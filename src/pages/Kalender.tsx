@@ -1,13 +1,13 @@
-import { CalendarDots, CaretLeft, CaretRight, Funnel, Lightbulb, Palette, Plus, Sparkle, TrafficSignal, UsersThree } from '@phosphor-icons/react'
+import { CalendarDots, CaretLeft, CaretRight, Check, Funnel, Lightbulb, Palette, PencilSimple, Plus, Sparkle, TrafficSignal, UsersThree } from '@phosphor-icons/react'
 import DoelTabel from '../components/DoelTabel'
 import { staffel } from '../lib/animatie'
 import { useMemo, useState } from 'react'
 import FilterBar from '../components/FilterBar'
 import { Legenda } from '../components/charts'
 import { CdmLabel, GenreLabel, Kaart, Lade, Match, Paginakop, StatusLabel, Tabs, cx } from '../components/ui'
-import { isoDatum, naarDatum, seizoenStartJaar } from '../data/generate'
+import { isoDatum, naarDatum, seizoenStartJaar, seizoenVanDatum } from '../data/generate'
 import type { Voorstelling, Zaal } from '../data/types'
-import { DOELGROEPEN, GENRE_FAMILIES, MOTIVATIES, STATUSSEN, ZALEN, familieVan, segmentVan } from '../data/vocab'
+import { DOELGROEPEN, GEMIDDELDE_PRIJS, GENRES, GENRE_FAMILIES, MOTIVATIES, STATUSSEN, ZALEN, capaciteitVan, familieVan, segmentVan } from '../data/vocab'
 import {
   DAGNAMEN, MAANDNAMEN, MAANDNAMEN_LANG, SEIZOENSMAANDEN, aandelen, actief, bereikPerDoelgroep, bereikPerFamilie, bereikPerMotivatie, bezetting, bezoekers, datumKort, datumLang, getal,
   isVerleden, maandVan, procent, vandaag, verkochtTotNu,
@@ -175,15 +175,27 @@ export default function Kalender() {
                     key={iso}
                     style={staffel(celIndex % 7 + Math.floor(celIndex / 7))}
                     className={cx(
-                      'plop flex flex-col gap-1 rounded-2xl p-1.5 transition',
+                      'plop group/dag flex flex-col gap-1 rounded-2xl p-1.5 transition',
+                      inMaand && iso >= vandaag() && 'hover:ring-2 hover:ring-violet/50',
                       eenvoudig ? 'min-h-[132px]' : 'min-h-[118px]',
                       inMaand ? 'bg-oppervlak ring-1 ring-line' : 'bg-transparent opacity-40',
                       isVrij && 'bg-[repeating-linear-gradient(45deg,var(--color-oppervlak),var(--color-oppervlak)_6px,var(--color-lavendel)_6px,var(--color-lavendel)_12px)] outline-2 outline-dashed outline-violet/40',
                       isVandaag && 'ring-2 ring-koraal',
                     )}
                   >
-                    <div className="flex items-center justify-between px-1">
+                    <div className="flex items-center justify-between gap-1 px-1">
                       <span className={cx('text-xs font-bold', isVandaag ? 'rounded-full bg-koraal px-1.5 text-white' : 'text-ink-2')}>{d.getDate()}</span>
+                      {inMaand && iso >= vandaag() && !isVrij && (
+                        <button
+                          onClick={() => setVlekDatum({ datum: iso, zaal: 'Grote zaal' })}
+                          className="grid h-6 w-6 place-items-center rounded-full bg-violet text-white opacity-0 shadow-md transition hover:scale-115 focus:opacity-100 group-hover/dag:opacity-100 [@media(hover:none)]:opacity-60"
+                          title="Voorstelling inplannen in de Grote of Kleine zaal"
+                          aria-label={`Voorstelling inplannen op ${datumKort(iso)}`}
+                          data-uitleg="plus-knop"
+                        >
+                          <Plus size={14} weight="bold" />
+                        </button>
+                      )}
                       {isVrij && (
                         <button data-uitleg="witte-vlek" onClick={() => setVlekDatum({ datum: iso, zaal: 'Grote zaal' })} className="puls-violet flex items-center gap-0.5 rounded-full bg-violet/10 px-1.5 py-0.5 text-[10px] font-bold text-violet transition hover:scale-110 hover:bg-violet hover:text-white" title="Vrije avond in de Grote zaal: bekijk suggesties">
                           <Sparkle size={11} /> {eenvoudig ? 'Iets inplannen?' : 'vrij'}
@@ -271,7 +283,7 @@ export default function Kalender() {
         />
       </div>
 
-      <SuggestieLade vlek={vlekDatum} onSluit={() => setVlekDatum(null)} />
+      <PlanLade key={vlekDatum ? `${vlekDatum.datum}-${vlekDatum.zaal}` : 'leeg'} vlek={vlekDatum} onSluit={() => setVlekDatum(null)} />
     </div>
   )
 }
@@ -344,7 +356,7 @@ function WeekWeergave({ weekStart, setWeekStart, perDag, kleuring, onVrij }: {
               {dagen.map((d) => {
                 const items = (perDag.get(d) ?? []).filter((v) => v.zaal === z.naam)
                 return (
-                  <div key={d} className="min-h-28 space-y-1.5 rounded-2xl bg-oppervlak p-1.5 ring-1 ring-line">
+                  <div key={d} className={cx('group/dag relative min-h-28 space-y-1.5 rounded-2xl bg-oppervlak p-1.5 ring-1 ring-line', d >= vandaag() && z.naam !== 'Theatercafé' && 'hover:ring-2 hover:ring-violet/50')}>
                     {items.map((v) => {
                       const kleur = kleurVan(v, kleuring)
                       const verkocht = verkochtTotNu(v)
@@ -356,9 +368,18 @@ function WeekWeergave({ weekStart, setWeekStart, perDag, kleuring, onVrij }: {
                         </button>
                       )
                     })}
-                    {!items.length && z.naam !== 'Theatercafé' && d >= vandaag() && [5, 6].includes(naarDatum(d).getDay()) && (
-                      <button onClick={() => onVrij({ datum: d, zaal: z.naam })} className="grid h-full min-h-24 w-full place-items-center rounded-xl border-2 border-dashed border-violet/30 text-xs font-semibold text-violet hover:bg-violet/5">
-                        <span className="flex items-center gap-1"><Plus size={13} /> suggesties</span>
+                    {items.length > 0 && z.naam !== 'Theatercafé' && d >= vandaag() && (
+                      <button onClick={() => onVrij({ datum: d, zaal: z.naam })} className="flex w-full items-center justify-center gap-1 rounded-xl py-1 text-xs font-semibold text-violet opacity-0 transition hover:bg-violet/10 focus:opacity-100 group-hover/dag:opacity-100 [@media(hover:none)]:opacity-60" aria-label={`Nog een voorstelling inplannen in de ${z.naam}`}>
+                        <Plus size={13} /> inplannen
+                      </button>
+                    )}
+                    {!items.length && z.naam !== 'Theatercafé' && d >= vandaag() && (
+                      <button
+                        onClick={() => onVrij({ datum: d, zaal: z.naam })}
+                        className={cx('grid h-full min-h-24 w-full place-items-center rounded-xl border-2 border-dashed border-violet/30 text-xs font-semibold text-violet transition hover:bg-violet/5 focus:opacity-100 group-hover/dag:opacity-100', ![5, 6].includes(naarDatum(d).getDay()) && 'opacity-0 [@media(hover:none)]:opacity-60')}
+                        aria-label={`Voorstelling inplannen in de ${z.naam}`}
+                      >
+                        <span className="flex items-center gap-1"><Plus size={13} /> inplannen</span>
                       </button>
                     )}
                   </div>
@@ -426,43 +447,146 @@ function LijstWeergave({ lijst, onKies }: { lijst: Voorstelling[]; onKies: (id: 
   )
 }
 
-function SuggestieLade({ vlek, onSluit }: { vlek: { datum: string; zaal: Zaal } | null; onSluit: () => void }) {
+function PlanLade({ vlek, onSluit }: { vlek: { datum: string; zaal: Zaal } | null; onSluit: () => void }) {
   const aanbod = useStore((s) => s.dataset.aanbod)
-  const voegToe = useStore((s) => s.voegScenarioToe)
+  const voorstellingen = useStore((s) => s.dataset.voorstellingen)
   const zetOptie = useStore((s) => s.zetOptie)
+  const upsert = useStore((s) => s.upsertVoorstelling)
   const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
   const toonAanbod = useSelectie((s) => s.toonAanbod)
   const matches = useMatches()
+  const [zaal, setZaal] = useState<Zaal>(vlek?.zaal ?? 'Grote zaal')
+  const [eigen, setEigen] = useState({ titel: '', genre: 'Cabaret', tijd: '20:15', doelgroep: '', motivatie: '' })
+  const [gepland, setGepland] = useState<string | null>(null)
   if (!vlek) return null
-  const exact = aanbod.filter((a) => a.status !== 'Afgewezen' && a.zalen.includes(vlek.zaal) && a.beschikbareData.includes(vlek.datum))
-  const inPeriode = aanbod.filter((a) => a.status !== 'Afgewezen' && a.zalen.includes(vlek.zaal) && !exact.includes(a) && a.periodeStart <= vlek.datum && a.periodeEind >= vlek.datum)
+  const datum = vlek.datum
+  const bezet = voorstellingen.filter((v) => v.datum === datum && v.zaal === zaal && actief(v))
+  const exact = aanbod.filter((a) => a.status !== 'Afgewezen' && a.status !== 'Ingepland' && a.zalen.includes(zaal) && a.beschikbareData.includes(datum))
+  const inPeriode = aanbod.filter((a) => a.status !== 'Afgewezen' && a.status !== 'Ingepland' && a.zalen.includes(zaal) && !exact.includes(a) && a.periodeStart <= datum && a.periodeEind >= datum)
   const sorteer = (l: typeof aanbod) => [...l].sort((a, b) => (matches.get(b.id)?.score ?? 0) - (matches.get(a.id)?.score ?? 0)).slice(0, 6)
+  const klaar = (titel: string) => {
+    setGepland(titel)
+    setTimeout(onSluit, 1100)
+  }
+  const voegEigenToe = () => {
+    if (!eigen.titel.trim()) return
+    const capaciteit = capaciteitVan(zaal)
+    const verwacht = Math.round((capaciteit * 0.72) / 10) * 10
+    const prijs = GEMIDDELDE_PRIJS[eigen.genre] ?? 30
+    upsert({
+      id: `e-${Date.now().toString(36)}`,
+      seizoen: seizoenVanDatum(datum),
+      status: 'Optie',
+      datum,
+      tijd: eigen.tijd,
+      titel: eigen.titel.trim(),
+      artiest: eigen.titel.trim(),
+      impresariaat: 'Eigen programmering',
+      genre: eigen.genre,
+      leeftijd: null,
+      zaal,
+      capaciteit,
+      verwacht,
+      eindstand: verwacht,
+      prijs,
+      uitkoopsom: Math.round((verwacht * prijs * 0.55) / 50) * 50,
+      motivaties: eigen.motivatie ? [eigen.motivatie] : [],
+      doelgroepen: eigen.doelgroep ? [eigen.doelgroep] : [],
+      bron: 'builder',
+    })
+    klaar(eigen.titel.trim())
+  }
   return (
-    <Lade open onSluit={onSluit} titel={`Vrij: ${datumLang(vlek.datum)}`}>
-      <p className="text-ink-2">{eenvoudig ? `De ${vlek.zaal} is nog vrij. Deze voorstellingen passen op deze datum, de beste staan bovenaan.` : `De ${vlek.zaal} is nog vrij. Dit aanbod past op deze datum, gesorteerd op matchscore.`}</p>
-      {!exact.length && !inPeriode.length && <p className="mt-3 rounded-2xl bg-citroen p-3 text-sm">Er is (nog) geen aanbod dat op deze datum past.</p>}
-      {[{ titel: 'Beschikbaar op precies deze datum', items: sorteer(exact), direct: true }, { titel: 'Tourt in deze periode (datum navragen)', items: sorteer(inPeriode), direct: false }].map((groep) => (
-        <div key={groep.titel} className="mt-5">
-          <h3 className="mb-2 font-bold">{groep.titel}</h3>
-          {!groep.items.length && <p className="text-sm text-muted">Geen aanbod gevonden.</p>}
-          <div className="space-y-2">
-            {groep.items.map((a) => (
-              <div key={a.id} className="flex items-center gap-3 rounded-2xl bg-oppervlak p-3 ring-1 ring-line">
-                <Match score={matches.get(a.id)?.score ?? 0} grootte={46} />
-                <button className="min-w-0 flex-1 text-left" onClick={() => toonAanbod(a.id)}>
-                  <div className="truncate font-semibold hover:underline">{a.titel}</div>
-                  <div className="text-xs text-ink-2">{a.genre} · {a.impresariaat}</div>
-                </button>
-                {groep.direct && (
-                  <button className="knop knop-primair !px-3 !py-1.5" onClick={() => { if (eenvoudig) zetOptie(a.id, vlek.datum, vlek.zaal); else voegToe({ aanbodId: a.id, datum: vlek.datum, zaal: vlek.zaal }); onSluit() }}>
-                    <Plus size={14} /> {eenvoudig ? 'Zet als optie' : 'Plan'}
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+    <Lade open onSluit={onSluit} titel={`Inplannen op ${datumLang(datum)}`}>
+      {gepland ? (
+        <div className="plop grid place-items-center gap-3 py-16 text-center">
+          <span className="grid h-16 w-16 place-items-center rounded-full bg-emerald-50 text-emerald-600"><Check size={34} weight="bold" className="spring" /></span>
+          <div className="font-display text-xl font-bold">{gepland}</div>
+          <p className="text-ink-2">staat als optie in de {zaal}.</p>
         </div>
-      ))}
+      ) : (
+        <>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-semibold text-ink-2">Zaal</span>
+            <Tabs<Zaal>
+              waarde={zaal}
+              onChange={setZaal}
+              opties={(['Grote zaal', 'Kleine zaal'] as Zaal[]).map((z) => {
+                const vol = voorstellingen.some((v) => v.datum === datum && v.zaal === z && actief(v))
+                return { id: z, label: <>{z === 'Grote zaal' ? 'GZ' : 'KZ'} <span className="font-normal opacity-80">{z}</span>{vol && <span className="ml-1 rounded-full bg-amber-50 px-1.5 text-[10px] font-bold text-amber-800">bezet</span>}</> }
+              })}
+            />
+          </div>
+          {bezet.length > 0 ? (
+            <p className="mt-3 rounded-2xl bg-citroen p-3 text-sm">
+              Let op: de {zaal} is deze dag al in gebruik door <b>{bezet.map((v) => `${v.titel} (${v.tijd})`).join(', ')}</b>. Je kunt er toch iets bij plannen, bijvoorbeeld een middagvoorstelling.
+            </p>
+          ) : (
+            <p className="mt-3 text-ink-2">De {zaal} is nog vrij. {eenvoudig ? 'Kies een voorstelling uit het aanbod of vul er zelf een in.' : 'Kies uit het aanbod (gesorteerd op matchscore) of voer zelf een voorstelling in.'}</p>
+          )}
+
+          {[{ titel: 'Uit het aanbod, op precies deze datum', items: sorteer(exact), direct: true }, { titel: 'Tourt in deze periode (datum navragen)', items: sorteer(inPeriode), direct: false }].map((groep) => (
+            <div key={groep.titel} className="mt-5">
+              <h3 className="mb-2 font-bold">{groep.titel}</h3>
+              {!groep.items.length && <p className="text-sm text-muted">Geen aanbod gevonden voor de {zaal}.</p>}
+              <div className="space-y-2">
+                {groep.items.map((a, i) => (
+                  <div key={a.id} className="verschijn flex items-center gap-3 rounded-2xl bg-oppervlak p-3 ring-1 ring-line" style={staffel(i)}>
+                    <Match score={matches.get(a.id)?.score ?? 0} grootte={46} />
+                    <button className="min-w-0 flex-1 text-left" onClick={() => toonAanbod(a.id)}>
+                      <div className="truncate font-semibold hover:underline">{a.titel}</div>
+                      <div className="text-xs text-ink-2">{a.genre} · {a.impresariaat}</div>
+                    </button>
+                    {groep.direct && (
+                      <button className="knop knop-primair !px-3 !py-1.5" onClick={() => { zetOptie(a.id, datum, zaal); klaar(a.titel) }}>
+                        <Plus size={14} /> Zet als optie
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <form
+            className="mt-6 rounded-3xl bg-vlak p-4 ring-1 ring-line"
+            onSubmit={(e) => { e.preventDefault(); voegEigenToe() }}
+          >
+            <h3 className="mb-3 flex items-center gap-2 font-bold"><PencilSimple size={18} className="text-violet" /> Zelf een voorstelling invullen</h3>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <label className="sm:col-span-2">
+                <span className="mb-1 block text-xs font-semibold text-ink-2">Titel</span>
+                <input required className="invoer" value={eigen.titel} onChange={(e) => setEigen({ ...eigen, titel: e.target.value })} placeholder="Bijvoorbeeld: Kerstconcert" />
+              </label>
+              <label>
+                <span className="mb-1 block text-xs font-semibold text-ink-2">Genre</span>
+                <select className="invoer" value={eigen.genre} onChange={(e) => setEigen({ ...eigen, genre: e.target.value, tijd: e.target.value === 'Jeugd & Familie' ? '14:00' : eigen.tijd })}>
+                  {GENRES.map((g) => <option key={g}>{g}</option>)}
+                </select>
+              </label>
+              <label>
+                <span className="mb-1 block text-xs font-semibold text-ink-2">Aanvang</span>
+                <input type="time" className="invoer" value={eigen.tijd} onChange={(e) => setEigen({ ...eigen, tijd: e.target.value })} />
+              </label>
+              <label>
+                <span className="mb-1 block text-xs font-semibold text-ink-2">Belangrijkste doelgroep</span>
+                <select className="invoer" value={eigen.doelgroep} onChange={(e) => setEigen({ ...eigen, doelgroep: e.target.value })}>
+                  <option value="">Nog niet bekend</option>
+                  {DOELGROEPEN.map((d) => <option key={d.naam} value={d.naam}>{d.kort} · {d.naam}</option>)}
+                </select>
+              </label>
+              <label>
+                <span className="mb-1 block text-xs font-semibold text-ink-2">Belangrijkste motivatie</span>
+                <select className="invoer" value={eigen.motivatie} onChange={(e) => setEigen({ ...eigen, motivatie: e.target.value })}>
+                  <option value="">Nog niet bekend</option>
+                  {MOTIVATIES.map((m) => <option key={m.naam} value={m.naam}>{m.naam}</option>)}
+                </select>
+              </label>
+            </div>
+            <button className="knop knop-primair mt-4"><Plus size={16} /> Zet als optie in de {zaal}</button>
+          </form>
+        </>
+      )}
     </Lade>
   )
 }

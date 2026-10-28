@@ -26,6 +26,7 @@ export const UITLEG: Record<string, { naam: string; stappen: UitlegStap[] }> = {
       { doel: 'filters', titel: 'Filteren', tekst: 'Filter op genre, zaal, status, doelgroep of motivatie, of zoek op titel en impresariaat. Filters blijven staan als je van weergave wisselt.' },
       { doel: 'witte-vlek', titel: 'Witte vlekken', tekst: 'Gestreepte vakjes zijn vrije weekendavonden in de Grote zaal. Klik op "vrij" voor het best passende aanbod op die datum.' },
       { doel: 'kalender-raster', titel: 'Details', tekst: 'Klik op een voorstelling voor alle details: voorverkoop, doelgroepen, kannibalisatie en het artiestengeheugen.' },
+      { doel: 'plus-knop', titel: 'Inplannen per dag', tekst: 'Beweeg over een dag en klik op het plusje om een voorstelling in de Grote of Kleine zaal te plannen, uit het aanbod of zelf ingevoerd.' },
       { doel: 'doel-tabellen', titel: 'Doel en realisatie', tekst: 'Per genre, doelgroep en motivatie het seizoensdoel naast de realisatie. De tabel die past bij je kleurkeuze is gemarkeerd.' },
     ],
   },
@@ -106,6 +107,7 @@ export const UITLEG_EENVOUDIG: Record<string, { naam: string; stappen: UitlegSta
     naam: 'Kalender',
     stappen: [
       { doel: 'kalender-raster', titel: 'Je maandoverzicht', tekst: 'Elke voorstelling staat op zijn datum. Klik erop voor alle details. Met de pijltjes ga je naar een andere maand.' },
+      { doel: 'plus-knop', titel: 'Zelf inplannen', tekst: 'Ga met je muis over een dag en klik op het plusje. Kies de Grote zaal (GZ) of Kleine zaal (KZ) en plan iets uit het aanbod in, of vul zelf een voorstelling in.' },
       { doel: 'witte-vlek', titel: 'Vrije avonden', tekst: 'Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal, vanaf vandaag. Klik op "Iets inplannen?" voor voorstellingen uit het aanbod die op die datum kunnen.' },
       { doel: 'kleuring', titel: 'Kleur naar keuze', tekst: 'Kies of de kalender kleurt op genre, op doelgroep (met de kleuren en afkortingen uit de brochure) of op motivatie.' },
       { doel: 'filter-knop', titel: 'Filteren', tekst: 'Wil je alleen bijvoorbeeld cabaret zien? Klik op "Filteren".' },
