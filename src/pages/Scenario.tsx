@@ -11,7 +11,7 @@ import {
   MAANDNAMEN, MAANDNAMEN_LANG, SEIZOENSMAANDEN, aandelen, actief, bereikPerDoelgroep, bereikPerMotivatie, bezoekers,
   datumKort, euroKort, getal, marge, recette, som,
 } from '../lib/calc'
-import { useMatches, useSelectie } from '../lib/hooks'
+import { seizoenVanAanbod, useMatches, useSelectie } from '../lib/hooks'
 import { vindKannibalisatie } from '../lib/inzichten'
 import { useSeizoen, useStore } from '../store/useStore'
 
@@ -66,7 +66,7 @@ export default function Scenario() {
 
   const kandidaten = useMemo(() => {
     const ingepland = new Set(scenario.map((s) => s.aanbodId))
-    const basis = aanbod.filter((a) => a.status !== 'Afgewezen' && a.status !== 'Ingepland')
+    const basis = aanbod.filter((a) => a.status !== 'Afgewezen' && a.status !== 'Ingepland' && seizoenVanAanbod(a) === PLAN_SEIZOEN)
     const l = bron === 'shortlist' ? basis.filter((a) => a.status === 'Shortlist' || ingepland.has(a.id)) : basis
     return [...l].sort((a, b) => (matches.get(b.id)?.score ?? 0) - (matches.get(a.id)?.score ?? 0)).slice(0, 40)
   }, [aanbod, scenario, bron, matches])

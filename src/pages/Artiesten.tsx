@@ -105,7 +105,7 @@ export default function Artiesten() {
                     <div className="mt-2 truncate font-bold">{p.artiest}</div>
                     <div className="text-xs text-ink-2">{p.genre} · {p.gespeeld}x gespeeld</div>
                     <div className="mt-2 text-xs text-ink-2">Terug vanaf <b className="text-ink">{p.terugVanaf && jaar(p.terugVanaf)}</b></div>
-                    {a && <div className="mt-2 rounded-lg bg-munt px-2 py-1 text-[11px] font-bold text-emerald-800"><Tray size={13} className="mr-1 inline" /> Zit in het aanbod 27/28</div>}
+                    {a && <div className="mt-2 rounded-lg bg-munt px-2 py-1 text-[11px] font-bold text-emerald-800"><Tray size={13} className="mr-1 inline" /> Zit in het aanbod</div>}
                   </button>
                 )
               })}
@@ -224,7 +224,7 @@ function ArtiestRij({ p, open, onToggle, onVoorstelling, aanbodId, onAanbod }: {
                     </div>
                   ))}
                 </div>
-                {aanbodId && <button onClick={() => onAanbod(aanbodId)} className="knop knop-zacht mt-4"><Tray size={16} className="text-amber-500" /> Bekijk aanbod 27/28</button>}
+                {aanbodId && <button onClick={() => onAanbod(aanbodId)} className="knop knop-zacht mt-4"><Tray size={16} className="text-amber-500" /> Bekijk aanbod</button>}
               </div>
               <div>
                 <div className="mb-1 font-bold">Alle voorstellingen ({p.voorstellingen.length})</div>

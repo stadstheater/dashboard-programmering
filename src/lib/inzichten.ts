@@ -102,7 +102,8 @@ export function berekenMatch(a: Aanbod, ctx: MatchContext): Match {
     redenen.push({ type: 'min', tekst: `Nieuw in Zoetermeer, genre haalt gem. ${procent(histBez / 0.92)}` })
   }
 
-  const vrijeData = a.beschikbareData.filter((d) => a.zalen.some((z) => !ctx.bezet.has(`${d}|${z}`)))
+  const peil = vandaag()
+  const vrijeData = a.beschikbareData.filter((d) => d >= peil && a.zalen.some((z) => !ctx.bezet.has(`${d}|${z}`)))
   const weekend = vrijeData.filter((d) => [5, 6].includes(naarDatum(d).getDay())).length
   const kalender = a.beschikbareData.length
     ? klem01((vrijeData.length / a.beschikbareData.length) * 0.75 + Math.min(weekend, 2) * 0.125)

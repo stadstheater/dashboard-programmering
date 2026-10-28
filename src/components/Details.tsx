@@ -5,7 +5,7 @@ import { naarDatum } from '../data/generate'
 import type { Zaal } from '../data/types'
 import { DOELGROEPEN, DOELGROEP_GEWICHTEN, MOTIVATIES, segmentVan } from '../data/vocab'
 import {
-  bezetting, datumKort, datumLang, euro, getal, isVerleden, marge, procent, recette, verkochtTotNu, voorverkoopIndex,
+  bezetting, datumKort, datumLang, euro, getal, isVerleden, marge, procent, recette, vandaag, verkochtTotNu, voorverkoopIndex,
 } from '../lib/calc'
 import { useArtiesten, useMatches, useSelectie } from '../lib/hooks'
 import { MATCH_GEWICHTEN, OORDEEL_KLEUR, vindKannibalisatie } from '../lib/inzichten'
@@ -183,7 +183,7 @@ export function MatchUitleg({ aanbodId }: { aanbodId: string }) {
         <ScoreRing score={m.score} grootte={72} />
         <div>
           <div className="font-display text-lg font-bold">Matchscore</div>
-          <div className="text-sm text-ink-2">Hoe goed dit aanbod past bij seizoen 27/28, de doelen en onze historie.</div>
+          <div className="text-sm text-ink-2">Hoe goed dit aanbod past bij het seizoen, de doelen en onze historie.</div>
         </div>
       </div>
       <div className="mt-4 space-y-2">
@@ -297,7 +297,7 @@ export function AanbodLade() {
                 eenvoudig ? 'px-4 py-3 text-[15px]' : 'px-3 py-2 text-sm',
                 gekozen ? 'bg-violet text-white' : vrij ? 'bg-oppervlak ring-1 ring-line hover:-translate-y-0.5 hover:ring-violet' : 'cursor-not-allowed bg-slate-100 text-slate-400 line-through',
               )}
-              title={vrij ? 'Vrij: klik om in te plannen' : 'Zaal is bezet'}
+              title={vrij ? 'Vrij: klik om in te plannen' : d < vandaag() ? 'Deze datum is voorbij' : 'Zaal is bezet'}
             >
               {gekozen ? <Check size={eenvoudig ? 18 : 14} className="spring" /> : <CalendarPlus size={eenvoudig ? 18 : 14} />}
               {eenvoudig && gekozen ? `Optie op ${datumKort(d)}` : datumKort(d)}

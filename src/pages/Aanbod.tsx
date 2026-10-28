@@ -5,7 +5,8 @@ import { staffel } from '../lib/animatie'
 import type { Aanbod as AanbodType, AanbodStatus } from '../data/types'
 import { AANBOD_STATUSSEN, DOELGROEPEN, GENRES, IMPRESARIATEN, MOTIVATIES, segmentVan } from '../data/vocab'
 import { datumKort, euro, getal } from '../lib/calc'
-import { useMatches, useSelectie } from '../lib/hooks'
+import { HUIDIG_SEIZOEN, PLAN_SEIZOEN } from '../data/vocab'
+import { seizoenVanAanbod, useMatches, useSelectie } from '../lib/hooks'
 import { useStore } from '../store/useStore'
 
 type Sortering = 'match' | 'ontvangen' | 'uitkoop' | 'verwacht'
@@ -28,10 +29,15 @@ export default function Aanbod() {
   const [aantal, setAantal] = useState(24)
   const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
   const [alleenGoed, setAlleenGoed] = useState(false)
+  const gekozenSeizoen = useStore((s) => s.seizoen)
+  const setSeizoen = useStore((s) => s.setSeizoen)
+  const seizoen = gekozenSeizoen === HUIDIG_SEIZOEN ? HUIDIG_SEIZOEN : PLAN_SEIZOEN
+  const afgelopen = gekozenSeizoen < HUIDIG_SEIZOEN
+  const seizoenAanbod = useMemo(() => aanbod.filter((a) => seizoenVanAanbod(a) === seizoen), [aanbod, seizoen])
 
   const lijst = useMemo(() => {
     const q = zoek.trim().toLowerCase()
-    const l = aanbod.filter(
+    const l = seizoenAanbod.filter(
       (a) =>
         (status === 'Alle' || a.status === status) &&
         (!genre || a.genre === genre) &&
@@ -50,11 +56,12 @@ export default function Aanbod() {
       verwacht: (a: AanbodType, b: AanbodType) => b.verwacht - a.verwacht,
     }[sortering]
     return l.sort(s)
-  }, [aanbod, status, genre, impresariaat, doelgroep, motivatie, budget, alleenNieuw, zoek, sortering, matches])
+  }, [seizoenAanbod, status, genre, impresariaat, doelgroep, motivatie, budget, alleenNieuw, alleenGoed, zoek, sortering, matches])
 
-  const scores = [...matches.values()].map((m) => m.score)
+  const scores = seizoenAanbod.map((a) => matches.get(a.id)?.score ?? 0)
   const gemScore = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : 0
-  const telStatus = (s: AanbodStatus) => aanbod.filter((a) => a.status === s).length
+  const telStatus = (s: AanbodStatus) => seizoenAanbod.filter((a) => a.status === s).length
+  const seizoenTekst = seizoen === HUIDIG_SEIZOEN ? 'dit seizoen (vanaf vandaag)' : 'volgend seizoen'
 
   return (
     <div>
@@ -63,11 +70,21 @@ export default function Aanbod() {
         icoon={Tray}
         kleur="#d97706"
         sub={eenvoudig
-          ? 'Voorstellingen die impresariaten ons aanbieden voor volgend seizoen. Bovenaan staat wat het best bij ons publiek en onze agenda past.'
-          : 'Alle geïmporteerde producties voor seizoen 27/28. De matchscore weegt doelgroepgaten, motivaties, onze historie, vrije data en de financiële verhouding.'}
+          ? `Voorstellingen die impresariaten ons aanbieden voor ${seizoenTekst}. Bovenaan staat wat het best bij ons publiek en onze agenda past.`
+          : `Alle geïmporteerde producties voor seizoen ${seizoen}${seizoen === HUIDIG_SEIZOEN ? ', met speeldata vanaf vandaag' : ''}. De matchscore weegt doelgroepgaten, motivaties, onze historie, vrije data en de financiële verhouding.`}
       >
         {!eenvoudig && <Tabs waarde={weergave} onChange={setWeergave} opties={[{ id: 'kaarten', label: <span className="flex items-center gap-1.5"><SquaresFour size={15} /> Kaarten</span> }, { id: 'tabel', label: <span className="flex items-center gap-1.5"><Rows size={15} /> Tabel</span> }]} />}
       </Paginakop>
+
+      {afgelopen && (
+        <div className="verschijn mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-citroen px-4 py-3 text-sm font-medium">
+          Voor afgelopen seizoenen is er geen aanbod meer. Je ziet nu het aanbod voor volgend seizoen.
+          <div className="flex gap-2">
+            <button className="knop knop-zacht !py-1.5" onClick={() => setSeizoen(HUIDIG_SEIZOEN)}>Dit seizoen</button>
+            <button className="knop knop-primair !py-1.5" onClick={() => setSeizoen(PLAN_SEIZOEN)}>Volgend seizoen</button>
+          </div>
+        </div>
+      )}
 
       {eenvoudig ? (
         <div className="verschijn flex flex-wrap items-center gap-3 rounded-3xl bg-oppervlak p-4 shadow-[var(--shadow-zacht)] ring-1 ring-line">
@@ -88,7 +105,7 @@ export default function Aanbod() {
         </div>
       ) : (<>
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
-        <KpiTegel i={0} label="Producties in aanbod" waarde={aanbod.length} icoon={Package} kleur="citroen" />
+        <KpiTegel i={0} label="Producties in aanbod" waarde={seizoenAanbod.length} icoon={Package} kleur="citroen" />
         <KpiTegel i={1} label="Nieuw binnen" waarde={telStatus('Nieuw')} sub="nog niet bekeken" icoon={Sparkle} kleur="ijs" />
         <KpiTegel i={2} label="Op de shortlist" waarde={telStatus('Shortlist')} icoon={Star} kleur="perzik" />
         <KpiTegel i={3} label="Ingepland" waarde={telStatus('Ingepland')} icoon={CheckCircle} kleur="munt" />

@@ -190,6 +190,16 @@ export const useStore = create<State>()(
     {
       name: 'coulisse-dashboard-v2',
       storage: veiligeOpslag,
+      version: 1,
+      // Versie 1: aanbod voor het lopende seizoen toegevoegd. Bestaande wijzigingen blijven bewaard.
+      migrate: (opgeslagen, versie) => {
+        const st = opgeslagen as Partial<State>
+        if (versie < 1 && st.dataset && !st.dataset.aanbod.some((a) => a.id.startsWith('h-'))) {
+          const extra = genereerDataset(st.dataset.seed).aanbod.filter((a) => a.id.startsWith('h-'))
+          st.dataset = { ...st.dataset, aanbod: [...st.dataset.aanbod, ...extra].sort((a, b) => b.ontvangen.localeCompare(a.ontvangen)) }
+        }
+        return st as State
+      },
       partialize: ({ dataset, seizoen, scenario, modus, thema }) => ({ dataset, seizoen, scenario, modus, thema }),
     },
   ),

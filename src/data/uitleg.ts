@@ -106,7 +106,7 @@ export const UITLEG_EENVOUDIG: Record<string, { naam: string; stappen: UitlegSta
     naam: 'Kalender',
     stappen: [
       { doel: 'kalender-raster', titel: 'Je maandoverzicht', tekst: 'Elke voorstelling staat op zijn datum. Klik erop voor alle details. Met de pijltjes ga je naar een andere maand.' },
-      { doel: 'witte-vlek', titel: 'Vrije avonden', tekst: 'Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal. Klik op "Iets inplannen?" voor passende voorstellingen.' },
+      { doel: 'witte-vlek', titel: 'Vrije avonden', tekst: 'Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal, vanaf vandaag. Klik op "Iets inplannen?" voor voorstellingen uit het aanbod die op die datum kunnen.' },
       { doel: 'kleuring', titel: 'Kleur naar keuze', tekst: 'Kies of de kalender kleurt op genre, op doelgroep (met de kleuren en afkortingen uit de brochure) of op motivatie.' },
       { doel: 'filter-knop', titel: 'Filteren', tekst: 'Wil je alleen bijvoorbeeld cabaret zien? Klik op "Filteren".' },
       { doel: 'doel-tabellen', titel: 'Doel en realisatie', tekst: 'Onder de kalender zie je per genre, doelgroep en motivatie wat we willen bereiken en hoe het nu gaat. Groen is boven het doel, rood eronder.' },

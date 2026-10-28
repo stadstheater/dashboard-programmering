@@ -208,7 +208,7 @@ export default function SegmentAnalyse({ soort }: { soort: Soort }) {
               <p className="mt-2 text-xs text-muted">Gemiddeld aantal bezoeken per seizoen</p>
             </div>
             <div>
-              <h3 className="mb-2 flex items-center gap-2 font-bold"><Tray size={18} className="text-lucht" /> Passend aanbod 27/28</h3>
+              <h3 className="mb-2 flex items-center gap-2 font-bold"><Tray size={18} className="text-lucht" /> Passend aanbod</h3>
               <ul className="space-y-1.5">
                 {aanbodVoorFocus.map((a, i) => (
                   <li key={a.id} className="verschijn" style={staffel(i + 1)}>

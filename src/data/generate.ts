@@ -401,14 +401,24 @@ const OMSCHRIJVINGEN: Record<string, string[]> = {
   Opera: ['Volledige operaproductie met koor, orkest en internationale solisten.', 'Een compacte, toegankelijke opera-uitvoering met boventiteling.'],
 }
 
-function genereerAanbod(rng: Rng, acts: Act[], gebruikt: Set<string>): Aanbod[] {
-  const seizoen = '27/28'
-  const dagen = dagenVanSeizoen(seizoen)
+interface AanbodOpties {
+  seizoen: string
+  aantal: number
+  /** Alleen data vanaf deze dag (ISO). Voor het lopende seizoen is dat vandaag. */
+  vanaf?: string
+  prefix: string
+  /** Vrije data die we graag aangeboden zien, zodat suggesties op lege avonden passen. */
+  voorkeur?: string[]
+}
+
+function genereerAanbod(rng: Rng, acts: Act[], gebruikt: Set<string>, { seizoen, aantal, vanaf, prefix, voorkeur = [] }: AanbodOpties): Aanbod[] {
+  const dagen = dagenVanSeizoen(seizoen).filter((d) => !vanaf || isoDatum(d) >= vanaf)
   const uit: Aanbod[] = []
+  if (dagen.length < 21) return uit
   const genres = Object.keys(GENRE_BASIS)
   const gewichten = genres.map((g) => GENRE_BASIS[g] + 6)
   const statussen: AanbodStatus[] = ['Nieuw', 'Bekeken', 'Shortlist', 'Afgewezen']
-  for (let i = 0; i < 168; i++) {
+  for (let i = 0; i < aantal; i++) {
     const terugkerend = rng() < 0.42
     let act: Act
     let titel: string
@@ -423,27 +433,35 @@ function genereerAanbod(rng: Rng, acts: Act[], gebruikt: Set<string>): Aanbod[] 
       act = nieuweAct(rng, gewogen(rng, genres, gewichten), gebruikt)
       titel = act.titels[0]
     }
-    const startIndex = geheel(rng, 0, dagen.length - 70)
+    const startIndex = geheel(rng, 0, Math.max(0, dagen.length - 70))
     const lengte = geheel(rng, 30, 130)
     const periode = dagen.slice(startIndex, Math.min(dagen.length, startIndex + lengte))
     const kandidaten = periode.filter((d) => MAAND_GEWICHT[d.getMonth()] > 0 && WEEKDAG_GEWICHT[d.getDay()] >= 0.8)
-    const beschikbaar = uniekeSelectie(rng, kandidaten, geheel(rng, 3, 9)).map(isoDatum).sort()
+    const periodeStart = isoDatum(periode[0])
+    const periodeEind = isoDatum(periode[periode.length - 1])
+    const vrijInPeriode = voorkeur.filter((d) => d >= periodeStart && d <= periodeEind)
+    const beschikbaar = [...new Set([
+      ...uniekeSelectie(rng, kandidaten, geheel(rng, 3, 9)).map(isoDatum),
+      ...uniekeSelectie(rng, vrijInPeriode, act.zaal === 'Grote zaal' ? geheel(rng, 2, 4) : 0),
+    ])].sort()
+    if (!beschikbaar.length) continue
     const capaciteit = capaciteitVan(act.zaal)
     const verwacht = rondAf(klem(capaciteit * act.kracht * tussen(rng, 0.85, 1.05), 20, capaciteit), capaciteit > 200 ? 10 : 5)
     const prijs = prijsVoor(rng, act.genre, act.zaal, seizoen)
     const zalen: Zaal[] = act.zaal === 'Grote zaal' && rng() < 0.2 ? ['Grote zaal', 'Kleine zaal'] : [act.zaal]
-    const ontvangen = new Date(2026, 6, 1)
-    ontvangen.setDate(ontvangen.getDate() + geheel(rng, 0, 118))
+    // Aanbod voor het lopende seizoen is recent binnengekomen, aanbod voor volgend seizoen sinds de zomer.
+    const ontvangen = vanaf ? naarDatum(vanaf) : new Date(2026, 6, 1)
+    ontvangen.setDate(ontvangen.getDate() + (vanaf ? -geheel(rng, 0, 45) : geheel(rng, 0, 118)))
     uit.push({
-      id: `a-${i + 1}`,
+      id: `${prefix}-${i + 1}`,
       titel,
       artiest: act.artiest,
       impresariaat: terugkerend && rng() < 0.8 ? act.impresariaat : kiesImpresariaat(rng, act.genre),
       genre: act.genre,
       omschrijving: kies(rng, OMSCHRIJVINGEN[act.genre] ?? OMSCHRIJVINGEN.Special),
       zalen,
-      periodeStart: isoDatum(periode[0]),
-      periodeEind: isoDatum(periode[periode.length - 1]),
+      periodeStart,
+      periodeEind,
       beschikbareData: beschikbaar,
       uitkoopsom: rondAf(verwacht * prijs * tussen(rng, 0.45, 0.75), 50),
       prijsIndicatie: prijs,
@@ -457,6 +475,28 @@ function genereerAanbod(rng: Rng, acts: Act[], gebruikt: Set<string>): Aanbod[] 
     })
   }
   return uit.sort((a, b) => b.ontvangen.localeCompare(a.ontvangen))
+}
+
+/** Aanbod voor het lopende seizoen, met speeldata vanaf vandaag. */
+function genereerAanbodHuidig(seed: number, acts: Act[], gebruikt: Set<string>, voorstellingen: Voorstelling[]) {
+  const vanaf = isoDatum(new Date())
+  const seizoen = seizoenVanDatum(vanaf)
+  // Vrije vrijdag- en zaterdagavonden in de Grote zaal, zodat er suggesties zijn voor de witte vlekken.
+  const bezet = new Set(voorstellingen.filter((v) => v.zaal === 'Grote zaal' && v.status !== 'Geannuleerd').map((v) => v.datum))
+  const voorkeur = dagenVanSeizoen(seizoen).filter((d) => [5, 6].includes(d.getDay())).map(isoDatum).filter((d) => d >= vanaf && !bezet.has(d))
+  const rng = maakRng(seed + 7919)
+  const aanbod = genereerAanbod(rng, acts, gebruikt, { seizoen, aantal: 64, vanaf, prefix: 'h', voorkeur })
+  // Zorg dat elke vrije avond minstens twee passende voorstellingen heeft.
+  const kandidaten = aanbod.filter((a) => a.zalen.includes('Grote zaal') && a.status !== 'Afgewezen')
+  for (const datum of voorkeur) {
+    const tekort = 2 - kandidaten.filter((a) => a.beschikbareData.includes(datum)).length
+    for (const a of uniekeSelectie(rng, kandidaten.filter((x) => !x.beschikbareData.includes(datum)), Math.max(0, tekort))) {
+      a.beschikbareData = [...a.beschikbareData, datum].sort()
+      if (datum < a.periodeStart) a.periodeStart = datum
+      if (datum > a.periodeEind) a.periodeEind = datum
+    }
+  }
+  return aanbod
 }
 
 /* ---------- Doelen ---------- */
@@ -534,7 +574,11 @@ export function genereerDataset(seed = 2627): Dataset {
   }, basisActs, dummyActs, gebruikt, teller)
 
   const alleActs = [...basisActs, ...[...dummyActs.values()].flat()]
-  const aanbod = genereerAanbod(rng, alleActs, gebruikt)
+  const aanbod = [
+    ...genereerAanbod(rng, alleActs, gebruikt, { seizoen: '27/28', aantal: 168, prefix: 'a' }),
+    // Eigen willekeur, zodat de rest van de dataset gelijk blijft aan eerdere versies.
+    ...genereerAanbodHuidig(seed, alleActs, gebruikt, [...historie, ...huidig, ...volgend]),
+  ].sort((a, b) => b.ontvangen.localeCompare(a.ontvangen))
 
   const voorstellingen = [...historie, ...huidig, ...volgend].sort((a, b) => a.datum.localeCompare(b.datum))
   return {

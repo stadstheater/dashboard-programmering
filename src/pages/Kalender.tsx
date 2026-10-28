@@ -7,7 +7,7 @@ import { Legenda } from '../components/charts'
 import { CdmLabel, GenreLabel, Kaart, Lade, Match, Paginakop, StatusLabel, Tabs, cx } from '../components/ui'
 import { isoDatum, naarDatum, seizoenStartJaar } from '../data/generate'
 import type { Voorstelling, Zaal } from '../data/types'
-import { DOELGROEPEN, GENRE_FAMILIES, MOTIVATIES, PLAN_SEIZOEN, STATUSSEN, ZALEN, familieVan, segmentVan } from '../data/vocab'
+import { DOELGROEPEN, GENRE_FAMILIES, MOTIVATIES, STATUSSEN, ZALEN, familieVan, segmentVan } from '../data/vocab'
 import {
   DAGNAMEN, MAANDNAMEN, MAANDNAMEN_LANG, SEIZOENSMAANDEN, aandelen, actief, bereikPerDoelgroep, bereikPerFamilie, bereikPerMotivatie, bezetting, bezoekers, datumKort, datumLang, getal,
   isVerleden, maandVan, procent, vandaag, verkochtTotNu,
@@ -102,7 +102,7 @@ export default function Kalender() {
     for (const v of gefilterd) m.set(v.datum, [...(m.get(v.datum) ?? []), v])
     return m
   }, [gefilterd])
-  const vrij = useMemo(() => new Set(vindWitteVlekken(lijst, seizoen, 'Grote zaal', '0000').map((w) => w.datum)), [lijst, seizoen])
+  const vrij = useMemo(() => new Set(vindWitteVlekken(lijst, seizoen, 'Grote zaal', vandaag()).map((w) => w.datum)), [lijst, seizoen])
 
   const kop = (
     <div className="flex flex-wrap items-center gap-2">
@@ -118,7 +118,7 @@ export default function Kalender() {
         icoon={CalendarDots}
         kleur="#2a78d6"
         sub={eenvoudig
-          ? <>Alle voorstellingen van seizoen {seizoen} per maand. Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal.</>
+          ? <>Alle voorstellingen van seizoen {seizoen} per maand. Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal, vanaf vandaag.</>
           : <>Seizoen {seizoen} per maand, week of in één overzicht. Gestippelde vakjes zijn vrije weekendavonden in de Grote zaal: klik erop voor passende suggesties uit het aanbod.</>}
       >
         {eenvoudig ? (
@@ -271,7 +271,7 @@ export default function Kalender() {
         />
       </div>
 
-      <SuggestieLade vlek={vlekDatum} onSluit={() => setVlekDatum(null)} seizoen={seizoen} />
+      <SuggestieLade vlek={vlekDatum} onSluit={() => setVlekDatum(null)} />
     </div>
   )
 }
@@ -356,7 +356,7 @@ function WeekWeergave({ weekStart, setWeekStart, perDag, kleuring, onVrij }: {
                         </button>
                       )
                     })}
-                    {!items.length && z.naam !== 'Theatercafé' && [5, 6].includes(naarDatum(d).getDay()) && (
+                    {!items.length && z.naam !== 'Theatercafé' && d >= vandaag() && [5, 6].includes(naarDatum(d).getDay()) && (
                       <button onClick={() => onVrij({ datum: d, zaal: z.naam })} className="grid h-full min-h-24 w-full place-items-center rounded-xl border-2 border-dashed border-violet/30 text-xs font-semibold text-violet hover:bg-violet/5">
                         <span className="flex items-center gap-1"><Plus size={13} /> suggesties</span>
                       </button>
@@ -426,7 +426,7 @@ function LijstWeergave({ lijst, onKies }: { lijst: Voorstelling[]; onKies: (id: 
   )
 }
 
-function SuggestieLade({ vlek, onSluit, seizoen }: { vlek: { datum: string; zaal: Zaal } | null; onSluit: () => void; seizoen: string }) {
+function SuggestieLade({ vlek, onSluit }: { vlek: { datum: string; zaal: Zaal } | null; onSluit: () => void }) {
   const aanbod = useStore((s) => s.dataset.aanbod)
   const voegToe = useStore((s) => s.voegScenarioToe)
   const zetOptie = useStore((s) => s.zetOptie)
@@ -440,7 +440,7 @@ function SuggestieLade({ vlek, onSluit, seizoen }: { vlek: { datum: string; zaal
   return (
     <Lade open onSluit={onSluit} titel={`Vrij: ${datumLang(vlek.datum)}`}>
       <p className="text-ink-2">{eenvoudig ? `De ${vlek.zaal} is nog vrij. Deze voorstellingen passen op deze datum, de beste staan bovenaan.` : `De ${vlek.zaal} is nog vrij. Dit aanbod past op deze datum, gesorteerd op matchscore.`}</p>
-      {seizoen !== PLAN_SEIZOEN && <p className="mt-3 rounded-2xl bg-citroen p-3 text-sm">Het aanbod van impresariaten is voor {eenvoudig ? 'volgend seizoen' : `seizoen ${PLAN_SEIZOEN}`}. Kies {eenvoudig ? '"Volgend seizoen"' : 'dat seizoen'} bovenaan voor de beste suggesties.</p>}
+      {!exact.length && !inPeriode.length && <p className="mt-3 rounded-2xl bg-citroen p-3 text-sm">Er is (nog) geen aanbod dat op deze datum past.</p>}
       {[{ titel: 'Beschikbaar op precies deze datum', items: sorteer(exact), direct: true }, { titel: 'Tourt in deze periode (datum navragen)', items: sorteer(inPeriode), direct: false }].map((groep) => (
         <div key={groep.titel} className="mt-5">
           <h3 className="mb-2 font-bold">{groep.titel}</h3>
