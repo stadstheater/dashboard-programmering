@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { PALET } from '../data/vocab'
 import { minderBeweging } from '../lib/animatie'
 
@@ -28,7 +29,7 @@ export default function Confetti({ sleutel }: { sleutel: number }) {
     [sleutel],
   )
   if (!zichtbaar) return null
-  return (
+  return createPortal(
     <>
       {stukken.map((s, i) => (
         <span
@@ -37,6 +38,7 @@ export default function Confetti({ sleutel }: { sleutel: number }) {
           style={{ background: s.kleur, borderRadius: s.rond ? '999px' : '3px', ['--x' as string]: s.x, ['--y' as string]: s.y, ['--r' as string]: s.r }}
         />
       ))}
-    </>
+    </>,
+    document.body,
   )
 }

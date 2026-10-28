@@ -1,5 +1,6 @@
 import { X, type Icon } from '@phosphor-icons/react'
 import { useEffect, type CSSProperties, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { AANBOD_STATUSSEN, DOELGROEPEN, STATUSSEN, familieVan, inktVoor, isLicht, type Segment } from '../data/vocab'
 import { staffel, useOptellen } from '../lib/animatie'
 import { useStore } from '../store/useStore'
@@ -188,7 +189,8 @@ export function Lade({ open, onSluit, titel, children, breed }: { open: boolean;
     return () => window.removeEventListener('keydown', h)
   }, [open, onSluit])
   if (!open) return null
-  return (
+  // Via een portal boven op de pagina, zodat de bovenbalk en animaties er nooit overheen vallen.
+  return createPortal(
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="vervaag-in absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={onSluit} />
       <aside className={cx('schuif-in dun-scroll relative h-full w-full overflow-y-auto bg-paneel shadow-2xl', breed ? 'max-w-2xl' : 'max-w-lg')}>
@@ -198,7 +200,8 @@ export function Lade({ open, onSluit, titel, children, breed }: { open: boolean;
         </div>
         <div className="p-6">{children}</div>
       </aside>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
@@ -210,7 +213,7 @@ export function Venster({ open, onSluit, titel, children }: { open: boolean; onS
     return () => window.removeEventListener('keydown', h)
   }, [open, onSluit])
   if (!open) return null
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 grid place-items-center p-4">
       <div className="vervaag-in absolute inset-0 bg-black/45 backdrop-blur-[2px]" onClick={onSluit} />
       <div className="plop dun-scroll relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl bg-paneel shadow-2xl">
@@ -220,7 +223,8 @@ export function Venster({ open, onSluit, titel, children }: { open: boolean; onS
         </div>
         <div className="p-6">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
