@@ -21,10 +21,12 @@ export const UITLEG: Record<string, { naam: string; stappen: UitlegStap[] }> = {
   '/kalender': {
     naam: 'Kalender',
     stappen: [
-      { doel: 'weergave', titel: 'Vier weergaven', tekst: 'Bekijk het seizoen per maand, per week (met een baan per zaal), als seizoensoverzicht of als sorteerbare lijst. Kleur op genre of op status.' },
+      { doel: 'weergave', titel: 'Vier weergaven', tekst: 'Bekijk het seizoen per maand, per week (met een baan per zaal), als seizoensoverzicht of als sorteerbare lijst.' },
+      { doel: 'kleuring', titel: 'Kleur naar keuze', tekst: 'Kleur de voorstellingen op genre, doelgroep (CDM), motivatie of status.' },
       { doel: 'filters', titel: 'Filteren', tekst: 'Filter op genre, zaal, status, doelgroep of motivatie, of zoek op titel en impresariaat. Filters blijven staan als je van weergave wisselt.' },
       { doel: 'witte-vlek', titel: 'Witte vlekken', tekst: 'Gestreepte vakjes zijn vrije weekendavonden in de Grote zaal. Klik op "vrij" voor het best passende aanbod op die datum.' },
       { doel: 'kalender-raster', titel: 'Details', tekst: 'Klik op een voorstelling voor alle details: voorverkoop, doelgroepen, kannibalisatie en het artiestengeheugen.' },
+      { doel: 'doel-tabellen', titel: 'Doel en realisatie', tekst: 'Per genre, doelgroep en motivatie het seizoensdoel naast de realisatie. De tabel die past bij je kleurkeuze is gemarkeerd.' },
     ],
   },
   '/aanbod': {
@@ -105,7 +107,9 @@ export const UITLEG_EENVOUDIG: Record<string, { naam: string; stappen: UitlegSta
     stappen: [
       { doel: 'kalender-raster', titel: 'Je maandoverzicht', tekst: 'Elke voorstelling staat op zijn datum. Klik erop voor alle details. Met de pijltjes ga je naar een andere maand.' },
       { doel: 'witte-vlek', titel: 'Vrije avonden', tekst: 'Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal. Klik op "Iets inplannen?" voor passende voorstellingen.' },
+      { doel: 'kleuring', titel: 'Kleur naar keuze', tekst: 'Kies of de kalender kleurt op genre, op doelgroep (met de kleuren en afkortingen uit de brochure) of op motivatie.' },
       { doel: 'filter-knop', titel: 'Filteren', tekst: 'Wil je alleen bijvoorbeeld cabaret zien? Klik op "Filteren".' },
+      { doel: 'doel-tabellen', titel: 'Doel en realisatie', tekst: 'Onder de kalender zie je per genre, doelgroep en motivatie wat we willen bereiken en hoe het nu gaat. Groen is boven het doel, rood eronder.' },
     ],
   },
   '/aanbod': {

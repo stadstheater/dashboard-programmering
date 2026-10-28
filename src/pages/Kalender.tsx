@@ -1,14 +1,15 @@
-import { CalendarDots, CaretLeft, CaretRight, Funnel, Palette, Plus, Sparkle, TrafficSignal } from '@phosphor-icons/react'
+import { CalendarDots, CaretLeft, CaretRight, Funnel, Lightbulb, Palette, Plus, Sparkle, TrafficSignal, UsersThree } from '@phosphor-icons/react'
+import DoelTabel from '../components/DoelTabel'
 import { staffel } from '../lib/animatie'
 import { useMemo, useState } from 'react'
 import FilterBar from '../components/FilterBar'
 import { Legenda } from '../components/charts'
-import { GenreLabel, Kaart, Lade, Match, Paginakop, StatusLabel, Tabs, cx } from '../components/ui'
+import { CdmLabel, GenreLabel, Kaart, Lade, Match, Paginakop, StatusLabel, Tabs, cx } from '../components/ui'
 import { isoDatum, naarDatum, seizoenStartJaar } from '../data/generate'
 import type { Voorstelling, Zaal } from '../data/types'
-import { GENRE_FAMILIES, PLAN_SEIZOEN, STATUSSEN, ZALEN, familieVan } from '../data/vocab'
+import { DOELGROEPEN, GENRE_FAMILIES, MOTIVATIES, PLAN_SEIZOEN, STATUSSEN, ZALEN, familieVan, segmentVan } from '../data/vocab'
 import {
-  DAGNAMEN, MAANDNAMEN, MAANDNAMEN_LANG, SEIZOENSMAANDEN, actief, bezetting, bezoekers, datumKort, datumLang, getal,
+  DAGNAMEN, MAANDNAMEN, MAANDNAMEN_LANG, SEIZOENSMAANDEN, aandelen, actief, bereikPerDoelgroep, bereikPerFamilie, bereikPerMotivatie, bezetting, bezoekers, datumKort, datumLang, getal,
   isVerleden, maandVan, procent, vandaag, verkochtTotNu,
 } from '../lib/calc'
 import { useMatches, useSelectie } from '../lib/hooks'
@@ -16,10 +17,26 @@ import { vindWitteVlekken } from '../lib/inzichten'
 import { pasFiltersToe, useSeizoen, useStore } from '../store/useStore'
 
 type Weergave = 'maand' | 'week' | 'seizoen' | 'lijst'
-type Kleuring = 'genre' | 'status'
+type Kleuring = 'genre' | 'doelgroep' | 'motivatie' | 'status'
 
 const kleurVan = (v: Voorstelling, k: Kleuring) =>
-  k === 'genre' ? familieVan(v.genre).kleur : STATUSSEN.find((s) => s.naam === v.status)?.kleur ?? '#888'
+  k === 'genre' ? familieVan(v.genre).kleur
+    : k === 'doelgroep' ? segmentVan(DOELGROEPEN, v.doelgroepen[0] ?? '')?.kleur ?? '#c9c3d6'
+      : k === 'motivatie' ? segmentVan(MOTIVATIES, v.motivaties[0] ?? '')?.kleur ?? '#c9c3d6'
+        : STATUSSEN.find((s) => s.naam === v.status)?.kleur ?? '#888'
+
+/** Klein teken vooraan in een kalenderblok: genre-icoon, CDM-afkorting, motivatie-icoon of statusbolletje. */
+function Merk({ v, kleuring, kleur }: { v: Voorstelling; kleuring: Kleuring; kleur: string }) {
+  if (kleuring === 'doelgroep') return v.doelgroepen[0] ? <CdmLabel naam={v.doelgroepen[0]} /> : null
+  const I = kleuring === 'genre' ? familieVan(v.genre).icoon : kleuring === 'motivatie' ? segmentVan(MOTIVATIES, v.motivaties[0] ?? '')?.icoon : undefined
+  return I ? <I size={12} className="shrink-0 transition group-hover:scale-125" style={{ color: kleur }} /> : <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: kleur }} />
+}
+
+const KLEURING_OPTIES: { id: Kleuring; label: React.ReactNode }[] = [
+  { id: 'genre', label: <><Palette size={16} /> Genre</> },
+  { id: 'doelgroep', label: <><UsersThree size={16} /> Doelgroep</> },
+  { id: 'motivatie', label: <><Lightbulb size={16} /> Motivatie</> },
+]
 
 function maandDagen(jaar: number, maand: number) {
   const eerste = new Date(jaar, maand, 1)
@@ -42,7 +59,7 @@ function Pil({ v, kleuring, onClick, groot }: { v: Voorstelling; kleuring: Kleur
       className={cx('group flex w-full items-center gap-1.5 truncate rounded-lg px-1.5 text-left font-semibold leading-tight text-ink transition hover:-translate-y-px hover:shadow', groot ? 'py-1.5 text-[13px]' : 'py-1 text-[11.5px]', v.status === 'Geannuleerd' && 'line-through opacity-50', v.bron === 'scenario' && 'outline-2 outline-dashed outline-violet')}
       style={{ background: kleur + '22' }}
     >
-      {kleuring === 'genre' ? (() => { const I = familieVan(v.genre).icoon; return <I size={12} className="shrink-0 transition group-hover:scale-125" style={{ color: kleur }} /> })() : <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: kleur }} />}
+      <Merk v={v} kleuring={kleuring} kleur={kleur} />
       <span className="truncate">{v.titel}</span>
       <span className="ml-auto shrink-0 text-[10px] font-medium text-ink-2">{ZALEN.find((z) => z.naam === v.zaal)?.kort}</span>
     </button>
@@ -73,6 +90,11 @@ export default function Kalender() {
   const eenvoudig = useStore((st) => st.modus) === 'eenvoudig'
   const [filtersOpen, setFiltersOpen] = useState(false)
   const toonWeergave: Weergave = eenvoudig ? 'maand' : weergave
+  const doelen = useStore((st) => st.dataset.doelen)
+  const verhouding = useMemo(
+    () => ({ genre: aandelen(bereikPerFamilie(lijst)), doelgroep: aandelen(bereikPerDoelgroep(lijst)), motivatie: aandelen(bereikPerMotivatie(lijst)) }),
+    [lijst],
+  )
   const maandJaar = maand >= 8 ? jaar : jaar + 1
 
   const perDag = useMemo(() => {
@@ -85,7 +107,7 @@ export default function Kalender() {
   const kop = (
     <div className="flex flex-wrap items-center gap-2">
       <Tabs<Weergave> uitleg="weergave" waarde={weergave} onChange={setWeergave} opties={[{ id: 'maand', label: 'Maand' }, { id: 'week', label: 'Week' }, { id: 'seizoen', label: 'Seizoen' }, { id: 'lijst', label: 'Lijst' }]} />
-      <Tabs<Kleuring> waarde={kleuring} onChange={setKleuring} opties={[{ id: 'genre', label: <><Palette size={16} /> Genre</> }, { id: 'status', label: <><TrafficSignal size={16} /> Status</> }]} />
+      <Tabs<Kleuring> uitleg="kleuring" waarde={kleuring} onChange={setKleuring} opties={[...KLEURING_OPTIES, { id: 'status', label: <><TrafficSignal size={16} /> Status</> }]} />
     </div>
   )
 
@@ -100,9 +122,12 @@ export default function Kalender() {
           : <>Seizoen {seizoen} per maand, week of in één overzicht. Gestippelde vakjes zijn vrije weekendavonden in de Grote zaal: klik erop voor passende suggesties uit het aanbod.</>}
       >
         {eenvoudig ? (
-          <button data-uitleg="filter-knop" onClick={() => setFiltersOpen(!filtersOpen)} className={cx('knop !px-4 !py-2.5 text-[15px]', filtersOpen ? 'knop-primair' : 'knop-zacht')}>
-            <Funnel size={18} /> Filteren
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <Tabs<Kleuring> uitleg="kleuring" waarde={kleuring === 'status' ? 'genre' : kleuring} onChange={setKleuring} opties={KLEURING_OPTIES} />
+            <button data-uitleg="filter-knop" onClick={() => setFiltersOpen(!filtersOpen)} className={cx('knop !px-4 !py-2.5 text-[15px]', filtersOpen ? 'knop-primair' : 'knop-zacht')}>
+              <Funnel size={18} /> Filteren
+            </button>
+          </div>
         ) : kop}
       </Paginakop>
       {(!eenvoudig || filtersOpen) && (
@@ -218,12 +243,53 @@ export default function Kalender() {
 
       {toonWeergave === 'lijst' && <LijstWeergave lijst={gefilterd} onKies={toon} />}
 
+      <div className="mt-8 mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h2 className="font-display text-xl font-extrabold">Doel en realisatie</h2>
+        <span className="text-sm text-ink-2">Hoe seizoen {seizoen} zich verhoudt tot onze doelen, voor het hele seizoen</span>
+      </div>
+      <div data-uitleg="doel-tabellen" className="grid gap-5 lg:grid-cols-3">
+        <DoelTabel
+          titel="Genre"
+          icoon={Palette}
+          kleur="#2a78d6"
+          actief={kleuring === 'genre'}
+          rijen={GENRE_FAMILIES.map((f) => ({ naam: f.naam, kleur: f.kleur, doel: doelen.genres[f.naam] ?? 0, realisatie: verhouding.genre[f.naam] ?? 0, label: <><f.icoon size={15} style={{ color: f.kleur }} className="shrink-0" /><span className="truncate">{f.naam}</span></> }))}
+        />
+        <DoelTabel
+          titel="Culturele doelgroep"
+          icoon={UsersThree}
+          kleur="#0f9f84"
+          actief={kleuring === 'doelgroep'}
+          rijen={DOELGROEPEN.map((d) => ({ naam: d.naam, kleur: d.kleur, doel: doelen.doelgroepen[d.naam] ?? 0, realisatie: verhouding.doelgroep[d.naam] ?? 0, label: <><CdmLabel segment={d} /><span className="truncate">{d.naam}</span></> }))}
+        />
+        <DoelTabel
+          titel="Motivatie"
+          icoon={Lightbulb}
+          kleur="#db2777"
+          actief={kleuring === 'motivatie'}
+          rijen={MOTIVATIES.map((m) => ({ naam: m.naam, kleur: m.kleur, doel: doelen.motivaties[m.naam] ?? 0, realisatie: verhouding.motivatie[m.naam] ?? 0, label: <><m.icoon size={15} style={{ color: m.kleur }} className="shrink-0" /><span className="truncate">{m.naam}</span></> }))}
+        />
+      </div>
+
       <SuggestieLade vlek={vlekDatum} onSluit={() => setVlekDatum(null)} seizoen={seizoen} />
     </div>
   )
 }
 
 function KleurLegenda({ kleuring }: { kleuring: Kleuring }) {
+  if (kleuring === 'doelgroep') {
+    return (
+      <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1.5 text-xs text-ink-2">
+        {DOELGROEPEN.map((d) => (
+          <span key={d.naam} className="flex items-center gap-1.5"><CdmLabel segment={d} /> {d.naam}</span>
+        ))}
+        <span className="w-full text-muted">Kleur volgens de belangrijkste doelgroep van de voorstelling.</span>
+      </div>
+    )
+  }
+  if (kleuring === 'motivatie') {
+    return <Legenda className="mt-4" items={MOTIVATIES.map((m) => ({ naam: m.naam, kleur: m.kleur, icoon: m.icoon }))} />
+  }
   return (
     <Legenda
       className="mt-4"
