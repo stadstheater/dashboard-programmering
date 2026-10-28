@@ -1,7 +1,9 @@
-import { ArrowDownRight, ArrowUpRight, Minus, Search } from 'lucide-react'
+import { ArrowDownRight, ArrowUpRight, MagnifyingGlass, Minus } from '@phosphor-icons/react'
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { ArrowsClockwise, Buildings, Microphone, Star, ThumbsUp, Tray, Trophy, Warning } from '@phosphor-icons/react'
 import { GenreLabel, Kaart, KpiTegel, Paginakop, ScoreRing, Tabs, cx } from '../components/ui'
+import { staffel } from '../lib/animatie'
 import { naarDatum } from '../data/generate'
 import { GENRES, IMPRESARIATEN, SEIZOENEN } from '../data/vocab'
 import { actief, datumKort, euroKort, getal, isVerleden, marge, procent, som, vandaag } from '../lib/calc'
@@ -16,9 +18,11 @@ function Trend({ t }: { t: number | null }) {
   return <span className="inline-flex items-center text-ink-2"><Minus size={14} /></span>
 }
 
+const waardeKleur = (o: Oordeel, actief: string) => (o === actief ? 'white' : OORDEEL_KLEUR[o].kleur)
+
 function OordeelLabel({ o }: { o: Oordeel }) {
   const k = OORDEEL_KLEUR[o]
-  return <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold" style={{ background: k.zacht, color: k.kleur }}>{k.emoji} {o}</span>
+  return <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold" style={{ background: k.zacht, color: k.kleur }}><k.icoon size={14} /> {o}</span>
 }
 
 function jaar(iso: string) {
@@ -77,48 +81,48 @@ export default function Artiesten() {
 
   return (
     <div>
-      <Paginakop titel="Artiestengeheugen" emoji="🌟" sub="Wie speelde er wanneer, hoe liep het en wanneer is het weer tijd? Met terugboekadvies per artiest en een scorekaart per impresariaat.">
-        <Tabs waarde={tab} onChange={setTab} opties={[{ id: 'artiesten', label: '🎤 Artiesten' }, { id: 'impresariaten', label: '🏢 Impresariaten' }]} />
+      <Paginakop titel="Artiestengeheugen" icoon={Star} kleur="#ca8a04" sub="Wie speelde er wanneer, hoe liep het en wanneer is het weer tijd? Met terugboekadvies per artiest en een scorekaart per impresariaat.">
+        <Tabs uitleg="artiest-tabs" waarde={tab} onChange={setTab} opties={[{ id: 'artiesten', label: <><Microphone size={16} /> Artiesten</> }, { id: 'impresariaten', label: <><Buildings size={16} /> Impresariaten</> }]} />
       </Paginakop>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
-        <KpiTegel label="Artiesten met historie" waarde={getal(metHistorie.length)} icoon="🎤" kleur="lavendel" />
-        <KpiTegel label="Toppers" waarde={getal(tel('Topper'))} sub="85% bezetting of meer" icoon="🏆" kleur="munt" />
-        <KpiTegel label="Solide" waarde={getal(tel('Solide'))} sub="70 tot 85%" icoon="👍" kleur="ijs" />
-        <KpiTegel label="Risico" waarde={getal(tel('Risico'))} sub="onder 50%" icoon="⚠️" kleur="perzik" />
-        <KpiTegel label="Klaar om terug te boeken" waarde={getal(terugTeBoeken.length)} sub="toppers en solide, nog niet geboekt" icoon="🔁" kleur="citroen" />
+        <KpiTegel i={0} label="Artiesten met historie" waarde={metHistorie.length} icoon={Microphone} kleur="lavendel" />
+        <KpiTegel i={1} label="Toppers" waarde={tel('Topper')} sub="85% bezetting of meer" icoon={Trophy} kleur="munt" />
+        <KpiTegel i={2} label="Solide" waarde={tel('Solide')} sub="70 tot 85%" icoon={ThumbsUp} kleur="ijs" />
+        <KpiTegel i={3} label="Risico" waarde={tel('Risico')} sub="onder 50%" icoon={Warning} kleur="perzik" />
+        <KpiTegel i={4} label="Klaar om terug te boeken" waarde={terugTeBoeken.length} sub="toppers en solide, nog niet geboekt" icoon={ArrowsClockwise} kleur="citroen" />
       </div>
 
       {tab === 'artiesten' ? (
         <>
-          <Kaart className="mt-6" titel="🔁 Tijd voor een terugkeer" sub="Sterke artiesten zonder nieuwe boeking, waarvan het terugboekmoment voor eind seizoen 27/28 valt">
+          <Kaart className="mt-6" i={5} uitleg="terugkeer" titel={<><ArrowsClockwise size={20} className="text-amber-500" /> Tijd voor een terugkeer</>} sub="Sterke artiesten zonder nieuwe boeking, waarvan het terugboekmoment voor eind seizoen 27/28 valt">
             <div className="dun-scroll -mx-1 flex gap-3 overflow-x-auto px-1 pb-2">
-              {terugTeBoeken.slice(0, 14).map((p) => {
+              {terugTeBoeken.slice(0, 14).map((p, i) => {
                 const a = inAanbod.get(p.artiest)
                 return (
-                  <button key={p.artiest} onClick={() => { setZoek(p.artiest); setOpen(p.artiest) }} className="w-60 shrink-0 rounded-2xl bg-gradient-to-br from-white to-[#fff7ef] p-4 text-left ring-1 ring-line transition hover:-translate-y-1 hover:shadow-md">
+                  <button key={p.artiest} style={staffel(i)} onClick={() => { setZoek(p.artiest); setOpen(p.artiest) }} className="verschijn w-60 shrink-0 rounded-2xl bg-gradient-to-br from-white to-[#fff7ef] p-4 text-left ring-1 ring-line transition hover:-translate-y-1 hover:shadow-md">
                     <div className="flex items-center justify-between"><OordeelLabel o={p.oordeel} /><span className="font-display text-xl font-extrabold">{procent(p.bezetting ?? 0)}</span></div>
                     <div className="mt-2 truncate font-bold">{p.artiest}</div>
                     <div className="text-xs text-ink-2">{p.genre} · {p.gespeeld}x gespeeld</div>
                     <div className="mt-2 text-xs text-ink-2">Terug vanaf <b className="text-ink">{p.terugVanaf && jaar(p.terugVanaf)}</b></div>
-                    {a && <div className="mt-2 rounded-lg bg-munt px-2 py-1 text-[11px] font-bold text-emerald-800">📬 Zit in het aanbod 27/28</div>}
+                    {a && <div className="mt-2 rounded-lg bg-munt px-2 py-1 text-[11px] font-bold text-emerald-800"><Tray size={13} className="mr-1 inline" /> Zit in het aanbod 27/28</div>}
                   </button>
                 )
               })}
             </div>
           </Kaart>
 
-          <Kaart className="mt-6">
+          <Kaart className="mt-6" i={6} uitleg="artiest-tabel">
             <div className="mb-4 flex flex-wrap items-center gap-2">
               <div className="relative min-w-56 flex-1">
-                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                <MagnifyingGlass size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
                 <input className="invoer !rounded-full !pl-9" placeholder="Zoek artiest of impresariaat" value={zoek} onChange={(e) => setZoek(e.target.value)} />
               </div>
               <select className="invoer !w-auto !rounded-full" value={genre} onChange={(e) => setGenre(e.target.value)}>
                 <option value="">Alle genres</option>
                 {GENRES.map((g) => <option key={g}>{g}</option>)}
               </select>
-              <Tabs<'Alle' | Oordeel> waarde={oordeel} onChange={setOordeel} opties={(['Alle', 'Topper', 'Solide', 'Twijfel', 'Risico', 'Onbekend'] as const).map((o) => ({ id: o, label: o === 'Alle' ? 'Alle' : `${OORDEEL_KLEUR[o].emoji} ${o}` }))} />
+              <Tabs<'Alle' | Oordeel> waarde={oordeel} onChange={setOordeel} opties={(['Alle', 'Topper', 'Solide', 'Twijfel', 'Risico', 'Onbekend'] as const).map((o) => ({ id: o, label: o === 'Alle' ? 'Alle' : (() => { const I = OORDEEL_KLEUR[o].icoon; return <><I size={15} style={{ color: waardeKleur(o, oordeel) }} /> {o}</> })() }))} />
             </div>
             <div className="dun-scroll overflow-x-auto">
               <table className="w-full min-w-[1000px] text-sm">
@@ -140,8 +144,8 @@ export default function Artiesten() {
       ) : (
         <Kaart className="mt-6" titel="Scorekaart impresariaten" sub="Historische prestaties en de kwaliteit van het huidige aanbod">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {impresariaten.map((i) => (
-              <div key={i.naam} className="rounded-3xl bg-gradient-to-br from-white to-[#fff7ef] p-5 ring-1 ring-line">
+            {impresariaten.map((i, n) => (
+              <div key={i.naam} style={staffel(n)} className="verschijn rounded-3xl transition hover:-translate-y-1 hover:shadow-md bg-gradient-to-br from-white to-[#fff7ef] p-5 ring-1 ring-line">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="font-display text-lg font-bold leading-tight">{i.naam}</div>
@@ -151,7 +155,7 @@ export default function Artiesten() {
                 </div>
                 <div className="mt-4">
                   <div className="mb-1 flex justify-between text-xs text-ink-2"><span>Gem. bezetting</span><b className="text-ink">{procent(i.bezetting)}</b></div>
-                  <div className="h-2.5 rounded-full bg-[#f6efe6]"><div className="h-full rounded-full bg-gradient-to-r from-mint to-lucht" style={{ width: `${i.bezetting * 100}%` }} /></div>
+                  <div className="h-2.5 rounded-full bg-[#f6efe6]"><div className="groei h-full rounded-full bg-gradient-to-r from-mint to-lucht" style={{ width: `${i.bezetting * 100}%`, ...staffel(n) }} /></div>
                 </div>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
                   <div className="rounded-xl bg-white p-2 ring-1 ring-line"><div className="text-muted">Saldo</div><div className="font-bold">{euroKort(i.saldo)}</div></div>
@@ -220,7 +224,7 @@ function ArtiestRij({ p, open, onToggle, onVoorstelling, aanbodId, onAanbod }: {
                     </div>
                   ))}
                 </div>
-                {aanbodId && <button onClick={() => onAanbod(aanbodId)} className="knop knop-zacht mt-4">📬 Bekijk aanbod 27/28</button>}
+                {aanbodId && <button onClick={() => onAanbod(aanbodId)} className="knop knop-zacht mt-4"><Tray size={16} className="text-amber-500" /> Bekijk aanbod 27/28</button>}
               </div>
               <div>
                 <div className="mb-1 font-bold">Alle voorstellingen ({p.voorstellingen.length})</div>

@@ -1,3 +1,4 @@
+import type { Icon } from '@phosphor-icons/react'
 import type { ReactNode } from 'react'
 import { cx } from './ui'
 
@@ -28,13 +29,12 @@ export function TipKaart({ active, payload, label, formatter, titel }: {
   )
 }
 
-export function Legenda({ items, className }: { items: { naam: string; kleur: string; emoji?: string }[]; className?: string }) {
+export function Legenda({ items, className }: { items: { naam: string; kleur: string; icoon?: Icon }[]; className?: string }) {
   return (
     <div className={cx('flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-2', className)}>
       {items.map((i) => (
         <span key={i.naam} className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full" style={{ background: i.kleur }} />
-          {i.emoji && <span>{i.emoji}</span>}
+          {i.icoon ? <i.icoon weight="fill" size={14} style={{ color: i.kleur }} /> : <span className="h-2.5 w-2.5 rounded-full" style={{ background: i.kleur }} />}
           {i.naam}
         </span>
       ))}

@@ -1,9 +1,10 @@
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight, Armchair, CurrencyEur, Gauge, ShoppingCart, Sparkle, Ticket, TrendUp, UsersThree } from '@phosphor-icons/react'
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Legenda, TipKaart } from '../components/charts'
-import { DoelBalk, GenreLabel, Kaart, KpiTegel, Paginakop, StatusLabel, cx } from '../components/ui'
+import { DoelBalk, GenreLabel, IcoonBol, Kaart, KpiTegel, Paginakop, StatusLabel, cx } from '../components/ui'
+import { staffel } from '../lib/animatie'
 import { DOELGROEPEN, GENRE_FAMILIES, HUIDIG_SEIZOEN, MOTIVATIES, PLAN_SEIZOEN, familieVan } from '../data/vocab'
 import {
   MAANDNAMEN, SEIZOENSMAANDEN, actief, aandelen, bereikPerDoelgroep, bereikPerFamilie, bereikPerMotivatie, bezoekers,
@@ -47,33 +48,34 @@ export default function Cockpit() {
 
   return (
     <div>
-      <Paginakop titel={`Cockpit ${seizoen}`} emoji="🎛️" sub={<>Alles over het {titelTekst} in één oogopslag: bezoekers, balans in doelgroepen en motivaties, en wat er aandacht nodig heeft.</>}>
-        <Link to="/scenario" className="knop knop-koraal shadow-md"><Sparkles size={16} /> Seizoen bouwen</Link>
+      <Paginakop titel={`Cockpit ${seizoen}`} icoon={Gauge} kleur="#ff6b57" sub={<>Alles over het {titelTekst} in één oogopslag: bezoekers, balans in doelgroepen en motivaties, en wat er aandacht nodig heeft.</>}>
+        <Link to="/scenario" className="knop knop-koraal shadow-md"><Sparkle size={16} /> Seizoen bouwen</Link>
       </Paginakop>
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
-        <KpiTegel label="Voorstellingen" waarde={getal(a.length)} sub={`${open} opties en concepten`} icoon="🎟️" kleur="perzik" voortgang={a.length / doelen.aantal} />
-        <KpiTegel label="Bezoekers" waarde={getal(totaalBezoekers)} sub={`${getal(gerealiseerd)} al gerealiseerd`} icoon="👥" kleur="citroen" />
-        <KpiTegel label="Bezettingsgraad" waarde={procent(bez)} sub={`doel ${doelen.bezetting}%`} icoon="💺" kleur="munt" voortgang={bez / (doelen.bezetting / 100)} />
-        <KpiTegel label="Recette" waarde={euroKort(som(a, (v) => recette(v, peil)))} sub="realisatie en prognose" icoon="💶" kleur="lavendel" />
-        <KpiTegel label="Saldo na uitkoop" waarde={euroKort(som(a, (v) => marge(v, peil)))} sub="recette min uitkoopsom" icoon="📈" kleur="ijs" />
-        <KpiTegel label="Voorverkoop" waarde={getal(som(a.filter((v) => !isVerleden(v, peil)), (v) => verkochtTotNu(v, peil)))} sub="kaarten voor komende voorstellingen" icoon="🛒" kleur="snoep" />
+      <div data-uitleg="kpi" className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
+        <KpiTegel i={0} label="Voorstellingen" waarde={a.length} opmaak={getal} sub={`${open} opties en concepten`} icoon={Ticket} kleur="perzik" voortgang={a.length / doelen.aantal} />
+        <KpiTegel i={1} label="Bezoekers" waarde={totaalBezoekers} opmaak={getal} sub={`${getal(gerealiseerd)} al gerealiseerd`} icoon={UsersThree} kleur="citroen" />
+        <KpiTegel i={2} label="Bezettingsgraad" waarde={bez} opmaak={(n) => procent(n)} sub={`doel ${doelen.bezetting}%`} icoon={Armchair} kleur="munt" voortgang={bez / (doelen.bezetting / 100)} />
+        <KpiTegel i={3} label="Recette" waarde={som(a, (v) => recette(v, peil))} opmaak={euroKort} sub="realisatie en prognose" icoon={CurrencyEur} kleur="lavendel" />
+        <KpiTegel i={4} label="Saldo na uitkoop" waarde={som(a, (v) => marge(v, peil))} opmaak={euroKort} sub="recette min uitkoopsom" icoon={TrendUp} kleur="ijs" />
+        <KpiTegel i={5} label="Voorverkoop" waarde={som(a.filter((v) => !isVerleden(v, peil)), (v) => verkochtTotNu(v, peil))} opmaak={getal} sub="kaarten voor komende voorstellingen" icoon={ShoppingCart} kleur="snoep" />
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1.35fr_1fr]">
         <Kaart
+          i={2}
           titel={komend.length ? 'Binnenkort op de planken' : 'Toppers van dit seizoen'}
           sub={komend.length ? 'Voorverkoop van de eerstvolgende voorstellingen' : 'Hoogste bezettingsgraad'}
           actie={<Link to="/kalender" className="knop knop-zacht">Kalender <ArrowRight size={15} /></Link>}
         >
           <ul className="divide-y divide-line">
-            {(komend.length ? komend : toppers).map((v) => {
+            {(komend.length ? komend : toppers).map((v, i) => {
               const verkocht = komend.length ? verkochtTotNu(v, peil) : v.eindstand
               const f = familieVan(v.genre)
               return (
-                <li key={v.id}>
-                  <button onClick={() => toon(v.id)} className="flex w-full items-center gap-4 rounded-2xl px-2 py-3 text-left transition hover:bg-[#fff6ee]">
-                    <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-center leading-tight" style={{ background: f.kleur + '1f' }}>
+                <li key={v.id} className="verschijn" style={staffel(i + 3)}>
+                  <button onClick={() => toon(v.id)} className="group flex w-full items-center gap-4 rounded-2xl px-2 py-3 text-left transition hover:bg-[#fff6ee]">
+                    <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-center leading-tight transition duration-300 group-hover:-rotate-6 group-hover:scale-110" style={{ background: f.kleur + '1f' }}>
                       <div>
                         <div className="font-display text-xl font-extrabold">{Number(v.datum.slice(8, 10))}</div>
                         <div className="text-[11px] font-semibold uppercase text-ink-2">{MAANDNAMEN[maandVan(v.datum)]}</div>
@@ -91,7 +93,7 @@ export default function Cockpit() {
                         <b className="text-ink">{procent(verkocht / v.capaciteit)}</b>
                       </div>
                       <div className="h-2 rounded-full bg-[#f6efe6]">
-                        <div className="h-full rounded-full" style={{ width: `${(verkocht / v.capaciteit) * 100}%`, background: f.kleur }} />
+                        <div className="groei h-full rounded-full" style={{ width: `${(verkocht / v.capaciteit) * 100}%`, background: f.kleur, ...staffel(i + 3) }} />
                       </div>
                     </div>
                   </button>
@@ -101,13 +103,16 @@ export default function Cockpit() {
           </ul>
         </Kaart>
 
-        <Kaart titel="Signaleringen" sub="Kansen en aandachtspunten, automatisch berekend">
+        <Kaart i={3} uitleg="signalen" titel="Signaleringen" sub="Kansen en aandachtspunten, automatisch berekend">
           <div className="space-y-3">
-            {signalen.map((s) => {
+            {signalen.map((s, i) => {
               const inhoud = (
-                <div className={cx('rounded-2xl p-4 transition hover:-translate-y-0.5', s.soort === 'kans' ? 'bg-munt' : s.soort === 'let op' ? 'bg-citroen' : 'bg-ijs')}>
+                <div className={cx('verschijn group rounded-2xl p-4 transition hover:-translate-y-0.5 hover:shadow-md', s.soort === 'kans' ? 'glans bg-munt' : s.soort === 'let op' ? 'bg-citroen' : 'bg-ijs')} style={staffel(i + 4)}>
                   <div className="flex items-center justify-between gap-2">
-                    <div className="font-semibold">{s.titel}</div>
+                    <div className="flex items-center gap-2.5 font-semibold">
+                      <IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={30} className="wip shadow-sm" style={{ background: 'white' }} />
+                      {s.titel}
+                    </div>
                     <span className="rounded-full bg-white/70 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-ink-2">{s.soort}</span>
                   </div>
                   <p className="mt-1 text-sm text-ink-2">{s.tekst}</p>
@@ -120,24 +125,24 @@ export default function Cockpit() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <Kaart titel="Balans in doelgroepen" sub="Aandeel in het bereik ten opzichte van het seizoensdoel (zwart streepje)" actie={<Link to="/doelgroepen" className="knop knop-zacht">Verdiepen <ArrowRight size={15} /></Link>}>
+        <Kaart i={4} uitleg="balans" titel="Balans in doelgroepen" sub="Aandeel in het bereik ten opzichte van het seizoensdoel (zwart streepje)" actie={<Link to="/doelgroepen" className="knop knop-zacht">Verdiepen <ArrowRight size={15} /></Link>}>
           <div className="space-y-3.5">
-            {DOELGROEPEN.map((d) => (
-              <DoelBalk key={d.naam} label={d.naam} emoji={d.emoji} kleur={d.kleur} aandeel={dg[d.naam] ?? 0} doel={doelen.doelgroepen[d.naam] ?? 0} max={35} />
+            {DOELGROEPEN.map((d, i) => (
+              <DoelBalk i={i} key={d.naam} label={d.naam} icoon={d.icoon} kleur={d.kleur} aandeel={dg[d.naam] ?? 0} doel={doelen.doelgroepen[d.naam] ?? 0} max={35} />
             ))}
           </div>
         </Kaart>
-        <Kaart titel="Motivatiemix" sub="Waarom komt ons publiek? Aandeel versus doel" actie={<Link to="/motivaties" className="knop knop-zacht">Verdiepen <ArrowRight size={15} /></Link>}>
+        <Kaart i={5} titel="Motivatiemix" sub="Waarom komt ons publiek? Aandeel versus doel" actie={<Link to="/motivaties" className="knop knop-zacht">Verdiepen <ArrowRight size={15} /></Link>}>
           <div className="space-y-3.5">
-            {MOTIVATIES.map((m) => (
-              <DoelBalk key={m.naam} label={m.naam} emoji={m.emoji} kleur={m.kleur} aandeel={mot[m.naam] ?? 0} doel={doelen.motivaties[m.naam] ?? 0} max={45} />
+            {MOTIVATIES.map((m, i) => (
+              <DoelBalk i={i} key={m.naam} label={m.naam} icoon={m.icoon} kleur={m.kleur} aandeel={mot[m.naam] ?? 0} doel={doelen.motivaties[m.naam] ?? 0} max={45} />
             ))}
           </div>
         </Kaart>
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1.5fr_1fr]">
-        <Kaart titel="Bezoekers per maand" sub="Gestapeld per genrefamilie">
+        <Kaart i={6} titel="Bezoekers per maand" sub="Gestapeld per genrefamilie">
           <div className="h-80">
             <ResponsiveContainer>
               <BarChart data={perMaand} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -146,17 +151,17 @@ export default function Cockpit() {
                 <YAxis tickLine={false} axisLine={false} tick={{ fill: '#8a87a2', fontSize: 12 }} tickFormatter={(v) => getal(v)} width={56} />
                 <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => getal(v)} />} />
                 {GENRE_FAMILIES.map((f, i) => (
-                  <Bar key={f.naam} dataKey={f.naam} stackId="a" fill={f.kleur} stroke="#fff" strokeWidth={2} radius={i === GENRE_FAMILIES.length - 1 ? [6, 6, 0, 0] : 0} maxBarSize={44} />
+                  <Bar animationDuration={900} key={f.naam} dataKey={f.naam} stackId="a" fill={f.kleur} stroke="#fff" strokeWidth={2} radius={i === GENRE_FAMILIES.length - 1 ? [6, 6, 0, 0] : 0} maxBarSize={44} />
                 ))}
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <Legenda className="mt-3" items={GENRE_FAMILIES.map((f) => ({ naam: f.naam, kleur: f.kleur, emoji: f.emoji }))} />
+          <Legenda className="mt-3" items={GENRE_FAMILIES.map((f) => ({ naam: f.naam, kleur: f.kleur, icoon: f.icoon }))} />
         </Kaart>
-        <Kaart titel="Genremix versus doel" sub="Aandeel bezoekers per genrefamilie">
+        <Kaart i={7} titel="Genremix versus doel" sub="Aandeel bezoekers per genrefamilie">
           <div className="space-y-3.5">
-            {GENRE_FAMILIES.map((f) => (
-              <DoelBalk key={f.naam} label={f.naam} emoji={f.emoji} kleur={f.kleur} aandeel={fam[f.naam] ?? 0} doel={doelen.genres[f.naam] ?? 0} max={40} />
+            {GENRE_FAMILIES.map((f, i) => (
+              <DoelBalk i={i} key={f.naam} label={f.naam} icoon={f.icoon} kleur={f.kleur} aandeel={fam[f.naam] ?? 0} doel={doelen.genres[f.naam] ?? 0} max={40} />
             ))}
           </div>
         </Kaart>

@@ -1,4 +1,6 @@
-import { CheckCircle2, ChevronLeft, ChevronRight, GripVertical, Trash2, X } from 'lucide-react'
+import { CaretLeft, CaretRight, CheckCircle, DotsSixVertical, Flask, Lightning, Star, Target, Trash, X } from '@phosphor-icons/react'
+import Confetti from '../components/Confetti'
+import { staffel } from '../lib/animatie'
 import { useMemo, useState } from 'react'
 import { Bar, BarChart, CartesianGrid, ReferenceDot, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { TipKaart } from '../components/charts'
@@ -55,6 +57,7 @@ export default function Scenario() {
   const [sleep, setSleep] = useState<string | null>(null)
   const [bron, setBron] = useState<'shortlist' | 'top'>('shortlist')
   const [melding, setMelding] = useState<string | null>(null)
+  const [feest, setFeest] = useState(0)
 
   const jaar = seizoenStartJaar(PLAN_SEIZOEN)
   const maand = SEIZOENSMAANDEN[maandIndex]
@@ -96,23 +99,25 @@ export default function Scenario() {
     setSleep(null)
   }
 
-  const dgData = DOELGROEPEN.map((d) => ({ naam: d.kort, emoji: d.emoji, voluit: d.naam, Huidig: dgVoor[d.naam] ?? 0, 'Met scenario': dgNa[d.naam] ?? 0, doel: doelen.doelgroepen[d.naam] ?? 0 }))
+  const dgData = DOELGROEPEN.map((d) => ({ naam: d.kort, voluit: d.naam, Huidig: dgVoor[d.naam] ?? 0, 'Met scenario': dgNa[d.naam] ?? 0, doel: doelen.doelgroepen[d.naam] ?? 0 }))
   const motData = MOTIVATIES.map((m) => ({ naam: m.kort, voluit: m.naam, Huidig: motVoor[m.naam] ?? 0, 'Met scenario': motNa[m.naam] ?? 0, doel: doelen.motivaties[m.naam] ?? 0 }))
 
   return (
     <div>
-      <Paginakop titel="Seizoensbouwer 27/28" emoji="🧪" sub="Een zandbak voor het volgende seizoen. Sleep aanbod naar een datum en zie direct wat het doet met doelgroepen, motivaties, bezoekers en saldo. Pas bij bevestigen wordt het een optie in de kalender.">
+      <Paginakop titel="Seizoensbouwer 27/28" icoon={Flask} kleur="#8b5cf6" sub="Een zandbak voor het volgende seizoen. Sleep aanbod naar een datum en zie direct wat het doet met doelgroepen, motivaties, bezoekers en saldo. Pas bij bevestigen wordt het een optie in de kalender.">
         <div className="flex flex-wrap gap-2">
-          <button className="knop knop-zacht" disabled={!scenario.length} onClick={wis}><Trash2 size={16} /> Wis scenario</button>
+          <button className="knop knop-zacht" disabled={!scenario.length} onClick={wis}><Trash size={16} /> Wis scenario</button>
           <button
-            className="knop knop-primair disabled:opacity-40"
+            data-uitleg="bevestig"
+            className={cx('knop knop-primair disabled:opacity-40', scenario.length > 0 && 'puls-violet')}
             disabled={!scenario.length}
-            onClick={() => { const n = bevestig(); setMelding(`${n} voorstelling(en) als optie in de kalender gezet.`) }}
+            onClick={() => { const n = bevestig(); setFeest(Date.now()); setMelding(`${n} voorstelling(en) als optie in de kalender gezet.`) }}
           >
-            <CheckCircle2 size={16} /> Bevestig als opties ({scenario.length})
+            <CheckCircle size={16} /> Bevestig als opties ({scenario.length})
           </button>
         </div>
       </Paginakop>
+      <Confetti sleutel={feest} />
 
       {melding && (
         <div className="verschijn mb-4 flex items-center justify-between gap-3 rounded-2xl bg-citroen px-4 py-3 text-sm font-medium">
@@ -121,7 +126,7 @@ export default function Scenario() {
         </div>
       )}
 
-      <div className="rounded-3xl bg-gradient-to-br from-lavendel via-ijs to-munt p-5 shadow-[var(--shadow-zacht)]">
+      <div data-uitleg="impact" className="verschijn rounded-3xl bg-gradient-to-br from-lavendel via-ijs to-munt p-5 shadow-[var(--shadow-zacht)]">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-display text-lg font-bold">Impact van je scenario</h2>
           <span className="text-sm text-ink-2">{scenario.length} voorstelling(en) in de zandbak</span>
@@ -135,26 +140,27 @@ export default function Scenario() {
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[380px_1fr]">
-        <Kaart titel="Kandidaten" sub="Sleep een kaart naar de kalender" actie={<Tabs waarde={bron} onChange={setBron} opties={[{ id: 'shortlist', label: '⭐ Shortlist' }, { id: 'top', label: '🎯 Topmatches' }]} />}>
+        <Kaart i={1} uitleg="kandidaten" titel="Kandidaten" sub="Sleep een kaart naar de kalender" actie={<Tabs waarde={bron} onChange={setBron} opties={[{ id: 'shortlist', label: <><Star size={16} /> Shortlist</> }, { id: 'top', label: <><Target size={16} /> Topmatches</> }]} />}>
           {!kandidaten.length && <Leeg>Nog niets op de shortlist. Kies Topmatches of zet aanbod op de shortlist.</Leeg>}
           <div className="dun-scroll -mr-2 max-h-[720px] space-y-2 overflow-y-auto pr-2">
-            {kandidaten.map((a) => {
+            {kandidaten.map((a, i) => {
               const m = matches.get(a.id)
               const gepland = scenario.filter((s) => s.aanbodId === a.id)
               return (
                 <div
                   key={a.id}
                   draggable
+                  style={staffel(i)}
                   onDragStart={(e) => { setSleep(a.id); e.dataTransfer.effectAllowed = 'copy' }}
                   onDragEnd={() => setSleep(null)}
-                  className={cx('group flex cursor-grab items-center gap-3 rounded-2xl bg-white p-3 ring-1 ring-line transition hover:-translate-y-0.5 hover:shadow-md active:cursor-grabbing', sleep === a.id && 'opacity-50 ring-2 ring-violet')}
+                  className={cx('verschijn group flex cursor-grab items-center gap-3 rounded-2xl bg-white p-3 ring-1 ring-line transition hover:-translate-y-0.5 hover:shadow-md active:cursor-grabbing', sleep === a.id && 'opacity-50 ring-2 ring-violet')}
                 >
-                  <GripVertical size={16} className="shrink-0 text-muted" />
+                  <DotsSixVertical size={16} className="shrink-0 text-muted transition group-hover:text-violet" />
                   <ScoreRing score={m?.score ?? 0} grootte={42} />
                   <button className="min-w-0 flex-1 text-left" onClick={() => toonAanbod(a.id)}>
                     <div className="truncate text-sm font-semibold">{a.titel}</div>
                     <div className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-2">
-                      <span>{familieVan(a.genre).emoji}</span>
+                      {(() => { const f = familieVan(a.genre); return <f.icoon size={13} style={{ color: f.kleur }} /> })()}
                       <span className="truncate">{a.doelgroepen.slice(0, 2).map((d) => DOELGROEPEN.find((x) => x.naam === d)?.kort).join(', ')}</span>
                     </div>
                   </button>
@@ -166,11 +172,13 @@ export default function Scenario() {
         </Kaart>
 
         <Kaart
+          i={2}
+          uitleg="scenario-kalender"
           titel={<span className="capitalize">{MAANDNAMEN_LANG[maand]} {maandJaar}</span>}
           sub={gesleept ? `Groen = ${gesleept.titel} is beschikbaar` : 'Grijs = al geprogrammeerd, paars = jouw scenario'}
           actie={
             <div className="flex flex-wrap gap-1">
-              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === 0} onClick={() => setMaandIndex(maandIndex - 1)} aria-label="Vorige maand"><ChevronLeft size={18} /></button>
+              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === 0} onClick={() => setMaandIndex(maandIndex - 1)} aria-label="Vorige maand"><CaretLeft size={18} /></button>
               <div className="dun-scroll hidden max-w-sm gap-1 overflow-x-auto lg:flex">
                 {SEIZOENSMAANDEN.map((m, i) => {
                   const telling = scenario.filter((s) => Number(s.datum.slice(5, 7)) - 1 === m).length
@@ -182,7 +190,7 @@ export default function Scenario() {
                   )
                 })}
               </div>
-              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === SEIZOENSMAANDEN.length - 1} onClick={() => setMaandIndex(maandIndex + 1)} aria-label="Volgende maand"><ChevronRight size={18} /></button>
+              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === SEIZOENSMAANDEN.length - 1} onClick={() => setMaandIndex(maandIndex + 1)} aria-label="Volgende maand"><CaretRight size={18} /></button>
             </div>
           }
         >
@@ -202,13 +210,13 @@ export default function Scenario() {
                     className={cx(
                       'flex min-h-[104px] flex-col gap-1 rounded-2xl p-1.5 transition',
                       inMaand ? 'bg-white ring-1 ring-line' : 'opacity-30',
-                      kan && 'scale-[1.03] bg-emerald-50 ring-2 ring-emerald-400',
+                      kan && 'puls scale-[1.03] bg-emerald-50 ring-2 ring-emerald-400',
                     )}
                   >
                     <span className="px-1 text-xs font-bold text-ink-2">{d.getDate()}</span>
                     {inMaand && items.map((v) =>
                       v.bron === 'scenario' ? (
-                        <div key={v.id} className="verschijn flex items-center gap-1 rounded-lg bg-violet px-1.5 py-1 text-[11px] font-semibold text-white">
+                        <div key={v.id} className="plop flex items-center gap-1 rounded-lg bg-violet px-1.5 py-1 text-[11px] font-semibold text-white">
                           <span className="truncate">{v.titel}</span>
                           <button className="ml-auto shrink-0 opacity-70 hover:opacity-100" onClick={() => verwijder(v.id.slice(2, -11), v.datum)} aria-label="Verwijder uit scenario"><X size={12} /></button>
                         </div>
@@ -227,7 +235,7 @@ export default function Scenario() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <Kaart titel="Doelgroepbalans: huidig versus scenario" sub="Aandeel in het bereik (%). Het zwarte bolletje is het doel.">
+        <Kaart i={3} titel="Doelgroepbalans: huidig versus scenario" sub="Aandeel in het bereik (%). Het zwarte bolletje is het doel.">
           <div className="h-80">
             <ResponsiveContainer>
               <BarChart data={dgData} layout="vertical" margin={{ left: 10, right: 16 }} barGap={2}>
@@ -235,14 +243,14 @@ export default function Scenario() {
                 <XAxis type="number" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#8a87a2' }} unit="%" />
                 <YAxis type="category" dataKey="naam" tickLine={false} axisLine={false} width={80} tick={{ fontSize: 12, fill: '#55526f' }} />
                 <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => `${v.toFixed(1).replace('.', ',')}%`} titel={(_, p) => String(p?.voluit ?? '')} />} />
-                <Bar dataKey="Huidig" fill="#c9c3d6" radius={[0, 4, 4, 0]} barSize={9} />
-                <Bar dataKey="Met scenario" fill="#8b5cf6" radius={[0, 4, 4, 0]} barSize={9} />
+                <Bar animationDuration={900} dataKey="Huidig" fill="#c9c3d6" radius={[0, 4, 4, 0]} barSize={9} />
+                <Bar animationDuration={900} dataKey="Met scenario" fill="#8b5cf6" radius={[0, 4, 4, 0]} barSize={9} />
                 {dgData.map((d) => <ReferenceDot key={d.naam} x={d.doel} y={d.naam} r={4} fill="#1d1b2f" stroke="#fff" />)}
               </BarChart>
             </ResponsiveContainer>
           </div>
         </Kaart>
-        <Kaart titel="Motivatiemix: huidig versus scenario" sub="Aandeel in het bereik (%). Het zwarte bolletje is het doel.">
+        <Kaart i={4} titel="Motivatiemix: huidig versus scenario" sub="Aandeel in het bereik (%). Het zwarte bolletje is het doel.">
           <div className="h-80">
             <ResponsiveContainer>
               <BarChart data={motData} layout="vertical" margin={{ left: 10, right: 16 }} barGap={2}>
@@ -250,8 +258,8 @@ export default function Scenario() {
                 <XAxis type="number" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#8a87a2' }} unit="%" />
                 <YAxis type="category" dataKey="naam" tickLine={false} axisLine={false} width={80} tick={{ fontSize: 12, fill: '#55526f' }} />
                 <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => `${v.toFixed(1).replace('.', ',')}%`} titel={(_, p) => String(p?.voluit ?? '')} />} />
-                <Bar dataKey="Huidig" fill="#c9c3d6" radius={[0, 4, 4, 0]} barSize={9} />
-                <Bar dataKey="Met scenario" fill="#e87ba4" radius={[0, 4, 4, 0]} barSize={9} />
+                <Bar animationDuration={900} dataKey="Huidig" fill="#c9c3d6" radius={[0, 4, 4, 0]} barSize={9} />
+                <Bar animationDuration={900} dataKey="Met scenario" fill="#e87ba4" radius={[0, 4, 4, 0]} barSize={9} />
                 {motData.map((d) => <ReferenceDot key={d.naam} x={d.doel} y={d.naam} r={4} fill="#1d1b2f" stroke="#fff" />)}
               </BarChart>
             </ResponsiveContainer>
@@ -259,7 +267,7 @@ export default function Scenario() {
         </Kaart>
       </div>
 
-      <Kaart className="mt-6" titel="⚡ Kannibalisatie-alarm" sub={`${conflicten.length} mogelijke botsingen in seizoen 27/28, waarvan ${scenarioConflicten.length} door je scenario`}>
+      <Kaart className="mt-6" uitleg="kannibalisatie" titel={<><Lightning size={20} className="wip text-amber-500" /> Kannibalisatie-alarm</>} sub={`${conflicten.length} mogelijke botsingen in seizoen 27/28, waarvan ${scenarioConflicten.length} door je scenario`}>
         {!conflicten.length ? (
           <Leeg>Geen botsingen gevonden. Mooi gespreid!</Leeg>
         ) : (

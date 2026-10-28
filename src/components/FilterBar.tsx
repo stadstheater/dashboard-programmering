@@ -1,4 +1,4 @@
-import { ChevronDown, Search, X } from 'lucide-react'
+import { CaretDown, MagnifyingGlass, X } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import { DOELGROEPEN, GENRES, MOTIVATIES, STATUSSEN, ZALEN } from '../data/vocab'
 import { useStore, type Filters } from '../store/useStore'
@@ -26,7 +26,7 @@ function Keuze({ label, opties, gekozen, onChange }: {
       >
         {label}
         {gekozen.length > 0 && <span className="rounded-full bg-white/20 px-1.5 text-xs">{gekozen.length}</span>}
-        <ChevronDown size={15} />
+        <CaretDown size={15} />
       </button>
       {open && (
         <div className="verschijn absolute left-0 z-40 mt-2 max-h-80 w-72 overflow-y-auto rounded-2xl border border-line bg-white p-2 shadow-[var(--shadow-hoog)]">
@@ -56,9 +56,9 @@ export default function FilterBar({ verberg = [] }: { verberg?: (keyof Filters)[
   const wis = useStore((s) => s.wisFilters)
   const aantal = filters.genres.length + filters.zalen.length + filters.statussen.length + filters.doelgroepen.length + filters.motivaties.length + (filters.zoek ? 1 : 0)
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div data-uitleg="filters" className="flex flex-wrap items-center gap-2">
       <div className="relative min-w-56 flex-1 sm:max-w-xs">
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+        <MagnifyingGlass size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
         <input className="invoer !rounded-full !pl-9" placeholder="Zoek titel, artiest of impresariaat" value={filters.zoek} onChange={(e) => setFilters({ zoek: e.target.value })} />
       </div>
       {!verberg.includes('genres') && <Keuze label="Genre" opties={GENRES.map((g) => ({ naam: g }))} gekozen={filters.genres} onChange={(genres) => setFilters({ genres })} />}

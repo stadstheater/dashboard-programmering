@@ -1,4 +1,5 @@
-import { ChevronLeft, ChevronRight, Plus, Sparkles } from 'lucide-react'
+import { CalendarDots, CaretLeft, CaretRight, Palette, Plus, Sparkle, TrafficSignal } from '@phosphor-icons/react'
+import { staffel } from '../lib/animatie'
 import { useMemo, useState } from 'react'
 import FilterBar from '../components/FilterBar'
 import { Legenda } from '../components/charts'
@@ -41,7 +42,7 @@ function Pil({ v, kleuring, onClick }: { v: Voorstelling; kleuring: Kleuring; on
       className={cx('group flex w-full items-center gap-1.5 truncate rounded-lg px-1.5 py-1 text-left text-[11.5px] font-semibold leading-tight text-ink transition hover:-translate-y-px hover:shadow', v.status === 'Geannuleerd' && 'line-through opacity-50', v.bron === 'scenario' && 'outline-2 outline-dashed outline-violet')}
       style={{ background: kleur + '22' }}
     >
-      <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: kleur }} />
+      {kleuring === 'genre' ? (() => { const I = familieVan(v.genre).icoon; return <I size={12} className="shrink-0 transition group-hover:scale-125" style={{ color: kleur }} /> })() : <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: kleur }} />}
       <span className="truncate">{v.titel}</span>
       <span className="ml-auto shrink-0 text-[10px] font-medium text-ink-2">{ZALEN.find((z) => z.naam === v.zaal)?.kort}</span>
     </button>
@@ -80,14 +81,14 @@ export default function Kalender() {
 
   const kop = (
     <div className="flex flex-wrap items-center gap-2">
-      <Tabs<Weergave> waarde={weergave} onChange={setWeergave} opties={[{ id: 'maand', label: 'Maand' }, { id: 'week', label: 'Week' }, { id: 'seizoen', label: 'Seizoen' }, { id: 'lijst', label: 'Lijst' }]} />
-      <Tabs<Kleuring> waarde={kleuring} onChange={setKleuring} opties={[{ id: 'genre', label: '🎨 Genre' }, { id: 'status', label: '🚦 Status' }]} />
+      <Tabs<Weergave> uitleg="weergave" waarde={weergave} onChange={setWeergave} opties={[{ id: 'maand', label: 'Maand' }, { id: 'week', label: 'Week' }, { id: 'seizoen', label: 'Seizoen' }, { id: 'lijst', label: 'Lijst' }]} />
+      <Tabs<Kleuring> waarde={kleuring} onChange={setKleuring} opties={[{ id: 'genre', label: <><Palette size={16} /> Genre</> }, { id: 'status', label: <><TrafficSignal size={16} /> Status</> }]} />
     </div>
   )
 
   return (
     <div>
-      <Paginakop titel="Kalender" emoji="🗓️" sub={<>Seizoen {seizoen} per maand, week of in één overzicht. Gestippelde vakjes zijn vrije weekendavonden in de Grote zaal: klik erop voor passende suggesties uit het aanbod.</>}>
+      <Paginakop titel="Kalender" icoon={CalendarDots} kleur="#2a78d6" sub={<>Seizoen {seizoen} per maand, week of in één overzicht. Gestippelde vakjes zijn vrije weekendavonden in de Grote zaal: klik erop voor passende suggesties uit het aanbod.</>}>
         {kop}
       </Paginakop>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -100,26 +101,27 @@ export default function Kalender() {
 
       {weergave === 'maand' && (
         <Kaart
+          uitleg="kalender-raster"
           titel={<span className="capitalize">{MAANDNAMEN_LANG[maand]} {maandJaar}</span>}
           sub={`${gefilterd.filter((v) => maandVan(v.datum) === maand).length} voorstellingen`}
           actie={
             <div className="flex gap-1">
-              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === 0} onClick={() => setMaandIndex(maandIndex - 1)} aria-label="Vorige maand"><ChevronLeft size={18} /></button>
+              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === 0} onClick={() => setMaandIndex(maandIndex - 1)} aria-label="Vorige maand"><CaretLeft size={18} /></button>
               <div className="dun-scroll hidden max-w-md gap-1 overflow-x-auto md:flex">
                 {SEIZOENSMAANDEN.map((m, i) => (
                   <button key={m} onClick={() => setMaandIndex(i)} className={cx('rounded-full px-2.5 py-1 text-xs font-semibold', i === maandIndex ? 'bg-ink text-white' : 'bg-white text-ink-2 ring-1 ring-line')}>{MAANDNAMEN[m]}</button>
                 ))}
               </div>
-              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === SEIZOENSMAANDEN.length - 1} onClick={() => setMaandIndex(maandIndex + 1)} aria-label="Volgende maand"><ChevronRight size={18} /></button>
+              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === SEIZOENSMAANDEN.length - 1} onClick={() => setMaandIndex(maandIndex + 1)} aria-label="Volgende maand"><CaretRight size={18} /></button>
             </div>
           }
         >
           <div className="dun-scroll overflow-x-auto">
-            <div className="grid min-w-[760px] grid-cols-7 gap-1.5">
+            <div key={`${seizoen}-${maandIndex}`} className="grid min-w-[760px] grid-cols-7 gap-1.5">
               {['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'].map((d) => (
                 <div key={d} className="pb-1 text-center text-xs font-bold uppercase tracking-wide text-muted">{d}</div>
               ))}
-              {maandDagen(maandJaar, maand).map((d) => {
+              {maandDagen(maandJaar, maand).map((d, celIndex) => {
                 const iso = isoDatum(d)
                 const items = perDag.get(iso) ?? []
                 const inMaand = d.getMonth() === maand
@@ -128,8 +130,9 @@ export default function Kalender() {
                 return (
                   <div
                     key={iso}
+                    style={staffel(celIndex % 7 + Math.floor(celIndex / 7))}
                     className={cx(
-                      'flex min-h-[118px] flex-col gap-1 rounded-2xl p-1.5 transition',
+                      'plop flex min-h-[118px] flex-col gap-1 rounded-2xl p-1.5 transition',
                       inMaand ? 'bg-white ring-1 ring-line' : 'bg-transparent opacity-40',
                       isVrij && 'bg-[repeating-linear-gradient(45deg,#fff,#fff_6px,#f7f2ff_6px,#f7f2ff_12px)] outline-2 outline-dashed outline-violet/40',
                       isVandaag && 'ring-2 ring-koraal',
@@ -138,8 +141,8 @@ export default function Kalender() {
                     <div className="flex items-center justify-between px-1">
                       <span className={cx('text-xs font-bold', isVandaag ? 'rounded-full bg-koraal px-1.5 text-white' : 'text-ink-2')}>{d.getDate()}</span>
                       {isVrij && (
-                        <button onClick={() => setVlekDatum({ datum: iso, zaal: 'Grote zaal' })} className="flex items-center gap-0.5 rounded-full bg-violet/10 px-1.5 py-0.5 text-[10px] font-bold text-violet hover:bg-violet hover:text-white" title="Vrije avond in de Grote zaal: bekijk suggesties">
-                          <Sparkles size={11} /> vrij
+                        <button data-uitleg="witte-vlek" onClick={() => setVlekDatum({ datum: iso, zaal: 'Grote zaal' })} className="puls-violet flex items-center gap-0.5 rounded-full bg-violet/10 px-1.5 py-0.5 text-[10px] font-bold text-violet transition hover:scale-110 hover:bg-violet hover:text-white" title="Vrije avond in de Grote zaal: bekijk suggesties">
+                          <Sparkle size={11} /> vrij
                         </button>
                       )}
                     </div>
@@ -161,7 +164,7 @@ export default function Kalender() {
             {SEIZOENSMAANDEN.map((m, i) => {
               const j = m >= 8 ? jaar : jaar + 1
               return (
-                <button key={m} onClick={() => { setMaandIndex(i); setWeergave('maand') }} className="rounded-2xl bg-[#fffaf5] p-3 text-left ring-1 ring-line transition hover:-translate-y-0.5 hover:shadow-md">
+                <button key={m} style={staffel(i)} onClick={() => { setMaandIndex(i); setWeergave('maand') }} className="verschijn rounded-2xl bg-[#fffaf5] p-3 text-left ring-1 ring-line transition hover:-translate-y-0.5 hover:shadow-md">
                   <div className="mb-2 flex justify-between text-sm font-bold capitalize">
                     {MAANDNAMEN_LANG[m]}
                     <span className="font-medium text-ink-2">{gefilterd.filter((v) => maandVan(v.datum) === m).length}</span>
@@ -205,7 +208,7 @@ function KleurLegenda({ kleuring }: { kleuring: Kleuring }) {
   return (
     <Legenda
       className="mt-4"
-      items={kleuring === 'genre' ? GENRE_FAMILIES.map((f) => ({ naam: f.naam, kleur: f.kleur, emoji: f.emoji })) : STATUSSEN.map((s) => ({ naam: s.naam, kleur: s.kleur }))}
+      items={kleuring === 'genre' ? GENRE_FAMILIES.map((f) => ({ naam: f.naam, kleur: f.kleur, icoon: f.icoon })) : STATUSSEN.map((s) => ({ naam: s.naam, kleur: s.kleur }))}
     />
   )
 }
@@ -234,8 +237,8 @@ function WeekWeergave({ weekStart, setWeekStart, perDag, kleuring, onVrij }: {
       sub="Per zaal een eigen baan"
       actie={
         <div className="flex gap-1">
-          <button className="knop knop-zacht !px-2.5" onClick={() => verschuif(-1)} aria-label="Vorige week"><ChevronLeft size={18} /></button>
-          <button className="knop knop-zacht !px-2.5" onClick={() => verschuif(1)} aria-label="Volgende week"><ChevronRight size={18} /></button>
+          <button className="knop knop-zacht !px-2.5" onClick={() => verschuif(-1)} aria-label="Vorige week"><CaretLeft size={18} /></button>
+          <button className="knop knop-zacht !px-2.5" onClick={() => verschuif(1)} aria-label="Volgende week"><CaretRight size={18} /></button>
         </div>
       }
     >

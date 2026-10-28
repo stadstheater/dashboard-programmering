@@ -1,3 +1,4 @@
+import { IconContext } from '@phosphor-icons/react'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -15,6 +16,7 @@ import Scenario from './pages/Scenario'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <IconContext.Provider value={{ weight: 'fill' }}>
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
@@ -31,5 +33,6 @@ createRoot(document.getElementById('root')!).render(
         </Route>
       </Routes>
     </BrowserRouter>
+    </IconContext.Provider>
   </StrictMode>,
 )

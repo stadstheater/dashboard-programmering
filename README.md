@@ -21,6 +21,12 @@ Prototype van een programmeringsdashboard voor de programmeur van Stadstheater Z
 2. **Seizoensbouwer met kannibalisatie-alarm**: wat-als-scenario's met directe impact op balans, bezoekers en saldo.
 3. **Artiestengeheugen met terugboekritme**: wanneer is het weer tijd voor een artiest, en welke impresariaten leveren goed aanbod.
 
+## Vormgeving en uitleg
+
+- Iconen: Phosphor Icons in de gevulde variant (standaard via `IconContext` in `src/main.tsx`).
+- Animaties staan in `src/index.css` en `src/lib/animatie.ts`; ze worden uitgeschakeld bij de systeeminstelling "minder beweging".
+- Elk onderdeel toont bij het eerste bezoek een korte rondleiding (`src/components/Rondleiding.tsx`, teksten in `src/data/uitleg.ts`). De vraagteken-knop rechtsboven start hem opnieuw.
+
 ## Starten
 
 ```bash

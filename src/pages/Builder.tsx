@@ -1,4 +1,5 @@
-import { Download, FileJson, FileSpreadsheet, Pencil, Plus, RefreshCw, Trash2, Upload, Wand2 } from 'lucide-react'
+import { ArrowsClockwise, DiceFive, X, DownloadSimple, FileJs, FileXls, Hammer, Lightbulb, MagicWand, PencilSimple, Plus, Target, Ticket, Trash, Tray, UploadSimple, type Icon } from '@phosphor-icons/react'
+import { wisAlleUitleg } from '../components/Rondleiding'
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { GenreLabel, Kaart, KpiTegel, Paginakop, SegmentChip, StatusLabel, Tabs, Venster, cx } from '../components/ui'
@@ -12,6 +13,17 @@ import { downloadJson, exporteerExcel, leesProgrammeringExcel } from '../lib/exc
 import { useStore } from '../store/useStore'
 
 type Tab = 'voorstellingen' | 'aanbod' | 'doelen' | 'dataset'
+
+function SegmentIconen({ namen }: { namen: string[] }) {
+  return (
+    <span className="flex gap-1">
+      {namen.map((n) => {
+        const s = DOELGROEPEN.find((x) => x.naam === n)
+        return s ? <span key={n} title={s.naam}><s.icoon size={16} style={{ color: s.kleur }} /></span> : null
+      })}
+    </span>
+  )
+}
 
 function Veld({ label, children, breed }: { label: string; children: ReactNode; breed?: boolean }) {
   return (
@@ -37,7 +49,8 @@ function SegmentKiezer({ lijst, gekozen, max, onChange }: { lijst: typeof DOELGR
             style={i >= 0 ? { background: s.kleur } : undefined}
           >
             {i >= 0 && <span className="grid h-4 w-4 place-items-center rounded-full bg-white/30 text-[10px]">{i + 1}</span>}
-            {s.emoji} {s.naam}
+            {i < 0 && <s.icoon size={14} style={{ color: s.kleur }} />}
+            {s.naam}
           </button>
         )
       })}
@@ -117,7 +130,7 @@ function VoorstellingFormulier({ start, onOpslaan, onSluit }: { start: Voorstell
       </div>
       <datalist id="impresariaten">{IMPRESARIATEN.map((i) => <option key={i} value={i} />)}</datalist>
       <div className="mt-6 flex flex-wrap justify-between gap-2">
-        <button type="button" className="knop knop-zacht" onClick={slimAanvullen}><Wand2 size={16} className="text-violet" /> Slim aanvullen</button>
+        <button type="button" className="knop knop-zacht" onClick={slimAanvullen}><MagicWand size={16} className="text-violet" /> Slim aanvullen</button>
         <div className="flex gap-2">
           <button type="button" className="knop knop-zacht" onClick={onSluit}>Annuleren</button>
           <button className="knop knop-primair">Opslaan</button>
@@ -178,7 +191,7 @@ function AanbodFormulier({ start, onOpslaan, onSluit }: { start: Aanbod; onOpsla
           <div className="flex flex-wrap items-center gap-2">
             {a.beschikbareData.map((d) => (
               <button type="button" key={d} onClick={() => zet({ beschikbareData: a.beschikbareData.filter((x) => x !== d) })} className="rounded-full bg-lavendel px-2.5 py-1 text-xs font-semibold hover:bg-rose-100" title="Klik om te verwijderen">
-                {datumKort(d)} ✕
+                <span className="inline-flex items-center gap-1">{datumKort(d)} <X size={11} weight="bold" /></span>
               </button>
             ))}
             <input type="date" className="invoer !w-auto" value={nieuweDatum} onChange={(e) => setNieuweDatum(e.target.value)} />
@@ -204,10 +217,10 @@ function AanbodFormulier({ start, onOpslaan, onSluit }: { start: Aanbod; onOpsla
   )
 }
 
-function DoelSchuif({ label, emoji, kleur, waarde, onChange, max = 40 }: { label: string; emoji?: string; kleur: string; waarde: number; onChange: (n: number) => void; max?: number }) {
+function DoelSchuif({ label, icoon: I, kleur, waarde, onChange, max = 40 }: { label: string; icoon?: Icon; kleur: string; waarde: number; onChange: (n: number) => void; max?: number }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="w-56 shrink-0 truncate text-sm">{emoji} {label}</span>
+      <span className="flex w-56 shrink-0 items-center gap-2 truncate text-sm">{I && <I size={16} style={{ color: kleur }} />} {label}</span>
       <input type="range" min={0} max={max} value={waarde} onChange={(e) => onChange(Number(e.target.value))} className="flex-1" style={{ accentColor: kleur }} />
       <span className="w-12 text-right font-semibold tabular-nums">{waarde}%</span>
     </div>
@@ -286,8 +299,8 @@ export default function Builder() {
 
   return (
     <div>
-      <Paginakop titel="Databuilder" emoji="🛠️" sub="Maak, bewerk en verwijder voorstellingen en aanbod, stel seizoensdoelen in en genereer met één klik een nieuwe dummy dataset. Alles wordt bewaard in deze browser.">
-        <Tabs<Tab> waarde={tab} onChange={setTab} opties={[{ id: 'voorstellingen', label: '🎟️ Voorstellingen' }, { id: 'aanbod', label: '📬 Aanbod' }, { id: 'doelen', label: '🎯 Doelen' }, { id: 'dataset', label: '🎲 Dataset' }]} />
+      <Paginakop titel="Databuilder" icoon={Hammer} kleur="#475569" sub="Maak, bewerk en verwijder voorstellingen en aanbod, stel seizoensdoelen in en genereer met één klik een nieuwe dummy dataset. Alles wordt bewaard in deze browser.">
+        <Tabs<Tab> uitleg="builder-tabs" waarde={tab} onChange={setTab} opties={[{ id: 'voorstellingen', label: <><Ticket size={16} /> Voorstellingen</> }, { id: 'aanbod', label: <><Tray size={16} /> Aanbod</> }, { id: 'doelen', label: <><Target size={16} /> Doelen</> }, { id: 'dataset', label: <><DiceFive size={16} /> Dataset</> }]} />
       </Paginakop>
 
       {melding && <div className="verschijn mb-4 rounded-2xl bg-citroen px-4 py-3 text-sm font-medium">{melding}</div>}
@@ -303,7 +316,7 @@ export default function Builder() {
               </select>
             )}
             <span className="text-sm text-ink-2">{tab === 'voorstellingen' ? voorstellingen.length : aanbod.length} regels</span>
-            <button className="knop knop-koraal ml-auto" onClick={() => (tab === 'voorstellingen' ? setBewerkV(nieuweVoorstelling()) : setBewerkA(nieuwAanbod()))}>
+            <button data-uitleg="builder-nieuw" className="knop knop-koraal ml-auto" onClick={() => (tab === 'voorstellingen' ? setBewerkV(nieuweVoorstelling()) : setBewerkA(nieuwAanbod()))}>
               <Plus size={16} /> {tab === 'voorstellingen' ? 'Nieuwe voorstelling' : 'Nieuw aanbod'}
             </button>
           </div>
@@ -326,10 +339,10 @@ export default function Builder() {
                         <td className="px-3 py-2 text-ink-2">{v.zaal}</td>
                         <td className="px-3 py-2"><StatusLabel status={v.status} klein /></td>
                         <td className="px-3 py-2 tabular-nums">{getal(v.verwacht)}</td>
-                        <td className="px-3 py-2">{v.doelgroepen.map((d) => DOELGROEPEN.find((x) => x.naam === d)?.emoji).join(' ')}</td>
+                        <td className="px-3 py-2"><SegmentIconen namen={v.doelgroepen} /></td>
                         <td className="whitespace-nowrap px-3 py-2 text-right">
-                          <button className="rounded-full p-2 hover:bg-white" onClick={() => setBewerkV(v)} aria-label="Bewerken"><Pencil size={15} /></button>
-                          <button className="rounded-full p-2 text-rose-600 hover:bg-rose-50" onClick={() => confirm(`"${v.titel}" verwijderen?`) && verwijderV(v.id)} aria-label="Verwijderen"><Trash2 size={15} /></button>
+                          <button className="rounded-full p-2 hover:bg-white" onClick={() => setBewerkV(v)} aria-label="Bewerken"><PencilSimple size={15} /></button>
+                          <button className="rounded-full p-2 text-rose-600 hover:bg-rose-50" onClick={() => confirm(`"${v.titel}" verwijderen?`) && verwijderV(v.id)} aria-label="Verwijderen"><Trash size={15} /></button>
                         </td>
                       </tr>
                     ))
@@ -341,10 +354,10 @@ export default function Builder() {
                         <td className="whitespace-nowrap px-3 py-2 text-ink-2">{datumKort(a.periodeStart)} tot {datumKort(a.periodeEind)}</td>
                         <td className="px-3 py-2 tabular-nums">{euro(a.uitkoopsom)}</td>
                         <td className="px-3 py-2"><StatusLabel status={a.status} klein /></td>
-                        <td className="px-3 py-2">{a.doelgroepen.map((d) => DOELGROEPEN.find((x) => x.naam === d)?.emoji).join(' ')}</td>
+                        <td className="px-3 py-2"><SegmentIconen namen={a.doelgroepen} /></td>
                         <td className="whitespace-nowrap px-3 py-2 text-right">
-                          <button className="rounded-full p-2 hover:bg-white" onClick={() => setBewerkA(a)} aria-label="Bewerken"><Pencil size={15} /></button>
-                          <button className="rounded-full p-2 text-rose-600 hover:bg-rose-50" onClick={() => confirm(`"${a.titel}" verwijderen?`) && verwijderA(a.id)} aria-label="Verwijderen"><Trash2 size={15} /></button>
+                          <button className="rounded-full p-2 hover:bg-white" onClick={() => setBewerkA(a)} aria-label="Bewerken"><PencilSimple size={15} /></button>
+                          <button className="rounded-full p-2 text-rose-600 hover:bg-rose-50" onClick={() => confirm(`"${a.titel}" verwijderen?`) && verwijderA(a.id)} aria-label="Verwijderen"><Trash size={15} /></button>
                         </td>
                       </tr>
                     ))}
@@ -361,51 +374,51 @@ export default function Builder() {
         <div className="grid gap-6 xl:grid-cols-2">
           <Kaart titel="Doelgroepen" sub="Streefaandeel in het bereik per seizoen" actie={<SomLabel som={somVan(doelen.doelgroepen)} />}>
             <div className="space-y-3">
-              {DOELGROEPEN.map((d) => <DoelSchuif key={d.naam} label={d.naam} emoji={d.emoji} kleur={d.kleur} waarde={doelen.doelgroepen[d.naam] ?? 0} onChange={(w) => zetDoel('doelgroepen', d.naam, w)} />)}
+              {DOELGROEPEN.map((d) => <DoelSchuif key={d.naam} label={d.naam} icoon={d.icoon} kleur={d.kleur} waarde={doelen.doelgroepen[d.naam] ?? 0} onChange={(w) => zetDoel('doelgroepen', d.naam, w)} />)}
             </div>
           </Kaart>
-          <Kaart titel="Motivaties" sub="Streefaandeel per motivatie" actie={<SomLabel som={somVan(doelen.motivaties)} />}>
+          <Kaart i={1} titel="Motivaties" sub="Streefaandeel per motivatie" actie={<SomLabel som={somVan(doelen.motivaties)} />}>
             <div className="space-y-3">
-              {MOTIVATIES.map((d) => <DoelSchuif key={d.naam} label={d.naam} emoji={d.emoji} kleur={d.kleur} waarde={doelen.motivaties[d.naam] ?? 0} onChange={(w) => zetDoel('motivaties', d.naam, w)} max={50} />)}
+              {MOTIVATIES.map((d) => <DoelSchuif key={d.naam} label={d.naam} icoon={d.icoon} kleur={d.kleur} waarde={doelen.motivaties[d.naam] ?? 0} onChange={(w) => zetDoel('motivaties', d.naam, w)} max={50} />)}
             </div>
           </Kaart>
-          <Kaart titel="Genrefamilies" sub="Streefaandeel bezoekers per genrefamilie" actie={<SomLabel som={somVan(doelen.genres)} />}>
+          <Kaart i={2} titel="Genrefamilies" sub="Streefaandeel bezoekers per genrefamilie" actie={<SomLabel som={somVan(doelen.genres)} />}>
             <div className="space-y-3">
-              {GENRE_FAMILIES.map((d) => <DoelSchuif key={d.naam} label={d.naam} emoji={d.emoji} kleur={d.kleur} waarde={doelen.genres[d.naam] ?? 0} onChange={(w) => zetDoel('genres', d.naam, w)} />)}
+              {GENRE_FAMILIES.map((d) => <DoelSchuif key={d.naam} label={d.naam} icoon={d.icoon} kleur={d.kleur} waarde={doelen.genres[d.naam] ?? 0} onChange={(w) => zetDoel('genres', d.naam, w)} />)}
             </div>
           </Kaart>
-          <Kaart titel="Seizoensdoelen" sub="Algemene ambities">
+          <Kaart i={3} titel="Seizoensdoelen" sub="Algemene ambities">
             <div className="grid gap-4 sm:grid-cols-2">
               <Veld label="Bezettingsgraad (%)"><input type="number" className="invoer" value={doelen.bezetting} onChange={(e) => setDoelen({ ...doelen, bezetting: Number(e.target.value) })} /></Veld>
               <Veld label="Aantal voorstellingen"><input type="number" className="invoer" value={doelen.aantal} onChange={(e) => setDoelen({ ...doelen, aantal: Number(e.target.value) })} /></Veld>
             </div>
-            <button className="knop knop-zacht mt-5" onClick={() => setDoelen(STANDAARD_DOELEN)}><RefreshCw size={16} /> Standaarddoelen herstellen</button>
+            <button className="knop knop-zacht mt-5" onClick={() => setDoelen(STANDAARD_DOELEN)}><ArrowsClockwise size={16} /> Standaarddoelen herstellen</button>
           </Kaart>
         </div>
       )}
 
       {tab === 'dataset' && (
         <div className="grid gap-6 xl:grid-cols-2">
-          <Kaart titel="🎲 Dummy dataset genereren" sub="Dezelfde seed geeft altijd dezelfde dataset. Het huidige seizoen is gebaseerd op de programmeringsexport.">
+          <Kaart i={0} titel={<><DiceFive size={20} className="text-violet" /> Dummy dataset genereren</>} sub="Dezelfde seed geeft altijd dezelfde dataset. Het huidige seizoen is gebaseerd op de programmeringsexport.">
             <div className="grid grid-cols-2 gap-3">
-              <KpiTegel label="Voorstellingen" waarde={getal(dataset.voorstellingen.length)} kleur="perzik" icoon="🎟️" />
-              <KpiTegel label="Aanbod" waarde={getal(dataset.aanbod.length)} kleur="munt" icoon="📬" />
+              <KpiTegel i={1} label="Voorstellingen" waarde={dataset.voorstellingen.length} kleur="perzik" icoon={Ticket} />
+              <KpiTegel i={2} label="Aanbod" waarde={dataset.aanbod.length} kleur="munt" icoon={Tray} />
             </div>
             <div className="mt-5 flex flex-wrap items-end gap-3">
               <Veld label="Seed"><input type="number" className="invoer !w-36" value={seed} onChange={(e) => setSeed(Number(e.target.value))} /></Veld>
-              <button className="knop knop-zacht" onClick={() => setSeed(Math.floor(Math.random() * 99999))}><Wand2 size={16} /> Willekeurig</button>
+              <button className="knop knop-zacht" onClick={() => setSeed(Math.floor(Math.random() * 99999))}><MagicWand size={16} /> Willekeurig</button>
               <button className="knop knop-primair" onClick={() => { if (confirm('Alle data en wijzigingen vervangen door een nieuwe dummy dataset?')) { genereer(seed); setMelding(`Nieuwe dataset gegenereerd met seed ${seed}.`) } }}>
-                <RefreshCw size={16} /> Genereer opnieuw
+                <ArrowsClockwise size={16} /> Genereer opnieuw
               </button>
             </div>
             <p className="mt-3 text-xs text-muted">Huidige seed {dataset.seed}, gemaakt op {new Date(dataset.gegenereerdOp).toLocaleString('nl-NL')}.</p>
           </Kaart>
-          <Kaart titel="📥 Importeren en exporteren" sub="Excel in het formaat van de programmeringsexport, of de complete dataset als JSON">
+          <Kaart i={1} titel={<><UploadSimple size={20} className="text-lucht" /> Importeren en exporteren</>} sub="Excel in het formaat van de programmeringsexport, of de complete dataset als JSON">
             <div className="grid gap-3 sm:grid-cols-2">
-              <button className="knop knop-zacht justify-center !py-3" onClick={() => excelRef.current?.click()}><Upload size={16} /> Programmering (.xlsx) inlezen</button>
-              <button className="knop knop-zacht justify-center !py-3" onClick={() => exporteerExcel(dataset)}><FileSpreadsheet size={16} /> Exporteer naar Excel</button>
-              <button className="knop knop-zacht justify-center !py-3" onClick={() => jsonRef.current?.click()}><FileJson size={16} /> Dataset (.json) inlezen</button>
-              <button className="knop knop-zacht justify-center !py-3" onClick={() => downloadJson(dataset)}><Download size={16} /> Download als JSON</button>
+              <button className="knop knop-zacht justify-center !py-3" onClick={() => excelRef.current?.click()}><UploadSimple size={16} /> Programmering (.xlsx) inlezen</button>
+              <button className="knop knop-zacht justify-center !py-3" onClick={() => exporteerExcel(dataset)}><FileXls size={16} /> Exporteer naar Excel</button>
+              <button className="knop knop-zacht justify-center !py-3" onClick={() => jsonRef.current?.click()}><FileJs size={16} /> Dataset (.json) inlezen</button>
+              <button className="knop knop-zacht justify-center !py-3" onClick={() => downloadJson(dataset)}><DownloadSimple size={16} /> Download als JSON</button>
             </div>
             <input ref={excelRef} type="file" accept=".xlsx" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) importeerExcel(f); e.target.value = '' }} />
             <input ref={jsonRef} type="file" accept=".json,application/json" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) importeerJson(f); e.target.value = '' }} />
@@ -416,6 +429,11 @@ export default function Builder() {
               {DOELGROEPEN.slice(0, 4).map((d) => <SegmentChip key={d.naam} segment={d} klein />)}
               <span className="text-xs text-muted">en meer worden automatisch herkend</span>
             </div>
+          </Kaart>
+          <Kaart i={2} titel={<><Lightbulb size={20} className="text-amber-500" /> Uitleg</>} sub="Elk onderdeel toont één keer een korte rondleiding. Wil je ze allemaal opnieuw zien?">
+            <button className="knop knop-zacht" onClick={() => { wisAlleUitleg(); setMelding('Alle uitleg staat weer aan. Je ziet hem bij je volgende bezoek aan elk onderdeel.') }}>
+              <ArrowsClockwise size={16} /> Alle uitleg opnieuw tonen
+            </button>
           </Kaart>
         </div>
       )}

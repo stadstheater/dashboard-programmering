@@ -1,3 +1,4 @@
+import { CalendarDots, CheckCircle, ClipboardText, Lightning, Question, Sparkle, ThumbsUp, Trophy, Warning, type Icon } from '@phosphor-icons/react'
 import { isoDatum, naarDatum, seizoenStartJaar } from '../data/generate'
 import type { Aanbod, Doelen, Voorstelling, Zaal } from '../data/types'
 import { DOELGROEPEN, DOELGROEP_GEWICHTEN, MOTIVATIES, MOTIVATIE_GEWICHTEN, familieVan, segmentVan } from '../data/vocab'
@@ -276,18 +277,20 @@ export function artiestProfielen(alle: Voorstelling[]): ArtiestProfiel[] {
   })
 }
 
-export const OORDEEL_KLEUR: Record<Oordeel, { kleur: string; zacht: string; emoji: string }> = {
-  Topper: { kleur: '#15803d', zacht: '#dcfce7', emoji: '🏆' },
-  Solide: { kleur: '#0369a1', zacht: '#e0f2fe', emoji: '👍' },
-  Twijfel: { kleur: '#b45309', zacht: '#fef3c7', emoji: '🤔' },
-  Risico: { kleur: '#b91c1c', zacht: '#fee2e2', emoji: '⚠️' },
-  Onbekend: { kleur: '#475569', zacht: '#f1f5f9', emoji: '✨' },
+export const OORDEEL_KLEUR: Record<Oordeel, { kleur: string; zacht: string; icoon: Icon }> = {
+  Topper: { kleur: '#15803d', zacht: '#dcfce7', icoon: Trophy },
+  Solide: { kleur: '#0369a1', zacht: '#e0f2fe', icoon: ThumbsUp },
+  Twijfel: { kleur: '#b45309', zacht: '#fef3c7', icoon: Question },
+  Risico: { kleur: '#b91c1c', zacht: '#fee2e2', icoon: Warning },
+  Onbekend: { kleur: '#475569', zacht: '#f1f5f9', icoon: Sparkle },
 }
 
 /* ---------- Signaleringen voor de cockpit ---------- */
 
 export interface Signaal {
   soort: 'kans' | 'let op' | 'goed'
+  icoon: Icon
+  kleur: string
   titel: string
   tekst: string
   link?: string
@@ -300,7 +303,9 @@ export function maakSignalen(lijst: Voorstelling[], doelen: Doelen, seizoen: str
   if (laagste && laagste.verschil < -2) {
     uit.push({
       soort: 'kans',
-      titel: `${laagste.segment.emoji} ${laagste.segment.naam} blijft achter`,
+      icoon: laagste.segment.icoon,
+      kleur: laagste.segment.kleur,
+      titel: `${laagste.segment.naam} blijft achter`,
       tekst: `${laagste.aandeel.toFixed(1).replace('.', ',')}% van het bereik, doel is ${laagste.doel}%. Bekijk passend aanbod.`,
       link: '/aanbod',
     })
@@ -309,7 +314,9 @@ export function maakSignalen(lijst: Voorstelling[], doelen: Doelen, seizoen: str
   if (hoogste && hoogste.verschil > 4) {
     uit.push({
       soort: 'let op',
-      titel: `${hoogste.segment.emoji} Veel focus op ${hoogste.segment.kort}`,
+      icoon: hoogste.segment.icoon,
+      kleur: hoogste.segment.kleur,
+      titel: `Veel focus op ${hoogste.segment.kort}`,
       tekst: `${hoogste.aandeel.toFixed(1).replace('.', ',')}% van het bereik tegenover een doel van ${hoogste.doel}%.`,
       link: '/doelgroepen',
     })
@@ -318,7 +325,9 @@ export function maakSignalen(lijst: Voorstelling[], doelen: Doelen, seizoen: str
   if (motAfw && motAfw.verschil < -2) {
     uit.push({
       soort: 'kans',
-      titel: `${motAfw.segment.emoji} Motivatie ${motAfw.segment.naam} onderbelicht`,
+      icoon: motAfw.segment.icoon,
+      kleur: motAfw.segment.kleur,
+      titel: `Motivatie ${motAfw.segment.naam} onderbelicht`,
       tekst: `${motAfw.aandeel.toFixed(1).replace('.', ',')}% tegenover ${motAfw.doel}% doel.`,
       link: '/motivaties',
     })
@@ -327,7 +336,9 @@ export function maakSignalen(lijst: Voorstelling[], doelen: Doelen, seizoen: str
   if (vlekken.length) {
     uit.push({
       soort: 'kans',
-      titel: `🗓️ ${vlekken.length} vrije weekendavonden in de Grote zaal`,
+      icoon: CalendarDots,
+      kleur: '#8b5cf6',
+      titel: `${vlekken.length} vrije weekendavonden in de Grote zaal`,
       tekst: `Eerstvolgende: ${vlekken.slice(0, 3).map((v) => datumKort(v.datum)).join(', ')}.`,
       link: '/kalender',
     })
@@ -336,17 +347,19 @@ export function maakSignalen(lijst: Voorstelling[], doelen: Doelen, seizoen: str
   if (conflicten.length) {
     uit.push({
       soort: 'let op',
-      titel: `⚡ ${conflicten.length} mogelijke kannibalisatie${conflicten.length > 1 ? 's' : ''}`,
+      icoon: Lightning,
+      kleur: '#d97706',
+      titel: `${conflicten.length} mogelijke kannibalisatie${conflicten.length > 1 ? 's' : ''}`,
       tekst: `${conflicten[0].a.titel} en ${conflicten[0].b.titel} liggen ${conflicten[0].dagen} dagen uit elkaar.`,
       link: '/scenario',
     })
   }
   const opties = lijst.filter((v) => v.status === 'Optie' || v.status === 'Concept')
   if (opties.length) {
-    uit.push({ soort: 'let op', titel: `📝 ${opties.length} opties en concepten open`, tekst: 'Nog te bevestigen of los te laten.', link: '/kalender' })
+    uit.push({ soort: 'let op', icoon: ClipboardText, kleur: '#0284c7', titel: `${opties.length} opties en concepten open`, tekst: 'Nog te bevestigen of los te laten.', link: '/kalender' })
   }
   if (!uit.some((s) => s.soort === 'let op')) {
-    uit.push({ soort: 'goed', titel: '✅ Mooie balans', tekst: 'Geen grote afwijkingen ten opzichte van de seizoensdoelen.' })
+    uit.push({ soort: 'goed', icoon: CheckCircle, kleur: '#16a34a', titel: 'Mooie balans', tekst: 'Geen grote afwijkingen ten opzichte van de seizoensdoelen.' })
   }
   return uit
 }

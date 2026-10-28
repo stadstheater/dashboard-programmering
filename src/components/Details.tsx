@@ -1,4 +1,4 @@
-import { CalendarPlus, Check, Eye, Pencil, ThumbsDown, Star } from 'lucide-react'
+import { CalendarPlus, Check, CheckCircle, Eye, Lightning, MinusCircle, PencilSimple, Star, ThumbsDown } from '@phosphor-icons/react'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { naarDatum } from '../data/generate'
@@ -10,7 +10,8 @@ import {
 import { useArtiesten, useMatches, useSelectie } from '../lib/hooks'
 import { MATCH_GEWICHTEN, OORDEEL_KLEUR, vindKannibalisatie } from '../lib/inzichten'
 import { useStore } from '../store/useStore'
-import { GenreLabel, Lade, ScoreRing, SegmentChip, StatusLabel, cx } from './ui'
+import { staffel } from '../lib/animatie'
+import { GenreLabel, IcoonBol, Lade, ScoreRing, SegmentChip, StatusLabel, cx } from './ui'
 
 function Feit({ label, waarde, sub }: { label: string; waarde: React.ReactNode; sub?: React.ReactNode }) {
   return (
@@ -85,11 +86,11 @@ export function VoorstellingLade() {
           const s = segmentVan(DOELGROEPEN, d)
           if (!s) return null
           return (
-            <div key={d} className="flex items-center gap-3">
-              <span className="w-6 text-center">{s.emoji}</span>
+            <div key={d} className="verschijn flex items-center gap-3" style={staffel(i + 2)}>
+              <IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={28} rond />
               <span className="flex-1 text-sm">{s.naam}</span>
               <div className="h-2 w-24 rounded-full bg-[#f6efe6]">
-                <div className="h-full rounded-full" style={{ width: `${DOELGROEP_GEWICHTEN[i] * 250}%`, background: s.kleur }} />
+                <div className="groei h-full rounded-full" style={{ width: `${DOELGROEP_GEWICHTEN[i] * 250}%`, background: s.kleur, ...staffel(i + 2) }} />
               </div>
               <span className="w-10 text-right text-xs tabular-nums text-ink-2">{DOELGROEP_GEWICHTEN[i] * 100}%</span>
             </div>
@@ -100,13 +101,13 @@ export function VoorstellingLade() {
       <div className="flex flex-wrap gap-2">
         {v.motivaties.map((m) => {
           const s = segmentVan(MOTIVATIES, m)
-          return s ? <SegmentChip key={m} segment={{ ...s, naam: `${s.emoji} ${s.naam}` }} /> : null
+          return s ? <SegmentChip key={m} segment={s} /> : null
         })}
       </div>
 
       {conflicten.length > 0 && (
         <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4">
-          <div className="font-bold text-amber-900">⚡ Let op kannibalisatie</div>
+          <div className="flex items-center gap-2 font-bold text-amber-900"><Lightning size={18} className="wip text-amber-600" /> Let op kannibalisatie</div>
           <ul className="mt-2 space-y-1 text-sm text-amber-900">
             {conflicten.map((c) => {
               const ander = c.a.id === v.id ? c.b : c.a
@@ -123,7 +124,7 @@ export function VoorstellingLade() {
       {profiel && (
         <div className="mt-6 rounded-2xl p-4" style={{ background: OORDEEL_KLEUR[profiel.oordeel].zacht }}>
           <div className="flex items-center justify-between">
-            <div className="font-bold">{OORDEEL_KLEUR[profiel.oordeel].emoji} Artiestengeheugen: {profiel.oordeel}</div>
+            <div className="flex items-center gap-2 font-bold"><IcoonBol icoon={OORDEEL_KLEUR[profiel.oordeel].icoon} kleur={OORDEEL_KLEUR[profiel.oordeel].kleur} grootte={28} rond style={{ background: 'white' }} /> Artiestengeheugen: {profiel.oordeel}</div>
             <span className="text-sm text-ink-2">{profiel.gespeeld}x gespeeld</span>
           </div>
           <p className="mt-1 text-sm text-ink-2">
@@ -136,7 +137,7 @@ export function VoorstellingLade() {
 
       <div className="mt-6 flex flex-wrap gap-2">
         <button className="knop knop-primair" onClick={() => { toon(null); navigate(`/builder?bewerk=${v.id}`) }}>
-          <Pencil size={16} /> Bewerken
+          <PencilSimple size={16} /> Bewerken
         </button>
         <button className="knop knop-zacht" onClick={() => { toon(null); navigate(`/artiesten?zoek=${encodeURIComponent(v.artiest)}`) }}>
           <Star size={16} /> Naar artiest
@@ -166,20 +167,20 @@ export function MatchUitleg({ aanbodId }: { aanbodId: string }) {
         </div>
       </div>
       <div className="mt-4 space-y-2">
-        {delen.map((d) => (
+        {delen.map((d, i) => (
           <div key={d.sleutel} className="flex items-center gap-3 text-sm">
             <span className="w-36 shrink-0 text-ink-2">{d.label}</span>
             <div className="h-2.5 flex-1 rounded-full bg-white/70">
-              <div className="h-full rounded-full" style={{ width: `${m.delen[d.sleutel] * 100}%`, background: d.kleur }} />
+              <div className="groei h-full rounded-full" style={{ width: `${m.delen[d.sleutel] * 100}%`, background: d.kleur, ...staffel(i) }} />
             </div>
             <span className="w-14 text-right tabular-nums text-ink-2">{Math.round(m.delen[d.sleutel] * MATCH_GEWICHTEN[d.sleutel])}/{MATCH_GEWICHTEN[d.sleutel]}</span>
           </div>
         ))}
       </div>
       <ul className="mt-4 space-y-1 text-sm">
-        {m.redenen.map((r) => (
-          <li key={r.tekst} className="flex gap-2">
-            <span>{r.type === 'plus' ? '✅' : '➖'}</span>
+        {m.redenen.map((r, i) => (
+          <li key={r.tekst} className="verschijn flex items-center gap-2" style={staffel(i + 4)}>
+            {r.type === 'plus' ? <CheckCircle size={18} className="shrink-0 text-emerald-600" /> : <MinusCircle size={18} className="shrink-0 text-slate-400" />}
             <span>{r.tekst}</span>
           </li>
         ))}
@@ -280,7 +281,7 @@ export function AanbodLade() {
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
-        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Shortlist')}><Star size={16} className="text-amber-500" /> Op shortlist</button>
+        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Shortlist')}><Star size={16} className="wip text-amber-500" /> Op shortlist</button>
         <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Bekeken')}><Eye size={16} /> Bekeken</button>
         <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Afgewezen')}><ThumbsDown size={16} className="text-rose-500" /> Afwijzen</button>
       </div>

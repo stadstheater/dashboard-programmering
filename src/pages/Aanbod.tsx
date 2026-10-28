@@ -1,6 +1,7 @@
-import { LayoutGrid, Rows3, Search, Star } from 'lucide-react'
+import { CheckCircle, Package, Rows, Sparkle, SquaresFour, Star, Target, Tray, MagnifyingGlass } from '@phosphor-icons/react'
 import { useMemo, useState } from 'react'
-import { GenreLabel, Kaart, KpiTegel, Leeg, Paginakop, ScoreRing, StatusLabel, Tabs, cx } from '../components/ui'
+import { GenreLabel, IcoonBol, Kaart, KpiTegel, Leeg, Paginakop, ScoreRing, StatusLabel, Tabs, cx } from '../components/ui'
+import { staffel } from '../lib/animatie'
 import type { Aanbod as AanbodType, AanbodStatus } from '../data/types'
 import { AANBOD_STATUSSEN, DOELGROEPEN, GENRES, IMPRESARIATEN, MOTIVATIES, segmentVan } from '../data/vocab'
 import { datumKort, euro, getal } from '../lib/calc'
@@ -54,22 +55,22 @@ export default function Aanbod() {
 
   return (
     <div>
-      <Paginakop titel="Aanbod impresariaten" emoji="📬" sub="Alle geïmporteerde producties voor seizoen 27/28. De matchscore weegt doelgroepgaten, motivaties, onze historie, vrije data en de financiële verhouding.">
-        <Tabs waarde={weergave} onChange={setWeergave} opties={[{ id: 'kaarten', label: <span className="flex items-center gap-1.5"><LayoutGrid size={15} /> Kaarten</span> }, { id: 'tabel', label: <span className="flex items-center gap-1.5"><Rows3 size={15} /> Tabel</span> }]} />
+      <Paginakop titel="Aanbod impresariaten" icoon={Tray} kleur="#d97706" sub="Alle geïmporteerde producties voor seizoen 27/28. De matchscore weegt doelgroepgaten, motivaties, onze historie, vrije data en de financiële verhouding.">
+        <Tabs waarde={weergave} onChange={setWeergave} opties={[{ id: 'kaarten', label: <span className="flex items-center gap-1.5"><SquaresFour size={15} /> Kaarten</span> }, { id: 'tabel', label: <span className="flex items-center gap-1.5"><Rows size={15} /> Tabel</span> }]} />
       </Paginakop>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
-        <KpiTegel label="Producties in aanbod" waarde={getal(aanbod.length)} icoon="📦" kleur="citroen" />
-        <KpiTegel label="Nieuw binnen" waarde={getal(telStatus('Nieuw'))} sub="nog niet bekeken" icoon="🆕" kleur="ijs" />
-        <KpiTegel label="Op de shortlist" waarde={getal(telStatus('Shortlist'))} icoon="⭐" kleur="perzik" />
-        <KpiTegel label="Ingepland" waarde={getal(telStatus('Ingepland'))} icoon="✅" kleur="munt" />
-        <KpiTegel label="Gem. matchscore" waarde={Math.round(gemScore)} sub="van 100" icoon="🎯" kleur="lavendel" />
+        <KpiTegel i={0} label="Producties in aanbod" waarde={aanbod.length} icoon={Package} kleur="citroen" />
+        <KpiTegel i={1} label="Nieuw binnen" waarde={telStatus('Nieuw')} sub="nog niet bekeken" icoon={Sparkle} kleur="ijs" />
+        <KpiTegel i={2} label="Op de shortlist" waarde={telStatus('Shortlist')} icoon={Star} kleur="perzik" />
+        <KpiTegel i={3} label="Ingepland" waarde={telStatus('Ingepland')} icoon={CheckCircle} kleur="munt" />
+        <KpiTegel i={4} label="Gem. matchscore" waarde={Math.round(gemScore)} sub="van 100" icoon={Target} kleur="lavendel" />
       </div>
 
-      <Kaart className="mt-6">
+      <Kaart className="mt-6" i={5} uitleg="aanbod-filters">
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative min-w-56 flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+            <MagnifyingGlass size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
             <input className="invoer !rounded-full !pl-9" placeholder="Zoek titel, artiest of impresariaat" value={zoek} onChange={(e) => setZoek(e.target.value)} />
           </div>
           <select className="invoer !w-auto !rounded-full" value={genre} onChange={(e) => setGenre(e.target.value)}>
@@ -82,11 +83,11 @@ export default function Aanbod() {
           </select>
           <select className="invoer !w-auto !rounded-full" value={doelgroep} onChange={(e) => setDoelgroep(e.target.value)}>
             <option value="">Alle doelgroepen</option>
-            {DOELGROEPEN.map((g) => <option key={g.naam} value={g.naam}>{g.emoji} {g.naam}</option>)}
+            {DOELGROEPEN.map((g) => <option key={g.naam} value={g.naam}>{g.naam}</option>)}
           </select>
           <select className="invoer !w-auto !rounded-full" value={motivatie} onChange={(e) => setMotivatie(e.target.value)}>
             <option value="">Alle motivaties</option>
-            {MOTIVATIES.map((g) => <option key={g.naam} value={g.naam}>{g.emoji} {g.naam}</option>)}
+            {MOTIVATIES.map((g) => <option key={g.naam} value={g.naam}>{g.naam}</option>)}
           </select>
         </div>
         <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
@@ -114,10 +115,10 @@ export default function Aanbod() {
 
       {weergave === 'kaarten' ? (
         <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {lijst.slice(0, aantal).map((a) => {
+          {lijst.slice(0, aantal).map((a, i) => {
             const m = matches.get(a.id)
             return (
-              <article key={a.id} className="kaart verschijn group flex cursor-pointer flex-col p-5 transition hover:-translate-y-1 hover:shadow-[var(--shadow-hoog)]" onClick={() => toon(a.id)}>
+              <article key={a.id} data-uitleg={i === 0 ? 'aanbod-kaart' : undefined} style={staffel(i % 24)} className="kaart verschijn group flex cursor-pointer flex-col p-5 transition duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hoog)]" onClick={() => toon(a.id)}>
                 <div className="flex items-start gap-3">
                   <ScoreRing score={m?.score ?? 0} />
                   <div className="min-w-0 flex-1">
@@ -128,8 +129,9 @@ export default function Aanbod() {
                     onClick={(e) => { e.stopPropagation(); setStatus(a.id, a.status === 'Shortlist' ? 'Bekeken' : 'Shortlist') }}
                     className={cx('grid h-9 w-9 place-items-center rounded-full transition', a.status === 'Shortlist' ? 'bg-citroen text-amber-500' : 'bg-[#faf5ef] text-muted hover:text-amber-500')}
                     aria-label="Shortlist"
+                    data-uitleg={i === 0 ? 'shortlist' : undefined}
                   >
-                    <Star size={17} fill={a.status === 'Shortlist' ? 'currentColor' : 'none'} />
+                    <Star key={a.status} size={18} weight={a.status === 'Shortlist' ? 'fill' : 'bold'} className={a.status === 'Shortlist' ? 'spring' : ''} />
                   </button>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-1.5">
@@ -142,11 +144,11 @@ export default function Aanbod() {
                 <div className="mt-3 flex items-center gap-1">
                   {a.doelgroepen.map((d) => {
                     const s = segmentVan(DOELGROEPEN, d)
-                    return s ? <span key={d} title={s.naam} className="grid h-7 w-7 place-items-center rounded-full text-sm ring-2 ring-white" style={{ background: s.kleur + '33' }}>{s.emoji}</span> : null
+                    return s ? <span key={d} title={s.naam}><IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={28} rond className="ring-2 ring-white transition group-hover:-translate-y-0.5" /></span> : null
                   })}
-                  <span className="ml-auto text-xs text-ink-2">{a.motivaties.map((x) => segmentVan(MOTIVATIES, x)?.emoji).join(' ')}</span>
+                  <span className="ml-auto flex gap-1">{a.motivaties.map((x) => { const s = segmentVan(MOTIVATIES, x); return s ? <span key={x} title={s.naam}><s.icoon size={16} style={{ color: s.kleur }} /></span> : null })}</span>
                 </div>
-                {m && m.redenen[0] && <div className="mt-3 rounded-xl bg-munt/70 px-3 py-2 text-xs font-medium text-emerald-900">✨ {m.redenen.find((r) => r.type === 'plus')?.tekst ?? m.redenen[0].tekst}</div>}
+                {m && m.redenen[0] && <div className="mt-3 flex items-center gap-1.5 rounded-xl bg-munt/70 px-3 py-2 text-xs font-medium text-emerald-900"><Sparkle size={14} className="shrink-0 text-emerald-600" /> {m.redenen.find((r) => r.type === 'plus')?.tekst ?? m.redenen[0].tekst}</div>}
                 <div className="mt-auto grid grid-cols-3 gap-2 border-t border-line pt-3 text-center text-xs">
                   <div><div className="text-muted">Uitkoop</div><div className="font-bold">{euro(a.uitkoopsom)}</div></div>
                   <div><div className="text-muted">Verwacht</div><div className="font-bold">{getal(a.verwacht)}</div></div>
@@ -174,7 +176,7 @@ export default function Aanbod() {
                     <td className="px-3 py-2 text-ink-2">{a.impresariaat}</td>
                     <td className="px-3 py-2"><GenreLabel genre={a.genre} klein /></td>
                     <td className="whitespace-nowrap px-3 py-2 text-ink-2">{datumKort(a.periodeStart)} tot {datumKort(a.periodeEind)}</td>
-                    <td className="px-3 py-2">{a.doelgroepen.map((d) => segmentVan(DOELGROEPEN, d)?.emoji).join(' ')}</td>
+                    <td className="px-3 py-2"><span className="flex gap-1">{a.doelgroepen.map((d) => { const s = segmentVan(DOELGROEPEN, d); return s ? <span key={d} title={s.naam}><s.icoon size={16} style={{ color: s.kleur }} /></span> : null })}</span></td>
                     <td className="px-3 py-2 text-right tabular-nums">{euro(a.uitkoopsom)}</td>
                     <td className="px-3 py-2 text-right tabular-nums">{getal(a.verwacht)}</td>
                     <td className="px-3 py-2"><StatusLabel status={a.status} klein /></td>
