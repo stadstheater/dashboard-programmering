@@ -25,6 +25,22 @@
   --color-lavendel: #eee8ff;
   --color-ijs: #e0f3ff;
   --color-snoep: #ffe3f0;
+  --color-perzik-2: #ffd2c6;
+  --color-citroen-2: #ffe79a;
+  --color-munt-2: #b3eedf;
+  --color-lavendel-2: #ddd2ff;
+  --color-ijs-2: #c4e7ff;
+  --color-snoep-2: #ffcae2;
+
+  /* Vlakken en lijnen die met het thema meewisselen. */
+  --color-oppervlak: #ffffff;
+  --color-paneel: #fffdfa;
+  --color-vlak: #fffaf5;
+  --color-zacht: #fff6ee;
+  --color-spoor: #f6efe6;
+  --color-raster: #f1e9df;
+  /* Tekstkleur op een vlak in inktkleur (wit in licht thema, donker in donker thema). */
+  --color-op-ink: #ffffff;
 
   --shadow-zacht: 0 1px 2px rgb(29 27 47 / 0.04), 0 8px 24px -12px rgb(29 27 47 / 0.12);
   --shadow-hoog: 0 2px 4px rgb(29 27 47 / 0.05), 0 18px 40px -16px rgb(29 27 47 / 0.22);
@@ -38,12 +54,63 @@ html.eenvoudig { font-size: 17px; }
 html.eenvoudig .glans::after { display: none; }
 html.eenvoudig .puls-violet { animation: none; }
 
+/* Donker thema: dezelfde vrolijke accenten op een diep paarsblauwe ondergrond. */
+html.donker {
+  color-scheme: dark;
+  --color-bg: #13111c;
+  --color-ink: #f2eff9;
+  --color-ink-2: #b8b3cf;
+  --color-muted: #8a85a5;
+  --color-line: #2c2840;
+  --color-card: #1c1929;
+
+  --color-perzik: #3a2420;
+  --color-citroen: #362e17;
+  --color-munt: #15312b;
+  --color-lavendel: #282141;
+  --color-ijs: #152b3b;
+  --color-snoep: #371d2c;
+  --color-perzik-2: #4a2b25;
+  --color-citroen-2: #463b1b;
+  --color-munt-2: #1b4037;
+  --color-lavendel-2: #342a55;
+  --color-ijs-2: #1b394e;
+  --color-snoep-2: #48253a;
+
+  --color-oppervlak: #1c1929;
+  --color-paneel: #191624;
+  --color-vlak: #221e31;
+  --color-zacht: #2a2539;
+  --color-spoor: #2d293d;
+  --color-raster: #2a2638;
+  --color-op-ink: #15131f;
+
+  --shadow-zacht: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.55);
+  --shadow-hoog: 0 2px 4px rgb(0 0 0 / 0.35), 0 18px 40px -16px rgb(0 0 0 / 0.7);
+}
+
+/* Lichte statuslabels uit het standaardpalet krijgen in het donker een donkere tint met lichte tekst. */
+html.donker .bg-emerald-50, html.donker .bg-emerald-100 { background-color: rgb(16 185 129 / .16); }
+html.donker .bg-rose-50, html.donker .bg-rose-100 { background-color: rgb(244 63 94 / .16); }
+html.donker .bg-amber-50, html.donker .bg-amber-100 { background-color: rgb(245 158 11 / .16); }
+html.donker .bg-slate-100 { background-color: rgb(148 163 184 / .16); }
+html.donker .text-emerald-700, html.donker .text-emerald-800, html.donker .text-emerald-900 { color: #6ee7b7; }
+html.donker .text-rose-700, html.donker .text-rose-800 { color: #fda4af; }
+html.donker .text-amber-800, html.donker .text-amber-900, html.donker .text-amber-700 { color: #fcd34d; }
+html.donker .text-slate-600, html.donker .text-slate-700 { color: #cbd5e1; }
+html.donker .text-orange-800 { color: #fdba74; }
+html.donker .text-sky-800 { color: #7dd3fc; }
+html.donker .text-pink-700 { color: #f9a8d4; }
+html.donker .border-amber-200 { border-color: rgb(245 158 11 / .35); }
+html.donker .ring-emerald-200, html.donker .ring-amber-200, html.donker .ring-slate-200 { --tw-ring-color: rgb(148 163 184 / .25); }
+
 body {
   background-color: var(--color-bg);
   background-image:
-    radial-gradient(60rem 30rem at 110% -10%, #ffe3f0 0%, transparent 60%),
-    radial-gradient(50rem 28rem at -10% 110%, #d6f7ef 0%, transparent 60%),
-    radial-gradient(40rem 22rem at 50% -20%, #fff4c7 0%, transparent 60%);
+    radial-gradient(60rem 30rem at 110% -10%, var(--color-snoep) 0%, transparent 60%),
+    radial-gradient(50rem 28rem at -10% 110%, var(--color-munt) 0%, transparent 60%),
+    radial-gradient(40rem 22rem at 50% -20%, var(--color-citroen) 0%, transparent 60%);
+  transition: background-color .3s ease, color .3s ease;
   background-attachment: fixed;
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -66,14 +133,14 @@ h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0
 }
 .knop:hover { transform: translateY(-1px); }
 .knop:active { transform: translateY(0) scale(.96); }
-.knop-primair { background: var(--color-ink); color: white; box-shadow: var(--shadow-zacht); }
-.knop-primair:hover { background: #2f2c4a; }
-.knop-zacht { background: white; color: var(--color-ink); border: 1px solid var(--color-line); }
-.knop-zacht:hover { background: #fffaf5; box-shadow: var(--shadow-zacht); }
+.knop-primair { background: var(--color-ink); color: var(--color-op-ink); box-shadow: var(--shadow-zacht); }
+.knop-primair:hover { background: color-mix(in srgb, var(--color-ink) 85%, var(--color-violet)); }
+.knop-zacht { background: var(--color-oppervlak); color: var(--color-ink); border: 1px solid var(--color-line); }
+.knop-zacht:hover { background: var(--color-vlak); box-shadow: var(--shadow-zacht); }
 .knop-koraal { background: var(--color-koraal); color: white; }
 
 .invoer {
-  width: 100%; border-radius: .9rem; border: 1px solid var(--color-line); background: white;
+  width: 100%; border-radius: .9rem; border: 1px solid var(--color-line); background: var(--color-oppervlak); color: var(--color-ink);
   padding: .55rem .8rem; font-size: .875rem; outline: none; transition: box-shadow .15s, border-color .15s;
 }
 .invoer:focus { border-color: var(--color-violet); box-shadow: 0 0 0 4px rgb(139 92 246 / .15); }
@@ -146,7 +213,7 @@ h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0
 }
 
 .dun-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
-.dun-scroll::-webkit-scrollbar-thumb { background: #eadfd2; border-radius: 99px; }
+.dun-scroll::-webkit-scrollbar-thumb { background: var(--color-spoor); border-radius: 99px; }
 
 .recharts-tooltip-wrapper { outline: none; }
 .recharts-surface:focus { outline: none; }

@@ -70,7 +70,7 @@ export default function Aanbod() {
       </Paginakop>
 
       {eenvoudig ? (
-        <div className="verschijn flex flex-wrap items-center gap-3 rounded-3xl bg-white p-4 shadow-[var(--shadow-zacht)] ring-1 ring-line">
+        <div className="verschijn flex flex-wrap items-center gap-3 rounded-3xl bg-oppervlak p-4 shadow-[var(--shadow-zacht)] ring-1 ring-line">
           <div className="relative min-w-56 flex-1">
             <MagnifyingGlass size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
             <input className="invoer !rounded-full !py-3 !pl-10 !text-base" placeholder="Zoek een voorstelling of artiest" value={zoek} onChange={(e) => setZoek(e.target.value)} />
@@ -157,7 +157,7 @@ export default function Aanbod() {
                   </div>
                   <button
                     onClick={(e) => { e.stopPropagation(); setStatus(a.id, a.status === 'Shortlist' ? 'Bekeken' : 'Shortlist') }}
-                    className={cx('grid h-9 w-9 place-items-center rounded-full transition', a.status === 'Shortlist' ? 'bg-citroen text-amber-500' : 'bg-[#faf5ef] text-muted hover:text-amber-500')}
+                    className={cx('grid h-9 w-9 place-items-center rounded-full transition', a.status === 'Shortlist' ? 'bg-citroen text-amber-500' : 'bg-vlak text-muted hover:text-amber-500')}
                     aria-label={eenvoudig ? 'Bewaren' : 'Shortlist'}
                     title={a.status === 'Shortlist' ? 'Bewaard' : 'Bewaren'}
                     data-uitleg={i === 0 ? 'shortlist' : undefined}
@@ -199,7 +199,7 @@ export default function Aanbod() {
               </thead>
               <tbody>
                 {lijst.slice(0, aantal * 2).map((a) => (
-                  <tr key={a.id} onClick={() => toon(a.id)} className="cursor-pointer border-b border-line/60 hover:bg-[#fff6ee]">
+                  <tr key={a.id} onClick={() => toon(a.id)} className="cursor-pointer border-b border-line/60 hover:bg-zacht">
                     <td className="px-3 py-2"><ScoreRing score={matches.get(a.id)?.score ?? 0} grootte={40} /></td>
                     <td className="px-3 py-2 font-semibold">{a.titel}</td>
                     <td className="px-3 py-2 text-ink-2">{a.impresariaat}</td>

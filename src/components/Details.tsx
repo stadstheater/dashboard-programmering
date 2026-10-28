@@ -15,7 +15,7 @@ import { CdmLabel, GenreLabel, IcoonBol, Lade, PastBijOns, ScoreRing, SegmentChi
 
 function Feit({ label, waarde, sub }: { label: string; waarde: React.ReactNode; sub?: React.ReactNode }) {
   return (
-    <div className="rounded-2xl bg-white p-3 shadow-sm ring-1 ring-line">
+    <div className="rounded-2xl bg-oppervlak p-3 shadow-sm ring-1 ring-line">
       <div className="text-xs font-medium text-muted">{label}</div>
       <div className="font-display mt-0.5 text-lg font-bold">{waarde}</div>
       {sub && <div className="text-xs text-ink-2">{sub}</div>}
@@ -69,7 +69,7 @@ export function VoorstellingLade() {
             )}
           </div>
         </div>
-        <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/70">
+        <div className="mt-3 h-3 overflow-hidden rounded-full bg-oppervlak/70">
           <div className="h-full rounded-full bg-gradient-to-r from-lucht to-violet" style={{ width: `${Math.min(100, (verkocht / v.capaciteit) * 100)}%` }} />
         </div>
       </div>
@@ -90,7 +90,7 @@ export function VoorstellingLade() {
             <div key={d} className="verschijn flex items-center gap-3" style={staffel(i + 2)}>
               <IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={28} rond />
               <span className="flex flex-1 items-center gap-2 text-sm"><CdmLabel segment={s} /> {s.naam}</span>
-              <div className="h-2 w-24 rounded-full bg-[#f6efe6]">
+              <div className="h-2 w-24 rounded-full bg-spoor">
                 <div className="groei h-full rounded-full" style={{ width: `${DOELGROEP_GEWICHTEN[i] * 250}%`, background: s.kleur, ...staffel(i + 2) }} />
               </div>
               <span className="w-10 text-right text-xs tabular-nums text-ink-2">{DOELGROEP_GEWICHTEN[i] * 100}%</span>
@@ -190,7 +190,7 @@ export function MatchUitleg({ aanbodId }: { aanbodId: string }) {
         {delen.map((d, i) => (
           <div key={d.sleutel} className="flex items-center gap-3 text-sm">
             <span className="w-36 shrink-0 text-ink-2">{d.label}</span>
-            <div className="h-2.5 flex-1 rounded-full bg-white/70">
+            <div className="h-2.5 flex-1 rounded-full bg-oppervlak/70">
               <div className="groei h-full rounded-full" style={{ width: `${m.delen[d.sleutel] * 100}%`, background: d.kleur, ...staffel(i) }} />
             </div>
             <span className="w-14 text-right tabular-nums text-ink-2">{Math.round(m.delen[d.sleutel] * MATCH_GEWICHTEN[d.sleutel])}/{MATCH_GEWICHTEN[d.sleutel]}</span>
@@ -279,7 +279,7 @@ export function AanbodLade() {
       {a.zalen.length > 1 && (
         <div className="mb-3 flex gap-2">
           {a.zalen.map((z) => (
-            <button key={z} onClick={() => setZaal(z)} className={cx('rounded-full px-3 py-1 text-sm font-semibold', gekozenZaal === z ? 'bg-ink text-white' : 'bg-white ring-1 ring-line')}>{z}</button>
+            <button key={z} onClick={() => setZaal(z)} className={cx('rounded-full px-3 py-1 text-sm font-semibold', gekozenZaal === z ? 'bg-ink text-op-ink' : 'bg-oppervlak ring-1 ring-line')}>{z}</button>
           ))}
         </div>
       )}
@@ -295,7 +295,7 @@ export function AanbodLade() {
               className={cx(
                 'flex items-center gap-1.5 rounded-2xl font-semibold transition',
                 eenvoudig ? 'px-4 py-3 text-[15px]' : 'px-3 py-2 text-sm',
-                gekozen ? 'bg-violet text-white' : vrij ? 'bg-white ring-1 ring-line hover:-translate-y-0.5 hover:ring-violet' : 'cursor-not-allowed bg-slate-100 text-slate-400 line-through',
+                gekozen ? 'bg-violet text-white' : vrij ? 'bg-oppervlak ring-1 ring-line hover:-translate-y-0.5 hover:ring-violet' : 'cursor-not-allowed bg-slate-100 text-slate-400 line-through',
               )}
               title={vrij ? 'Vrij: klik om in te plannen' : 'Zaal is bezet'}
             >

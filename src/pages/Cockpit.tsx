@@ -74,7 +74,7 @@ export default function Cockpit() {
               const f = familieVan(v.genre)
               return (
                 <li key={v.id} className="verschijn" style={staffel(i + 3)}>
-                  <button onClick={() => toon(v.id)} className="group flex w-full items-center gap-4 rounded-2xl px-2 py-3 text-left transition hover:bg-[#fff6ee]">
+                  <button onClick={() => toon(v.id)} className="group flex w-full items-center gap-4 rounded-2xl px-2 py-3 text-left transition hover:bg-zacht">
                     <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-center leading-tight transition duration-300 group-hover:-rotate-6 group-hover:scale-110" style={{ background: f.kleur + '1f' }}>
                       <div>
                         <div className="font-display text-xl font-extrabold">{Number(v.datum.slice(8, 10))}</div>
@@ -92,7 +92,7 @@ export default function Cockpit() {
                         <span>{getal(verkocht)} / {getal(v.capaciteit)}</span>
                         <b className="text-ink">{procent(verkocht / v.capaciteit)}</b>
                       </div>
-                      <div className="h-2 rounded-full bg-[#f6efe6]">
+                      <div className="h-2 rounded-full bg-spoor">
                         <div className="groei h-full rounded-full" style={{ width: `${(verkocht / v.capaciteit) * 100}%`, background: f.kleur, ...staffel(i + 3) }} />
                       </div>
                     </div>
@@ -113,7 +113,7 @@ export default function Cockpit() {
                       <IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={30} className="wip shadow-sm" style={{ background: 'white' }} />
                       {s.titel}
                     </div>
-                    <span className="rounded-full bg-white/70 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-ink-2">{s.soort}</span>
+                    <span className="rounded-full bg-oppervlak/70 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-ink-2">{s.soort}</span>
                   </div>
                   <p className="mt-1 text-sm text-ink-2">{s.tekst}</p>
                 </div>
@@ -146,12 +146,12 @@ export default function Cockpit() {
           <div className="h-80">
             <ResponsiveContainer>
               <BarChart data={perMaand} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-                <CartesianGrid vertical={false} stroke="#f1e9df" />
-                <XAxis dataKey="maand" tickLine={false} axisLine={false} tick={{ fill: '#55526f', fontSize: 12 }} />
-                <YAxis tickLine={false} axisLine={false} tick={{ fill: '#8a87a2', fontSize: 12 }} tickFormatter={(v) => getal(v)} width={56} />
-                <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => getal(v)} />} />
+                <CartesianGrid vertical={false} stroke="var(--color-raster)" />
+                <XAxis dataKey="maand" tickLine={false} axisLine={false} tick={{ fill: 'var(--color-ink-2)', fontSize: 12 }} />
+                <YAxis tickLine={false} axisLine={false} tick={{ fill: 'var(--color-muted)', fontSize: 12 }} tickFormatter={(v) => getal(v)} width={56} />
+                <Tooltip cursor={{ fill: 'var(--color-zacht)' }} content={<TipKaart formatter={(v) => getal(v)} />} />
                 {GENRE_FAMILIES.map((f, i) => (
-                  <Bar animationDuration={900} key={f.naam} dataKey={f.naam} stackId="a" fill={f.kleur} stroke="#fff" strokeWidth={2} radius={i === GENRE_FAMILIES.length - 1 ? [6, 6, 0, 0] : 0} maxBarSize={44} />
+                  <Bar animationDuration={900} key={f.naam} dataKey={f.naam} stackId="a" fill={f.kleur} stroke="var(--color-oppervlak)" strokeWidth={2} radius={i === GENRE_FAMILIES.length - 1 ? [6, 6, 0, 0] : 0} maxBarSize={44} />
                 ))}
               </BarChart>
             </ResponsiveContainer>

@@ -10,6 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <script>
+      try {
+        var opgeslagen = JSON.parse(localStorage.getItem('coulisse-dashboard-v2') || '{}').state || {}
+        if (opgeslagen.thema === 'donker') document.documentElement.classList.add('donker')
+        if ((opgeslagen.modus || 'eenvoudig') === 'eenvoudig') document.documentElement.classList.add('eenvoudig')
+      } catch (e) {}
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

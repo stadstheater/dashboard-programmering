@@ -164,14 +164,14 @@ export default function Rondleiding() {
     <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true" aria-label={`Uitleg ${uitleg.naam}`}>
       {kader ? (
         <div
-          className="spotlight pointer-events-none absolute rounded-3xl ring-4 ring-white/80"
+          className="spotlight pointer-events-none absolute rounded-3xl ring-4 ring-oppervlak/80"
           style={{ ...kader, boxShadow: '0 0 0 9999px rgb(29 27 47 / .55)' }}
         />
       ) : (
-        <div className="vervaag-in absolute inset-0 bg-ink/55 backdrop-blur-[2px]" />
+        <div className="vervaag-in absolute inset-0 bg-black/55 backdrop-blur-[2px]" />
       )}
       <div className="absolute inset-0" onClick={(e) => e.stopPropagation()} />
-      <div key={stap} ref={ballonRef} className="plop absolute rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-black/5" style={ballon}>
+      <div key={stap} ref={ballonRef} className="plop absolute rounded-3xl bg-oppervlak p-5 shadow-2xl ring-1 ring-black/5" style={ballon}>
         <div className="flex items-start gap-3">
           <span className="zweef grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-zon to-koraal text-white shadow">
             <Lightbulb weight="fill" size={22} />
@@ -195,7 +195,7 @@ export default function Rondleiding() {
             {stap > 0 && (
               <button className="knop knop-zacht !px-3 !py-1.5" onClick={() => setStap(stap - 1)} aria-label="Vorige"><ArrowLeft weight="bold" size={14} /></button>
             )}
-            {!laatste && <button className="knop !px-3 !py-1.5 text-ink-2 hover:bg-[#fff3ea]" onClick={klaar}>Overslaan</button>}
+            {!laatste && <button className="knop !px-3 !py-1.5 text-ink-2 hover:bg-zacht" onClick={klaar}>Overslaan</button>}
             <button className="knop knop-primair !py-1.5" onClick={() => (laatste ? klaar() : setStap(stap + 1))}>
               {laatste ? 'Aan de slag' : 'Volgende'} {!laatste && <ArrowRight weight="bold" size={14} />}
             </button>

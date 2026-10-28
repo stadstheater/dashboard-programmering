@@ -53,7 +53,7 @@ export default function DoelTabel({ titel, icoon: I, kleur, rijen, actief, uitle
             <li key={r.naam} className="verschijn py-2" style={staffel(i)} title={`${r.naam}: doel ${pct(r.doel)}, realisatie ${pct(r.realisatie)}`}>
               <div className="flex min-w-0 items-center gap-1.5 text-sm font-medium">{r.label}</div>
               <div className="mt-1 grid grid-cols-[1fr_2.6rem_4.4rem_3.6rem] items-center gap-x-2 text-sm">
-                <div className="relative h-2 rounded-full bg-[#f6efe6]">
+                <div className="relative h-2 rounded-full bg-spoor">
                   <div
                     className={cx('groei h-full rounded-full', isLicht(r.kleur) && 'ring-1 ring-inset ring-black/15')}
                     style={{ width: `${Math.min(100, (r.realisatie / max) * 100)}%`, background: r.kleur, ...staffel(i) }}

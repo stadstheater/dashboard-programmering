@@ -26,11 +26,11 @@ function Sparkline({ waarden, kleur, doel }: { waarden: number[]; kleur: string;
   const pt = (v: number, i: number) => `${(i / Math.max(1, waarden.length - 1)) * (b - 8) + 4},${h - 4 - (v / max) * (h - 8)}`
   return (
     <svg width={b} height={h} className="overflow-visible" aria-hidden>
-      <line x1={4} x2={b - 4} y1={h - 4 - (doel / max) * (h - 8)} y2={h - 4 - (doel / max) * (h - 8)} stroke="#1d1b2f" strokeDasharray="3 3" strokeOpacity={0.35} />
+      <line x1={4} x2={b - 4} y1={h - 4 - (doel / max) * (h - 8)} y2={h - 4 - (doel / max) * (h - 8)} stroke="var(--color-ink)" strokeDasharray="3 3" strokeOpacity={0.35} />
       <polyline points={waarden.map(pt).join(' ')} fill="none" stroke={kleur} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
       {waarden.map((v, i) => {
         const [x, y] = pt(v, i).split(',').map(Number)
-        return <circle key={i} cx={x} cy={y} r={i === waarden.length - 1 ? 4 : 2.5} fill={kleur} stroke="#fff" strokeWidth={1.5} />
+        return <circle key={i} cx={x} cy={y} r={i === waarden.length - 1 ? 4 : 2.5} fill={kleur} stroke="var(--color-oppervlak)" strokeWidth={1.5} />
       })}
     </svg>
   )
@@ -138,7 +138,7 @@ export default function SegmentAnalyse({ soort }: { soort: Soort }) {
                       <p className="mt-2 text-sm text-ink-2">
                         <b className="text-ink">{Math.round(a)}%</b> van ons publiek, we willen <b className="text-ink">{doel}%</b>.
                       </p>
-                      <div className="mt-2 h-2.5 rounded-full bg-[#f6efe6]">
+                      <div className="mt-2 h-2.5 rounded-full bg-spoor">
                         <div className={cx('groei h-full rounded-full', isLicht(s.kleur) && 'ring-1 ring-inset ring-black/15')} style={{ width: `${Math.min(100, (a / Math.max(doel * 1.6, 1)) * 100)}%`, background: s.kleur, ...staffel(i) }} />
                       </div>
                     </div>
@@ -171,7 +171,7 @@ export default function SegmentAnalyse({ soort }: { soort: Soort }) {
       ))}
 
       <div key={focus.naam} data-uitleg="spotlight" className="verschijn mt-8 rounded-3xl p-[2px]" style={{ background: `linear-gradient(135deg, ${focus.kleur}, #ffffff00 70%)` }}>
-        <div className="rounded-[22px] bg-white p-5 sm:p-6">
+        <div className="rounded-[22px] bg-oppervlak p-5 sm:p-6">
           <div className="flex flex-wrap items-center gap-3">
             <IcoonBol icoon={focus.icoon} kleur={focus.kleur} grootte={56} className="plop" />
             <div>
@@ -185,7 +185,7 @@ export default function SegmentAnalyse({ soort }: { soort: Soort }) {
               <ul className="space-y-1.5">
                 {toppers.map((v, i) => (
                   <li key={v.id} className="verschijn" style={staffel(i + 1)}>
-                    <button onClick={() => toonV(v.id)} className="flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left text-sm hover:bg-[#fff6ee]">
+                    <button onClick={() => toonV(v.id)} className="flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left text-sm hover:bg-zacht">
                       <span className="w-10 shrink-0 rounded-lg bg-munt px-1 text-center text-xs font-bold text-emerald-800">{procent(v.eindstand / v.capaciteit)}</span>
                       <span className="min-w-0 flex-1 truncate font-medium">{v.titel}</span>
                       <span className="shrink-0 text-xs text-muted">{v.seizoen}</span>
@@ -200,7 +200,7 @@ export default function SegmentAnalyse({ soort }: { soort: Soort }) {
                 {genresVoorFocus.slice(0, 6).map((g, i) => (
                   <div key={g.naam} className="flex items-center gap-2 text-sm" title={`${getal(g.bereik)} bezoeken per seizoen`}>
                     <span className="w-28 shrink-0 truncate">{g.naam}</span>
-                    <div className="h-2.5 flex-1 rounded-full bg-[#f6efe6]"><div className="groei h-full rounded-full" style={{ width: `${(g.bereik / (genresVoorFocus[0].bereik || 1)) * 100}%`, background: g.kleur, ...staffel(i) }} /></div>
+                    <div className="h-2.5 flex-1 rounded-full bg-spoor"><div className="groei h-full rounded-full" style={{ width: `${(g.bereik / (genresVoorFocus[0].bereik || 1)) * 100}%`, background: g.kleur, ...staffel(i) }} /></div>
                     <span className="w-12 text-right text-xs tabular-nums text-ink-2">{getal(g.bereik)}</span>
                   </div>
                 ))}
@@ -212,7 +212,7 @@ export default function SegmentAnalyse({ soort }: { soort: Soort }) {
               <ul className="space-y-1.5">
                 {aanbodVoorFocus.map((a, i) => (
                   <li key={a.id} className="verschijn" style={staffel(i + 1)}>
-                    <button onClick={() => toonA(a.id)} className="flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left text-sm hover:bg-[#fff6ee]">
+                    <button onClick={() => toonA(a.id)} className="flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-left text-sm hover:bg-zacht">
                       <Match score={matches.get(a.id)?.score ?? 0} grootte={34} />
                       <span className="min-w-0 flex-1 truncate font-medium">{a.titel}</span>
                       <GenreLabel genre={a.genre} klein />
@@ -255,8 +255,8 @@ export default function SegmentAnalyse({ soort }: { soort: Soort }) {
             <div className="h-96">
               <ResponsiveContainer>
                 <RadarChart data={DOELGROEPEN.map((d) => ({ naam: d.kort, voluit: d.naam, 'Ons publiek': aandeel[d.naam] ?? 0, Verzorgingsgebied: d.marktaandeel }))} outerRadius="72%">
-                  <PolarGrid stroke="#eadfd2" />
-                  <PolarAngleAxis dataKey="naam" tick={{ fontSize: 12, fill: '#55526f' }} />
+                  <PolarGrid stroke="var(--color-raster)" />
+                  <PolarAngleAxis dataKey="naam" tick={{ fontSize: 12, fill: 'var(--color-ink-2)' }} />
                   <PolarRadiusAxis tick={false} axisLine={false} />
                   <Radar animationDuration={900} name="Verzorgingsgebied" dataKey="Verzorgingsgebied" stroke="#eb6834" fill="#eb6834" fillOpacity={0.12} strokeWidth={2} />
                   <Radar animationDuration={900} name="Ons publiek" dataKey="Ons publiek" stroke="#2a78d6" fill="#2a78d6" fillOpacity={0.25} strokeWidth={2} />
@@ -281,11 +281,11 @@ export default function SegmentAnalyse({ soort }: { soort: Soort }) {
           <div className="h-96">
             <ResponsiveContainer>
               <BarChart data={bezettingPerSegment} margin={{ top: 20, right: 8, left: 0, bottom: 0 }}>
-                <CartesianGrid vertical={false} stroke="#f1e9df" />
-                <XAxis dataKey="naam" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: '#55526f' }} interval={0} angle={-35} textAnchor="end" height={58} />
-                <YAxis tickLine={false} axisLine={false} unit="%" domain={[0, 100]} tick={{ fontSize: 12, fill: '#8a87a2' }} width={44} />
-                <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => `${v.toFixed(0)}%`} titel={(_, p) => String(p?.voluit ?? '')} />} />
-                <Bar animationDuration={900} dataKey="Bezetting" radius={[6, 6, 0, 0]} maxBarSize={44} label={{ position: 'top', fontSize: 11, fill: '#55526f', formatter: (v: unknown) => `${Math.round(Number(v))}%` }}>
+                <CartesianGrid vertical={false} stroke="var(--color-raster)" />
+                <XAxis dataKey="naam" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: 'var(--color-ink-2)' }} interval={0} angle={-35} textAnchor="end" height={58} />
+                <YAxis tickLine={false} axisLine={false} unit="%" domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--color-muted)' }} width={44} />
+                <Tooltip cursor={{ fill: 'var(--color-zacht)' }} content={<TipKaart formatter={(v) => `${v.toFixed(0)}%`} titel={(_, p) => String(p?.voluit ?? '')} />} />
+                <Bar animationDuration={900} dataKey="Bezetting" radius={[6, 6, 0, 0]} maxBarSize={44} label={{ position: 'top', fontSize: 11, fill: 'var(--color-ink-2)', formatter: (v: unknown) => `${Math.round(Number(v))}%` }}>
                   {bezettingPerSegment.map((b) => <Cell key={b.naam} fill={b.kleur} stroke={isLicht(b.kleur) ? '#00000033' : undefined} />)}
                 </Bar>
               </BarChart>

@@ -12,7 +12,7 @@ export function TipKaart({ active, payload, label, formatter, titel }: {
 }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="min-w-40 rounded-2xl border border-line bg-white/95 px-3.5 py-2.5 text-sm shadow-[var(--shadow-hoog)] backdrop-blur">
+    <div className="min-w-40 rounded-2xl border border-line bg-oppervlak/95 px-3.5 py-2.5 text-sm shadow-[var(--shadow-hoog)] backdrop-blur">
       <div className="mb-1.5 font-bold text-ink">{titel ? titel(label, payload[0]?.payload) : label}</div>
       <div className="space-y-1">
         {payload.map((p) => (
@@ -98,7 +98,7 @@ export function Matrix({ rijen, kolommen, waarde, opmaak, tint = 'blauw', onCel 
                     onClick={onCel ? () => onCel(r.naam, k.naam) : undefined}
                     title={`${r.naam} × ${k.naam}: ${opmaak(v)}`}
                     className={cx('h-9 min-w-11 rounded-lg text-center font-semibold tabular-nums transition hover:scale-[1.06] hover:shadow-md', onCel && 'cursor-pointer')}
-                    style={{ background: v ? schaal(t, tint) : '#faf6f0', color: v ? inktOp(t) : '#c9c3d6' }}
+                    style={{ background: v ? schaal(t, tint) : 'var(--color-vlak)', color: v ? inktOp(t) : 'var(--color-muted)' }}
                   >
                     {v ? opmaak(v) : '·'}
                   </td>

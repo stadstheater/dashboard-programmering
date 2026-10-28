@@ -23,11 +23,14 @@ export interface Filters {
 export const LEGE_FILTERS: Filters = { genres: [], zalen: [], statussen: [], doelgroepen: [], motivaties: [], zoek: '' }
 
 export type Modus = 'eenvoudig' | 'uitgebreid'
+export type Thema = 'licht' | 'donker'
 
 interface State {
   dataset: Dataset
   modus: Modus
   setModus: (m: Modus) => void
+  thema: Thema
+  setThema: (t: Thema) => void
   zetOptie: (aanbodId: string, datum: string, zaal: Zaal) => void
   seizoen: string
   filters: Filters
@@ -106,6 +109,8 @@ export const useStore = create<State>()(
       dataset: genereerDataset(),
       modus: 'eenvoudig',
       setModus: (modus) => set({ modus }),
+      thema: 'licht',
+      setThema: (thema) => set({ thema }),
       zetOptie: (aanbodId, datum, zaal) => {
         const { dataset } = get()
         const a = dataset.aanbod.find((x) => x.id === aanbodId)
@@ -185,7 +190,7 @@ export const useStore = create<State>()(
     {
       name: 'coulisse-dashboard-v2',
       storage: veiligeOpslag,
-      partialize: ({ dataset, seizoen, scenario, modus }) => ({ dataset, seizoen, scenario, modus }),
+      partialize: ({ dataset, seizoen, scenario, modus, thema }) => ({ dataset, seizoen, scenario, modus, thema }),
     },
   ),
 )

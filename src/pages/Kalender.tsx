@@ -152,7 +152,7 @@ export default function Kalender() {
               <button className="knop knop-zacht !px-2.5" disabled={maandIndex === 0} onClick={() => setMaandIndex(maandIndex - 1)} aria-label="Vorige maand"><CaretLeft size={18} />{eenvoudig && <span className="hidden sm:inline">Vorige</span>}</button>
               <div className={cx('dun-scroll hidden max-w-md gap-1 overflow-x-auto', !eenvoudig && 'md:flex')}>
                 {SEIZOENSMAANDEN.map((m, i) => (
-                  <button key={m} onClick={() => setMaandIndex(i)} className={cx('rounded-full px-2.5 py-1 text-xs font-semibold', i === maandIndex ? 'bg-ink text-white' : 'bg-white text-ink-2 ring-1 ring-line')}>{MAANDNAMEN[m]}</button>
+                  <button key={m} onClick={() => setMaandIndex(i)} className={cx('rounded-full px-2.5 py-1 text-xs font-semibold', i === maandIndex ? 'bg-ink text-op-ink' : 'bg-oppervlak text-ink-2 ring-1 ring-line')}>{MAANDNAMEN[m]}</button>
                 ))}
               </div>
               <button className="knop knop-zacht !px-2.5" disabled={maandIndex === SEIZOENSMAANDEN.length - 1} onClick={() => setMaandIndex(maandIndex + 1)} aria-label="Volgende maand">{eenvoudig && <span className="hidden sm:inline">Volgende</span>}<CaretRight size={18} /></button>
@@ -177,8 +177,8 @@ export default function Kalender() {
                     className={cx(
                       'plop flex flex-col gap-1 rounded-2xl p-1.5 transition',
                       eenvoudig ? 'min-h-[132px]' : 'min-h-[118px]',
-                      inMaand ? 'bg-white ring-1 ring-line' : 'bg-transparent opacity-40',
-                      isVrij && 'bg-[repeating-linear-gradient(45deg,#fff,#fff_6px,#f7f2ff_6px,#f7f2ff_12px)] outline-2 outline-dashed outline-violet/40',
+                      inMaand ? 'bg-oppervlak ring-1 ring-line' : 'bg-transparent opacity-40',
+                      isVrij && 'bg-[repeating-linear-gradient(45deg,var(--color-oppervlak),var(--color-oppervlak)_6px,var(--color-lavendel)_6px,var(--color-lavendel)_12px)] outline-2 outline-dashed outline-violet/40',
                       isVandaag && 'ring-2 ring-koraal',
                     )}
                   >
@@ -208,7 +208,7 @@ export default function Kalender() {
             {SEIZOENSMAANDEN.map((m, i) => {
               const j = m >= 8 ? jaar : jaar + 1
               return (
-                <button key={m} style={staffel(i)} onClick={() => { setMaandIndex(i); setWeergave('maand') }} className="verschijn rounded-2xl bg-[#fffaf5] p-3 text-left ring-1 ring-line transition hover:-translate-y-0.5 hover:shadow-md">
+                <button key={m} style={staffel(i)} onClick={() => { setMaandIndex(i); setWeergave('maand') }} className="verschijn rounded-2xl bg-vlak p-3 text-left ring-1 ring-line transition hover:-translate-y-0.5 hover:shadow-md">
                   <div className="mb-2 flex justify-between text-sm font-bold capitalize">
                     {MAANDNAMEN_LANG[m]}
                     <span className="font-medium text-ink-2">{gefilterd.filter((v) => maandVan(v.datum) === m).length}</span>
@@ -225,7 +225,7 @@ export default function Kalender() {
                           key={iso}
                           title={inMaand ? `${datumKort(iso)}: ${items.length} voorstelling(en), ${getal(b)} bezoekers` : ''}
                           className={cx('aspect-square rounded-[5px]', !inMaand && 'opacity-0', vlekken && inMaand && vrij.has(iso) && 'ring-1 ring-violet/60')}
-                          style={{ background: items.length ? `rgba(139, 92, 246, ${0.18 + t * 0.82})` : '#f3ece3' }}
+                          style={{ background: items.length ? `rgba(139, 92, 246, ${0.18 + t * 0.82})` : 'var(--color-spoor)' }}
                         />
                       )
                     })}
@@ -344,7 +344,7 @@ function WeekWeergave({ weekStart, setWeekStart, perDag, kleuring, onVrij }: {
               {dagen.map((d) => {
                 const items = (perDag.get(d) ?? []).filter((v) => v.zaal === z.naam)
                 return (
-                  <div key={d} className="min-h-28 space-y-1.5 rounded-2xl bg-white p-1.5 ring-1 ring-line">
+                  <div key={d} className="min-h-28 space-y-1.5 rounded-2xl bg-oppervlak p-1.5 ring-1 ring-line">
                     {items.map((v) => {
                       const kleur = kleurVan(v, kleuring)
                       const verkocht = verkochtTotNu(v)
@@ -403,7 +403,7 @@ function LijstWeergave({ lijst, onKies }: { lijst: Voorstelling[]; onKies: (id: 
           </thead>
           <tbody>
             {gesorteerd.map((v) => (
-              <tr key={v.id} onClick={() => onKies(v.id)} className="cursor-pointer border-b border-line/60 transition hover:bg-[#fff6ee]">
+              <tr key={v.id} onClick={() => onKies(v.id)} className="cursor-pointer border-b border-line/60 transition hover:bg-zacht">
                 <td className="whitespace-nowrap px-3 py-2.5 text-ink-2">{datumKort(v.datum)}</td>
                 <td className="px-3 py-2.5 font-semibold">{v.titel}{v.bron === 'scenario' && <span className="ml-2 rounded-full bg-violet/10 px-2 py-0.5 text-[10px] font-bold text-violet">scenario</span>}</td>
                 <td className="px-3 py-2.5"><GenreLabel genre={v.genre} klein /></td>
@@ -413,7 +413,7 @@ function LijstWeergave({ lijst, onKies }: { lijst: Voorstelling[]; onKies: (id: 
                 <td className="px-3 py-2.5 text-right tabular-nums">{actief(v) ? getal(verkochtTotNu(v)) : '·'}</td>
                 <td className="px-3 py-2.5 text-right">
                   <div className="ml-auto flex w-28 items-center gap-2">
-                    <div className="h-1.5 flex-1 rounded-full bg-[#f6efe6]"><div className="h-full rounded-full bg-mint" style={{ width: `${Math.min(100, bezetting(v) * 100)}%` }} /></div>
+                    <div className="h-1.5 flex-1 rounded-full bg-spoor"><div className="h-full rounded-full bg-mint" style={{ width: `${Math.min(100, bezetting(v) * 100)}%` }} /></div>
                     <span className="w-9 tabular-nums text-ink-2">{procent(bezetting(v))}</span>
                   </div>
                 </td>
@@ -447,7 +447,7 @@ function SuggestieLade({ vlek, onSluit, seizoen }: { vlek: { datum: string; zaal
           {!groep.items.length && <p className="text-sm text-muted">Geen aanbod gevonden.</p>}
           <div className="space-y-2">
             {groep.items.map((a) => (
-              <div key={a.id} className="flex items-center gap-3 rounded-2xl bg-white p-3 ring-1 ring-line">
+              <div key={a.id} className="flex items-center gap-3 rounded-2xl bg-oppervlak p-3 ring-1 ring-line">
                 <Match score={matches.get(a.id)?.score ?? 0} grootte={46} />
                 <button className="min-w-0 flex-1 text-left" onClick={() => toonAanbod(a.id)}>
                   <div className="truncate font-semibold hover:underline">{a.titel}</div>

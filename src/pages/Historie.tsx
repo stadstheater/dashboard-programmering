@@ -83,12 +83,12 @@ export default function Historie() {
           <div className="h-72">
             <ResponsiveContainer>
               <BarChart data={perSeizoen} margin={{ top: 8, right: 8, left: 0 }}>
-                <CartesianGrid vertical={false} stroke="#f1e9df" />
-                <XAxis dataKey="seizoen" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#55526f' }} />
-                <YAxis tickLine={false} axisLine={false} tickFormatter={(v) => `${Math.round(v / 1000)}k`} tick={{ fontSize: 12, fill: '#8a87a2' }} width={44} />
-                <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => getal(v)} />} />
-                <Bar animationDuration={900} dataKey="Gerealiseerd" stackId="a" fill="#2a78d6" stroke="#fff" strokeWidth={2} maxBarSize={56} />
-                <Bar animationDuration={900} dataKey="Prognose" stackId="a" fill="#9ec5f4" stroke="#fff" strokeWidth={2} radius={[6, 6, 0, 0]} maxBarSize={56} />
+                <CartesianGrid vertical={false} stroke="var(--color-raster)" />
+                <XAxis dataKey="seizoen" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: 'var(--color-ink-2)' }} />
+                <YAxis tickLine={false} axisLine={false} tickFormatter={(v) => `${Math.round(v / 1000)}k`} tick={{ fontSize: 12, fill: 'var(--color-muted)' }} width={44} />
+                <Tooltip cursor={{ fill: 'var(--color-zacht)' }} content={<TipKaart formatter={(v) => getal(v)} />} />
+                <Bar animationDuration={900} dataKey="Gerealiseerd" stackId="a" fill="#2a78d6" stroke="var(--color-oppervlak)" strokeWidth={2} maxBarSize={56} />
+                <Bar animationDuration={900} dataKey="Prognose" stackId="a" fill="#9ec5f4" stroke="var(--color-oppervlak)" strokeWidth={2} radius={[6, 6, 0, 0]} maxBarSize={56} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -98,11 +98,11 @@ export default function Historie() {
           <div className="h-72">
             <ResponsiveContainer>
               <LineChart data={perSeizoen} margin={{ top: 16, right: 16, left: 0 }}>
-                <CartesianGrid vertical={false} stroke="#f1e9df" />
-                <XAxis dataKey="seizoen" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#55526f' }} />
-                <YAxis tickLine={false} axisLine={false} unit="%" domain={[50, 90]} ticks={[50, 60, 70, 80, 90]} tick={{ fontSize: 12, fill: '#8a87a2' }} width={48} />
+                <CartesianGrid vertical={false} stroke="var(--color-raster)" />
+                <XAxis dataKey="seizoen" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: 'var(--color-ink-2)' }} />
+                <YAxis tickLine={false} axisLine={false} unit="%" domain={[50, 90]} ticks={[50, 60, 70, 80, 90]} tick={{ fontSize: 12, fill: 'var(--color-muted)' }} width={48} />
                 <Tooltip content={<TipKaart formatter={(v) => `${v.toFixed(1).replace('.', ',')}%`} />} />
-                <Line animationDuration={900} dataKey="bezetting" name="Bezetting" stroke="#1baf7a" strokeWidth={2.5} dot={{ r: 5, fill: '#1baf7a', stroke: '#fff', strokeWidth: 2 }} activeDot={{ r: 7 }} label={{ position: 'top', fontSize: 11, fill: '#55526f', formatter: (v: unknown) => `${Math.round(Number(v))}%` }} />
+                <Line animationDuration={900} dataKey="bezetting" name="Bezetting" stroke="#1baf7a" strokeWidth={2.5} dot={{ r: 5, fill: '#1baf7a', stroke: 'var(--color-oppervlak)', strokeWidth: 2 }} activeDot={{ r: 7 }} label={{ position: 'top', fontSize: 11, fill: 'var(--color-ink-2)', formatter: (v: unknown) => `${Math.round(Number(v))}%` }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -120,7 +120,7 @@ export default function Historie() {
             </thead>
             <tbody>
               {perSeizoen.map((s, i) => (
-                <tr key={s.seizoen} style={staffel(i + 2)} className={cx('verschijn border-b border-line/60 transition hover:bg-[#fff6ee]', s.seizoen === huidig && 'bg-citroen/50')}>
+                <tr key={s.seizoen} style={staffel(i + 2)} className={cx('verschijn border-b border-line/60 transition hover:bg-zacht', s.seizoen === huidig && 'bg-citroen/50')}>
                   <td className="px-3 py-2.5 font-display font-bold">{s.seizoen}{s.seizoen === HUIDIG_SEIZOEN && <span className="ml-2 rounded-full bg-mint px-1.5 text-[10px] text-white">nu</span>}{s.seizoen === PLAN_SEIZOEN && <span className="ml-2 rounded-full bg-violet px-1.5 text-[10px] text-white">plan</span>}</td>
                   <td className="px-3 py-2.5 text-right tabular-nums">{getal(s.aantal)}</td>
                   <td className="px-3 py-2.5 text-right tabular-nums">{getal(s.Gerealiseerd + s.Prognose)}</td>
@@ -140,12 +140,12 @@ export default function Historie() {
           <div className="h-80">
             <ResponsiveContainer>
               <AreaChart data={genreTrend} margin={{ top: 8, right: 8, left: 0 }}>
-                <CartesianGrid vertical={false} stroke="#f1e9df" />
-                <XAxis dataKey="seizoen" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#55526f' }} />
-                <YAxis tickLine={false} axisLine={false} unit="%" domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} allowDataOverflow tick={{ fontSize: 12, fill: '#8a87a2' }} width={44} />
+                <CartesianGrid vertical={false} stroke="var(--color-raster)" />
+                <XAxis dataKey="seizoen" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: 'var(--color-ink-2)' }} />
+                <YAxis tickLine={false} axisLine={false} unit="%" domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} allowDataOverflow tick={{ fontSize: 12, fill: 'var(--color-muted)' }} width={44} />
                 <Tooltip content={<TipKaart formatter={(v) => `${v.toFixed(1).replace('.', ',')}%`} />} />
                 {GENRE_FAMILIES.map((f) => (
-                  <Area animationDuration={900} key={f.naam} dataKey={f.naam} stackId="a" stroke="#fff" strokeWidth={2} fill={f.kleur} fillOpacity={0.9} type="monotone" />
+                  <Area animationDuration={900} key={f.naam} dataKey={f.naam} stackId="a" stroke="var(--color-oppervlak)" strokeWidth={2} fill={f.kleur} fillOpacity={0.9} type="monotone" />
                 ))}
               </AreaChart>
             </ResponsiveContainer>
@@ -156,8 +156,8 @@ export default function Historie() {
           <div className="h-80">
             <ResponsiveContainer>
               <RadarChart data={dna} outerRadius="70%">
-                <PolarGrid stroke="#eadfd2" />
-                <PolarAngleAxis dataKey="naam" tick={{ fontSize: 11, fill: '#55526f' }} />
+                <PolarGrid stroke="var(--color-raster)" />
+                <PolarAngleAxis dataKey="naam" tick={{ fontSize: 11, fill: 'var(--color-ink-2)' }} />
                 <PolarRadiusAxis tick={false} axisLine={false} />
                 <Radar animationDuration={900} name="Historie" dataKey="Historie" stroke="#eb6834" fill="#eb6834" fillOpacity={0.12} strokeWidth={2} />
                 <Radar animationDuration={900} name={`Seizoen ${huidig}`} dataKey={`Seizoen ${huidig}`} stroke="#6250d6" fill="#6250d6" fillOpacity={0.25} strokeWidth={2} />
@@ -174,12 +174,12 @@ export default function Historie() {
           <div className="h-72">
             <ResponsiveContainer>
               <BarChart data={inschatting} layout="vertical" margin={{ left: 8, right: 30 }}>
-                <CartesianGrid horizontal={false} stroke="#f1e9df" />
-                <XAxis type="number" domain={[60, 130]} unit="%" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: '#8a87a2' }} />
-                <YAxis type="category" dataKey="naam" width={110} tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#55526f' }} />
-                <ReferenceLine x={100} stroke="#1d1b2f" strokeDasharray="4 4" />
-                <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => `${v}%`} />} />
-                <Bar animationDuration={900} dataKey="Realisatie" radius={[0, 6, 6, 0]} barSize={14} label={{ position: 'right', fontSize: 11, fill: '#55526f', formatter: (v: unknown) => `${v}%` }}>
+                <CartesianGrid horizontal={false} stroke="var(--color-raster)" />
+                <XAxis type="number" domain={[60, 130]} unit="%" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: 'var(--color-muted)' }} />
+                <YAxis type="category" dataKey="naam" width={110} tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: 'var(--color-ink-2)' }} />
+                <ReferenceLine x={100} stroke="var(--color-ink)" strokeDasharray="4 4" />
+                <Tooltip cursor={{ fill: 'var(--color-zacht)' }} content={<TipKaart formatter={(v) => `${v}%`} />} />
+                <Bar animationDuration={900} dataKey="Realisatie" radius={[0, 6, 6, 0]} barSize={14} label={{ position: 'right', fontSize: 11, fill: 'var(--color-ink-2)', formatter: (v: unknown) => `${v}%` }}>
                   {inschatting.map((i) => <Cell key={i.naam} fill={i.Realisatie >= 100 ? '#1baf7a' : i.Realisatie >= 92 ? '#eda100' : '#e34948'} />)}
                 </Bar>
               </BarChart>
@@ -191,11 +191,11 @@ export default function Historie() {
           <div className="h-72">
             <ResponsiveContainer>
               <BarChart data={weekdagen} margin={{ top: 20, right: 8, left: 0 }}>
-                <CartesianGrid vertical={false} stroke="#f1e9df" />
-                <XAxis dataKey="dag" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#55526f' }} />
-                <YAxis tickLine={false} axisLine={false} unit="%" domain={[0, 100]} tick={{ fontSize: 12, fill: '#8a87a2' }} width={44} />
-                <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => `${v.toFixed(0)}%`} titel={(l, p) => `${l} (${p?.aantal} voorstellingen)`} />} />
-                <Bar animationDuration={900} dataKey="Bezetting" fill="#6250d6" radius={[6, 6, 0, 0]} maxBarSize={40} label={{ position: 'top', fontSize: 11, fill: '#55526f', formatter: (v: unknown) => `${Math.round(Number(v))}%` }} />
+                <CartesianGrid vertical={false} stroke="var(--color-raster)" />
+                <XAxis dataKey="dag" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: 'var(--color-ink-2)' }} />
+                <YAxis tickLine={false} axisLine={false} unit="%" domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--color-muted)' }} width={44} />
+                <Tooltip cursor={{ fill: 'var(--color-zacht)' }} content={<TipKaart formatter={(v) => `${v.toFixed(0)}%`} titel={(l, p) => `${l} (${p?.aantal} voorstellingen)`} />} />
+                <Bar animationDuration={900} dataKey="Bezetting" fill="#6250d6" radius={[6, 6, 0, 0]} maxBarSize={40} label={{ position: 'top', fontSize: 11, fill: 'var(--color-ink-2)', formatter: (v: unknown) => `${Math.round(Number(v))}%` }} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -204,8 +204,8 @@ export default function Historie() {
           <ol className="space-y-1.5">
             {topBezoekers.map((t, i) => (
               <li key={t.titel} className="verschijn" style={staffel(i + 6)}>
-                <button onClick={() => toon(t.id)} className="flex w-full items-center gap-3 rounded-xl px-2 py-1.5 text-left text-sm hover:bg-[#fff6ee]">
-                  <span className={cx('grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold', i < 3 ? 'bg-zon text-ink' : 'bg-[#f4efe8] text-ink-2')}>{i + 1}</span>
+                <button onClick={() => toon(t.id)} className="flex w-full items-center gap-3 rounded-xl px-2 py-1.5 text-left text-sm hover:bg-zacht">
+                  <span className={cx('grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold', i < 3 ? 'bg-zon text-ink' : 'bg-vlak text-ink-2')}>{i + 1}</span>
                   <span className="min-w-0 flex-1 truncate font-medium">{t.titel}</span>
                   <span className="shrink-0 tabular-nums text-ink-2">{getal(t.bezoekers)}</span>
                   <span className="w-8 shrink-0 text-right text-xs text-muted">{t.aantal}x</span>

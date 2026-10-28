@@ -54,12 +54,12 @@ export function Kaart({ titel, sub, actie, children, className, kleur, i = 0, ui
 }
 
 const TEGEL_STIJL = {
-  perzik: { verloop: 'from-[#ffe7df] to-[#ffd2c6]', kleur: '#f4664d' },
-  citroen: { verloop: 'from-[#fff4c7] to-[#ffe79a]', kleur: '#d48a00' },
-  munt: { verloop: 'from-[#d6f7ef] to-[#b3eedf]', kleur: '#139a78' },
-  lavendel: { verloop: 'from-[#eee8ff] to-[#ddd2ff]', kleur: '#7c5cf0' },
-  ijs: { verloop: 'from-[#e0f3ff] to-[#c4e7ff]', kleur: '#1f83c9' },
-  snoep: { verloop: 'from-[#ffe3f0] to-[#ffcae2]', kleur: '#db3f86' },
+  perzik: { verloop: 'from-perzik to-perzik-2', kleur: '#f4664d' },
+  citroen: { verloop: 'from-citroen to-citroen-2', kleur: '#d48a00' },
+  munt: { verloop: 'from-munt to-munt-2', kleur: '#139a78' },
+  lavendel: { verloop: 'from-lavendel to-lavendel-2', kleur: '#7c5cf0' },
+  ijs: { verloop: 'from-ijs to-ijs-2', kleur: '#1f83c9' },
+  snoep: { verloop: 'from-snoep to-snoep-2', kleur: '#db3f86' },
 }
 
 export function Getal({ waarde, opmaak }: { waarde: number; opmaak: (n: number) => string }) {
@@ -89,7 +89,7 @@ export function KpiTegel({ label, waarde, opmaak, sub, icoon: I, kleur = 'perzik
       <div className="relative flex items-center justify-between">
         <span className="text-[13px] font-semibold text-ink-2">{label}</span>
         {I && (
-          <span className="wip grid h-9 w-9 place-items-center rounded-2xl bg-white/75 shadow-sm" style={{ color: stijl.kleur }}>
+          <span className="wip grid h-9 w-9 place-items-center rounded-2xl bg-oppervlak/75 shadow-sm" style={{ color: stijl.kleur }}>
             <I weight="fill" size={19} />
           </span>
         )}
@@ -99,7 +99,7 @@ export function KpiTegel({ label, waarde, opmaak, sub, icoon: I, kleur = 'perzik
       </div>
       {sub && <div className="relative mt-1 text-[13px] text-ink-2">{sub}</div>}
       {voortgang !== undefined && (
-        <div className="relative mt-3 h-2 overflow-hidden rounded-full bg-white/60">
+        <div className="relative mt-3 h-2 overflow-hidden rounded-full bg-oppervlak/60">
           <div className="groei h-full rounded-full bg-ink/80" style={{ width: `${Math.min(100, voortgang * 100)}%`, ...staffel(i) }} />
         </div>
       )}
@@ -174,7 +174,7 @@ export function GenreLabel({ genre, klein }: { genre: string; klein?: boolean })
 
 function SluitKnop({ onSluit }: { onSluit: () => void }) {
   return (
-    <button onClick={onSluit} className="grid h-9 w-9 place-items-center rounded-full bg-white shadow-sm transition hover:rotate-90 hover:bg-perzik" aria-label="Sluiten">
+    <button onClick={onSluit} className="grid h-9 w-9 place-items-center rounded-full bg-oppervlak shadow-sm transition hover:rotate-90 hover:bg-perzik" aria-label="Sluiten">
       <X weight="bold" size={16} />
     </button>
   )
@@ -190,9 +190,9 @@ export function Lade({ open, onSluit, titel, children, breed }: { open: boolean;
   if (!open) return null
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="vervaag-in absolute inset-0 bg-ink/25 backdrop-blur-[2px]" onClick={onSluit} />
-      <aside className={cx('schuif-in dun-scroll relative h-full w-full overflow-y-auto bg-[#fffdfa] shadow-2xl', breed ? 'max-w-2xl' : 'max-w-lg')}>
-        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-line bg-[#fffdfa]/95 px-6 py-4 backdrop-blur">
+      <div className="vervaag-in absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={onSluit} />
+      <aside className={cx('schuif-in dun-scroll relative h-full w-full overflow-y-auto bg-paneel shadow-2xl', breed ? 'max-w-2xl' : 'max-w-lg')}>
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-line bg-paneel/95 px-6 py-4 backdrop-blur">
           <div className="font-display text-xl font-bold">{titel}</div>
           <SluitKnop onSluit={onSluit} />
         </div>
@@ -212,9 +212,9 @@ export function Venster({ open, onSluit, titel, children }: { open: boolean; onS
   if (!open) return null
   return (
     <div className="fixed inset-0 z-50 grid place-items-center p-4">
-      <div className="vervaag-in absolute inset-0 bg-ink/30 backdrop-blur-[2px]" onClick={onSluit} />
-      <div className="plop dun-scroll relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl bg-[#fffdfa] shadow-2xl">
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-line bg-[#fffdfa]/95 px-6 py-4 backdrop-blur">
+      <div className="vervaag-in absolute inset-0 bg-black/45 backdrop-blur-[2px]" onClick={onSluit} />
+      <div className="plop dun-scroll relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl bg-paneel shadow-2xl">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-line bg-paneel/95 px-6 py-4 backdrop-blur">
           <div className="font-display text-xl font-bold">{titel}</div>
           <SluitKnop onSluit={onSluit} />
         </div>
@@ -252,7 +252,7 @@ export function DoelBalk({ label, icoon: I, kleur, aandeel, doel, max = 40, sub,
           </span>
         </span>
       </div>
-      <div className="relative h-3 rounded-full bg-[#f6efe6]">
+      <div className="relative h-3 rounded-full bg-spoor">
         <div className={cx('groei h-full rounded-full transition-[width] duration-700 group-hover:brightness-110', isLicht(kleur) && 'ring-1 ring-inset ring-black/15')} style={{ width: `${Math.min(100, (aandeel / max) * 100)}%`, background: kleur, ...staffel(i) }} />
         <div className="absolute -top-1 h-5 w-[3px] rounded-full bg-ink transition-[left] duration-700" style={{ left: `calc(${Math.min(100, (doel / max) * 100)}% - 1px)` }} title={`Doel ${doel}%`} />
       </div>
@@ -262,17 +262,17 @@ export function DoelBalk({ label, icoon: I, kleur, aandeel, doel, max = 40, sub,
 }
 
 export function Leeg({ children }: { children: ReactNode }) {
-  return <div className="rounded-2xl border border-dashed border-line bg-white/60 p-8 text-center text-sm text-ink-2">{children}</div>
+  return <div className="rounded-2xl border border-dashed border-line bg-oppervlak/60 p-8 text-center text-sm text-ink-2">{children}</div>
 }
 
 export function Tabs<T extends string>({ waarde, opties, onChange, uitleg }: { waarde: T; opties: { id: T; label: ReactNode }[]; onChange: (t: T) => void; uitleg?: string }) {
   return (
-    <div data-uitleg={uitleg} className="inline-flex flex-wrap gap-1 rounded-full border border-line bg-white p-1 shadow-sm">
+    <div data-uitleg={uitleg} className="inline-flex flex-wrap gap-1 rounded-full border border-line bg-oppervlak p-1 shadow-sm">
       {opties.map((o) => (
         <button
           key={o.id}
           onClick={() => onChange(o.id)}
-          className={cx('flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold transition active:scale-95', waarde === o.id ? 'bg-ink text-white shadow' : 'text-ink-2 hover:bg-perzik/60')}
+          className={cx('flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold transition active:scale-95', waarde === o.id ? 'bg-ink text-op-ink shadow' : 'text-ink-2 hover:bg-perzik/60')}
         >
           {o.label}
         </button>
@@ -305,7 +305,7 @@ export function ScoreRing({ score, grootte = 52 }: { score: number; grootte?: nu
   return (
     <div className="relative shrink-0" style={{ width: grootte, height: grootte }} title={`Matchscore ${score} van 100`}>
       <svg width={grootte} height={grootte} className="-rotate-90">
-        <circle cx={grootte / 2} cy={grootte / 2} r={r} fill="none" stroke="#f3ebe1" strokeWidth={6} />
+        <circle cx={grootte / 2} cy={grootte / 2} r={r} fill="none" stroke="var(--color-spoor)" strokeWidth={6} />
         <circle
           className="ring-teken"
           cx={grootte / 2}

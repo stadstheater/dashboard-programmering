@@ -30,7 +30,7 @@ function maandDagen(jaar: number, maand: number) {
 function Delta({ label, voor, na, opmaak }: { label: string; voor: number; na: number; opmaak: (x: number) => string }) {
   const d = na - voor
   return (
-    <div className="rounded-2xl bg-white/80 p-4 ring-1 ring-white">
+    <div className="rounded-2xl bg-oppervlak/80 p-4 ring-1 ring-oppervlak">
       <div className="text-xs font-semibold text-ink-2">{label}</div>
       <div className="font-display mt-1 text-2xl font-extrabold">{opmaak(na)}</div>
       <div className={cx('mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-bold', d > 0 ? 'bg-emerald-100 text-emerald-800' : d < 0 ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-600')}>
@@ -153,7 +153,7 @@ export default function Scenario() {
                   style={staffel(i)}
                   onDragStart={(e) => { setSleep(a.id); e.dataTransfer.effectAllowed = 'copy' }}
                   onDragEnd={() => setSleep(null)}
-                  className={cx('verschijn group flex cursor-grab items-center gap-3 rounded-2xl bg-white p-3 ring-1 ring-line transition hover:-translate-y-0.5 hover:shadow-md active:cursor-grabbing', sleep === a.id && 'opacity-50 ring-2 ring-violet')}
+                  className={cx('verschijn group flex cursor-grab items-center gap-3 rounded-2xl bg-oppervlak p-3 ring-1 ring-line transition hover:-translate-y-0.5 hover:shadow-md active:cursor-grabbing', sleep === a.id && 'opacity-50 ring-2 ring-violet')}
                 >
                   <DotsSixVertical size={16} className="shrink-0 text-muted transition group-hover:text-violet" />
                   <ScoreRing score={m?.score ?? 0} grootte={42} />
@@ -183,7 +183,7 @@ export default function Scenario() {
                 {SEIZOENSMAANDEN.map((m, i) => {
                   const telling = scenario.filter((s) => Number(s.datum.slice(5, 7)) - 1 === m).length
                   return (
-                    <button key={m} onClick={() => setMaandIndex(i)} className={cx('relative rounded-full px-2.5 py-1 text-xs font-semibold', i === maandIndex ? 'bg-ink text-white' : 'bg-white text-ink-2 ring-1 ring-line')}>
+                    <button key={m} onClick={() => setMaandIndex(i)} className={cx('relative rounded-full px-2.5 py-1 text-xs font-semibold', i === maandIndex ? 'bg-ink text-op-ink' : 'bg-oppervlak text-ink-2 ring-1 ring-line')}>
                       {MAANDNAMEN[m]}
                       {telling > 0 && <span className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full bg-violet px-1 text-[10px] leading-4 text-white">{telling}</span>}
                     </button>
@@ -209,7 +209,7 @@ export default function Scenario() {
                     onDrop={(e) => { e.preventDefault(); drop(iso) }}
                     className={cx(
                       'flex min-h-[104px] flex-col gap-1 rounded-2xl p-1.5 transition',
-                      inMaand ? 'bg-white ring-1 ring-line' : 'opacity-30',
+                      inMaand ? 'bg-oppervlak ring-1 ring-line' : 'opacity-30',
                       kan && 'puls scale-[1.03] bg-emerald-50 ring-2 ring-emerald-400',
                     )}
                   >
@@ -221,7 +221,7 @@ export default function Scenario() {
                           <button className="ml-auto shrink-0 opacity-70 hover:opacity-100" onClick={() => verwijder(v.id.slice(2, -11), v.datum)} aria-label="Verwijder uit scenario"><X size={12} /></button>
                         </div>
                       ) : (
-                        <button key={v.id} onClick={() => toonVoorstelling(v.id)} className="truncate rounded-lg bg-[#f4efe8] px-1.5 py-1 text-left text-[11px] text-ink-2 hover:bg-[#ece4d9]" title={`${v.titel} (${v.status})`}>
+                        <button key={v.id} onClick={() => toonVoorstelling(v.id)} className="truncate rounded-lg bg-vlak px-1.5 py-1 text-left text-[11px] text-ink-2 hover:bg-spoor" title={`${v.titel} (${v.status})`}>
                           {v.titel}
                         </button>
                       ),
@@ -239,13 +239,13 @@ export default function Scenario() {
           <div className="h-80">
             <ResponsiveContainer>
               <BarChart data={dgData} layout="vertical" margin={{ left: 10, right: 16 }} barGap={2}>
-                <CartesianGrid horizontal={false} stroke="#f1e9df" />
-                <XAxis type="number" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#8a87a2' }} unit="%" />
-                <YAxis type="category" dataKey="naam" tickLine={false} axisLine={false} width={80} tick={{ fontSize: 12, fill: '#55526f' }} />
-                <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => `${v.toFixed(1).replace('.', ',')}%`} titel={(_, p) => String(p?.voluit ?? '')} />} />
+                <CartesianGrid horizontal={false} stroke="var(--color-raster)" />
+                <XAxis type="number" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: 'var(--color-muted)' }} unit="%" />
+                <YAxis type="category" dataKey="naam" tickLine={false} axisLine={false} width={80} tick={{ fontSize: 12, fill: 'var(--color-ink-2)' }} />
+                <Tooltip cursor={{ fill: 'var(--color-zacht)' }} content={<TipKaart formatter={(v) => `${v.toFixed(1).replace('.', ',')}%`} titel={(_, p) => String(p?.voluit ?? '')} />} />
                 <Bar animationDuration={900} dataKey="Huidig" fill="#c9c3d6" radius={[0, 4, 4, 0]} barSize={9} />
                 <Bar animationDuration={900} dataKey="Met scenario" fill="#8b5cf6" radius={[0, 4, 4, 0]} barSize={9} />
-                {dgData.map((d) => <ReferenceDot key={d.naam} x={d.doel} y={d.naam} r={4} fill="#1d1b2f" stroke="#fff" />)}
+                {dgData.map((d) => <ReferenceDot key={d.naam} x={d.doel} y={d.naam} r={4} fill="var(--color-ink)" stroke="var(--color-oppervlak)" />)}
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -254,13 +254,13 @@ export default function Scenario() {
           <div className="h-80">
             <ResponsiveContainer>
               <BarChart data={motData} layout="vertical" margin={{ left: 10, right: 16 }} barGap={2}>
-                <CartesianGrid horizontal={false} stroke="#f1e9df" />
-                <XAxis type="number" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#8a87a2' }} unit="%" />
-                <YAxis type="category" dataKey="naam" tickLine={false} axisLine={false} width={80} tick={{ fontSize: 12, fill: '#55526f' }} />
-                <Tooltip cursor={{ fill: '#fff3ea' }} content={<TipKaart formatter={(v) => `${v.toFixed(1).replace('.', ',')}%`} titel={(_, p) => String(p?.voluit ?? '')} />} />
+                <CartesianGrid horizontal={false} stroke="var(--color-raster)" />
+                <XAxis type="number" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: 'var(--color-muted)' }} unit="%" />
+                <YAxis type="category" dataKey="naam" tickLine={false} axisLine={false} width={80} tick={{ fontSize: 12, fill: 'var(--color-ink-2)' }} />
+                <Tooltip cursor={{ fill: 'var(--color-zacht)' }} content={<TipKaart formatter={(v) => `${v.toFixed(1).replace('.', ',')}%`} titel={(_, p) => String(p?.voluit ?? '')} />} />
                 <Bar animationDuration={900} dataKey="Huidig" fill="#c9c3d6" radius={[0, 4, 4, 0]} barSize={9} />
                 <Bar animationDuration={900} dataKey="Met scenario" fill="#e87ba4" radius={[0, 4, 4, 0]} barSize={9} />
-                {motData.map((d) => <ReferenceDot key={d.naam} x={d.doel} y={d.naam} r={4} fill="#1d1b2f" stroke="#fff" />)}
+                {motData.map((d) => <ReferenceDot key={d.naam} x={d.doel} y={d.naam} r={4} fill="var(--color-ink)" stroke="var(--color-oppervlak)" />)}
               </BarChart>
             </ResponsiveContainer>
           </div>

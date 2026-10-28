@@ -42,7 +42,7 @@ function SegmentKiezer({ lijst, gekozen, max, onChange }: { lijst: typeof DOELGR
             type="button"
             key={s.naam}
             onClick={() => onChange(i >= 0 ? gekozen.filter((g) => g !== s.naam) : gekozen.length < max ? [...gekozen, s.naam] : gekozen)}
-            className={cx('flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold transition', i >= 0 ? 'border-transparent' : 'border-line bg-white text-ink-2 hover:bg-[#fff6ee]')}
+            className={cx('flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold transition', i >= 0 ? 'border-transparent' : 'border-line bg-oppervlak text-ink-2 hover:bg-zacht')}
             style={i >= 0 ? { background: s.kleur, color: inktVoor(s.kleur) } : undefined}
           >
             {i >= 0 && <span className="grid h-4 w-4 place-items-center rounded-full bg-white/30 text-[10px]">{i + 1}</span>}
@@ -175,7 +175,7 @@ function AanbodFormulier({ start, onOpslaan, onSluit }: { start: Aanbod; onOpsla
         <Veld label="Geschikte zalen" breed>
           <div className="flex gap-2">
             {ZALEN.map((z) => (
-              <label key={z.naam} className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-sm ring-1 ring-line">
+              <label key={z.naam} className="flex items-center gap-1.5 rounded-full bg-oppervlak px-3 py-1.5 text-sm ring-1 ring-line">
                 <input type="checkbox" className="accent-violet-600" checked={a.zalen.includes(z.naam)} onChange={(e) => zet({ zalen: e.target.checked ? [...a.zalen, z.naam] : a.zalen.filter((x) => x !== z.naam) })} />
                 {z.naam}
               </label>
@@ -329,7 +329,7 @@ export default function Builder() {
               <tbody>
                 {tab === 'voorstellingen'
                   ? voorstellingen.slice(0, aantal).map((v) => (
-                      <tr key={v.id} className="border-b border-line/60 hover:bg-[#fff6ee]">
+                      <tr key={v.id} className="border-b border-line/60 hover:bg-zacht">
                         <td className="whitespace-nowrap px-3 py-2 text-ink-2">{datumKort(v.datum)} {v.datum.slice(0, 4)}</td>
                         <td className="px-3 py-2 font-semibold">{v.titel}</td>
                         <td className="px-3 py-2"><GenreLabel genre={v.genre} klein /></td>
@@ -338,13 +338,13 @@ export default function Builder() {
                         <td className="px-3 py-2 tabular-nums">{getal(v.verwacht)}</td>
                         <td className="px-3 py-2"><SegmentIconen namen={v.doelgroepen} /></td>
                         <td className="whitespace-nowrap px-3 py-2 text-right">
-                          <button className="rounded-full p-2 hover:bg-white" onClick={() => setBewerkV(v)} aria-label="Bewerken"><PencilSimple size={15} /></button>
+                          <button className="rounded-full p-2 hover:bg-oppervlak" onClick={() => setBewerkV(v)} aria-label="Bewerken"><PencilSimple size={15} /></button>
                           <button className="rounded-full p-2 text-rose-600 hover:bg-rose-50" onClick={() => confirm(`"${v.titel}" verwijderen?`) && verwijderV(v.id)} aria-label="Verwijderen"><Trash size={15} /></button>
                         </td>
                       </tr>
                     ))
                   : aanbod.slice(0, aantal).map((a) => (
-                      <tr key={a.id} className="border-b border-line/60 hover:bg-[#fff6ee]">
+                      <tr key={a.id} className="border-b border-line/60 hover:bg-zacht">
                         <td className="px-3 py-2 font-semibold">{a.titel}</td>
                         <td className="px-3 py-2 text-ink-2">{a.impresariaat}</td>
                         <td className="px-3 py-2"><GenreLabel genre={a.genre} klein /></td>
@@ -353,7 +353,7 @@ export default function Builder() {
                         <td className="px-3 py-2"><StatusLabel status={a.status} klein /></td>
                         <td className="px-3 py-2"><SegmentIconen namen={a.doelgroepen} /></td>
                         <td className="whitespace-nowrap px-3 py-2 text-right">
-                          <button className="rounded-full p-2 hover:bg-white" onClick={() => setBewerkA(a)} aria-label="Bewerken"><PencilSimple size={15} /></button>
+                          <button className="rounded-full p-2 hover:bg-oppervlak" onClick={() => setBewerkA(a)} aria-label="Bewerken"><PencilSimple size={15} /></button>
                           <button className="rounded-full p-2 text-rose-600 hover:bg-rose-50" onClick={() => confirm(`"${a.titel}" verwijderen?`) && verwijderA(a.id)} aria-label="Verwijderen"><Trash size={15} /></button>
                         </td>
                       </tr>

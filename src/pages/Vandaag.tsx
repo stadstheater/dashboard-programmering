@@ -102,7 +102,7 @@ export default function Vandaag() {
           {!signalen.length && <p className="text-ink-2">Niets bijzonders: alles ziet er goed uit.</p>}
           <div className="space-y-3">
             {signalen.map((s, i) => (
-              <div key={s.titel} className="verschijn flex flex-wrap items-center gap-4 rounded-2xl bg-[#fff8f1] p-4 ring-1 ring-line" style={staffel(i + 4)}>
+              <div key={s.titel} className="verschijn flex flex-wrap items-center gap-4 rounded-2xl bg-vlak p-4 ring-1 ring-line" style={staffel(i + 4)}>
                 <IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={44} />
                 <div className="min-w-[13rem] flex-1">
                   <div className="text-base font-bold">{gewoneTaal(s.titel)}</div>
@@ -126,7 +126,7 @@ export default function Vandaag() {
               const f = familieVan(v.genre)
               return (
                 <li key={v.id} className="verschijn" style={staffel(i + 5)}>
-                  <button onClick={() => toon(v.id)} className="group flex w-full items-center gap-4 rounded-2xl p-2 text-left transition hover:bg-[#fff6ee]">
+                  <button onClick={() => toon(v.id)} className="group flex w-full items-center gap-4 rounded-2xl p-2 text-left transition hover:bg-zacht">
                     <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-center leading-tight transition group-hover:scale-105" style={{ background: f.kleur + '1f' }}>
                       <div>
                         <div className="font-display text-xl font-extrabold">{Number(v.datum.slice(8, 10))}</div>
@@ -136,7 +136,7 @@ export default function Vandaag() {
                     <div className="min-w-0 flex-1">
                       <div className="truncate text-base font-semibold">{v.titel}</div>
                       <div className="mt-1 flex items-center gap-2 text-sm text-ink-2">
-                        <div className="h-2 w-28 rounded-full bg-[#f6efe6]">
+                        <div className="h-2 w-28 rounded-full bg-spoor">
                           <div className="groei h-full rounded-full" style={{ width: `${(verkocht / v.capaciteit) * 100}%`, background: f.kleur, ...staffel(i + 5) }} />
                         </div>
                         {procent(verkocht / v.capaciteit)} verkocht

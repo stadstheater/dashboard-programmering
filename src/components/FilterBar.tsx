@@ -22,18 +22,18 @@ function Keuze({ label, opties, gekozen, onChange }: {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className={cx('flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-sm font-semibold transition', gekozen.length ? 'border-ink bg-ink text-white' : 'border-line bg-white text-ink hover:bg-[#fff6ee]')}
+        className={cx('flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-sm font-semibold transition', gekozen.length ? 'border-ink bg-ink text-op-ink' : 'border-line bg-oppervlak text-ink hover:bg-zacht')}
       >
         {label}
         {gekozen.length > 0 && <span className="rounded-full bg-white/20 px-1.5 text-xs">{gekozen.length}</span>}
         <CaretDown size={15} />
       </button>
       {open && (
-        <div className="verschijn absolute left-0 z-40 mt-2 max-h-80 w-72 overflow-y-auto rounded-2xl border border-line bg-white p-2 shadow-[var(--shadow-hoog)]">
+        <div className="verschijn absolute left-0 z-40 mt-2 max-h-80 w-72 overflow-y-auto rounded-2xl border border-line bg-oppervlak p-2 shadow-[var(--shadow-hoog)]">
           {opties.map((o) => {
             const aan = gekozen.includes(o.naam)
             return (
-              <label key={o.naam} className="flex cursor-pointer items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm hover:bg-[#fff6ee]">
+              <label key={o.naam} className="flex cursor-pointer items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm hover:bg-zacht">
                 <input type="checkbox" checked={aan} onChange={() => onChange(aan ? gekozen.filter((g) => g !== o.naam) : [...gekozen, o.naam])} className="h-4 w-4 accent-violet-600" />
                 {o.kleur && <span className="h-2.5 w-2.5 rounded-full" style={{ background: o.kleur }} />}
                 {o.emoji && <span>{o.emoji}</span>}
