@@ -11,7 +11,7 @@ import { useArtiesten, useMatches, useSelectie } from '../lib/hooks'
 import { MATCH_GEWICHTEN, OORDEEL_KLEUR, vindKannibalisatie } from '../lib/inzichten'
 import { useStore } from '../store/useStore'
 import { staffel } from '../lib/animatie'
-import { GenreLabel, IcoonBol, Lade, ScoreRing, SegmentChip, StatusLabel, cx } from './ui'
+import { CdmLabel, GenreLabel, IcoonBol, Lade, PastBijOns, ScoreRing, SegmentChip, StatusLabel, cx } from './ui'
 
 function Feit({ label, waarde, sub }: { label: string; waarde: React.ReactNode; sub?: React.ReactNode }) {
   return (
@@ -29,6 +29,7 @@ export function VoorstellingLade() {
   const alle = useStore((s) => s.dataset.voorstellingen)
   const artiesten = useArtiesten()
   const navigate = useNavigate()
+  const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
   const v = alle.find((x) => x.id === id)
   const conflicten = useMemo(
     () => (v ? vindKannibalisatie(alle.filter((x) => x.seizoen === v.seizoen)).filter((c) => c.a.id === v.id || c.b.id === v.id) : []),
@@ -75,9 +76,9 @@ export function VoorstellingLade() {
 
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Feit label={verleden ? 'Bezetting' : 'Verw. bezetting'} waarde={procent(bezetting(v))} />
-        <Feit label="Recette" waarde={euro(recette(v))} sub={`à ${euro(v.prijs)}`} />
-        <Feit label="Uitkoopsom" waarde={euro(v.uitkoopsom)} />
-        <Feit label="Saldo" waarde={<span className={marge(v) >= 0 ? 'text-emerald-700' : 'text-rose-700'}>{euro(marge(v))}</span>} />
+        <Feit label={eenvoudig ? 'Opbrengst kaarten' : 'Recette'} waarde={euro(recette(v))} sub={`à ${euro(v.prijs)}`} />
+        <Feit label={eenvoudig ? 'Kosten artiest' : 'Uitkoopsom'} waarde={euro(v.uitkoopsom)} />
+        <Feit label={eenvoudig ? 'Wat we overhouden' : 'Saldo'} waarde={<span className={marge(v) >= 0 ? 'text-emerald-700' : 'text-rose-700'}>{euro(marge(v))}</span>} />
       </div>
 
       <h3 className="mt-6 mb-2 font-bold">Doelgroepen</h3>
@@ -88,7 +89,7 @@ export function VoorstellingLade() {
           return (
             <div key={d} className="verschijn flex items-center gap-3" style={staffel(i + 2)}>
               <IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={28} rond />
-              <span className="flex-1 text-sm">{s.naam}</span>
+              <span className="flex flex-1 items-center gap-2 text-sm"><CdmLabel segment={s} /> {s.naam}</span>
               <div className="h-2 w-24 rounded-full bg-[#f6efe6]">
                 <div className="groei h-full rounded-full" style={{ width: `${DOELGROEP_GEWICHTEN[i] * 250}%`, background: s.kleur, ...staffel(i + 2) }} />
               </div>
@@ -107,7 +108,7 @@ export function VoorstellingLade() {
 
       {conflicten.length > 0 && (
         <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4">
-          <div className="flex items-center gap-2 font-bold text-amber-900"><Lightning size={18} className="wip text-amber-600" /> Let op kannibalisatie</div>
+          <div className="flex items-center gap-2 font-bold text-amber-900"><Lightning size={18} className="wip text-amber-600" /> {eenvoudig ? 'Let op: lijkt erg op een andere voorstelling' : 'Let op kannibalisatie'}</div>
           <ul className="mt-2 space-y-1 text-sm text-amber-900">
             {conflicten.map((c) => {
               const ander = c.a.id === v.id ? c.b : c.a
@@ -149,7 +150,26 @@ export function VoorstellingLade() {
 
 export function MatchUitleg({ aanbodId }: { aanbodId: string }) {
   const m = useMatches().get(aanbodId)
+  const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
   if (!m) return null
+  if (eenvoudig) {
+    return (
+      <div className="rounded-3xl bg-gradient-to-br from-munt to-ijs p-5">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="font-display text-lg font-bold">Past dit bij ons?</div>
+          <PastBijOns score={m.score} />
+        </div>
+        <ul className="mt-3 space-y-1.5 text-[15px]">
+          {m.redenen.map((r, i) => (
+            <li key={r.tekst} className="verschijn flex items-center gap-2" style={staffel(i + 1)}>
+              {r.type === 'plus' ? <CheckCircle size={20} className="shrink-0 text-emerald-600" /> : <MinusCircle size={20} className="shrink-0 text-slate-400" />}
+              <span>{r.tekst}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
   const delen: { sleutel: keyof typeof MATCH_GEWICHTEN; label: string; kleur: string }[] = [
     { sleutel: 'doelgroep', label: 'Doelgroepgat', kleur: '#2a78d6' },
     { sleutel: 'motivatie', label: 'Motivatiegat', kleur: '#e87ba4' },
@@ -195,6 +215,9 @@ export function AanbodLade() {
   const a = useStore((s) => s.dataset.aanbod.find((x) => x.id === id))
   const setStatus = useStore((s) => s.setAanbodStatus)
   const voegToe = useStore((s) => s.voegScenarioToe)
+  const zetOptie = useStore((s) => s.zetOptie)
+  const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
+  const voorstellingen = useStore((s) => s.dataset.voorstellingen)
   const scenario = useStore((s) => s.scenario)
   const matches = useMatches()
   const [zaal, setZaal] = useState<Zaal | null>(null)
@@ -249,7 +272,9 @@ export function AanbodLade() {
 
       <h3 className="mt-6 mb-1 font-bold">Beschikbare data</h3>
       <p className="mb-3 text-sm text-ink-2">
-        Speelperiode {datumKort(a.periodeStart)} tot {datumKort(a.periodeEind)}. Klik een datum om hem in de seizoensbouwer te zetten.
+        {eenvoudig
+          ? <>Kies een vrije datum. De voorstelling komt dan als <b className="text-ink">optie</b> in de kalender. Grijze data zijn al bezet.</>
+          : <>Speelperiode {datumKort(a.periodeStart)} tot {datumKort(a.periodeEind)}. Klik een datum om hem in de seizoensbouwer te zetten.</>}
       </p>
       {a.zalen.length > 1 && (
         <div className="mb-3 flex gap-2">
@@ -260,30 +285,31 @@ export function AanbodLade() {
       )}
       <div className="flex flex-wrap gap-2">
         {a.beschikbareData.map((d) => {
-          const vrij = m?.vrijeData.includes(d)
-          const gekozen = inScenario.includes(d)
+          const gekozen = eenvoudig ? voorstellingen.some((v) => v.id === `o-${a.id}-${d}`) : inScenario.includes(d)
+          const vrij = m?.vrijeData.includes(d) || (eenvoudig && gekozen)
           return (
             <button
               key={d}
-              disabled={!vrij && !gekozen}
-              onClick={() => voegToe({ aanbodId: a.id, datum: d, zaal: gekozenZaal })}
+              disabled={!vrij || (eenvoudig && gekozen)}
+              onClick={() => (eenvoudig ? zetOptie(a.id, d, gekozenZaal) : voegToe({ aanbodId: a.id, datum: d, zaal: gekozenZaal }))}
               className={cx(
-                'flex items-center gap-1.5 rounded-2xl px-3 py-2 text-sm font-semibold transition',
+                'flex items-center gap-1.5 rounded-2xl font-semibold transition',
+                eenvoudig ? 'px-4 py-3 text-[15px]' : 'px-3 py-2 text-sm',
                 gekozen ? 'bg-violet text-white' : vrij ? 'bg-white ring-1 ring-line hover:-translate-y-0.5 hover:ring-violet' : 'cursor-not-allowed bg-slate-100 text-slate-400 line-through',
               )}
               title={vrij ? 'Vrij: klik om in te plannen' : 'Zaal is bezet'}
             >
-              {gekozen ? <Check size={14} /> : <CalendarPlus size={14} />}
-              {datumKort(d)}
+              {gekozen ? <Check size={eenvoudig ? 18 : 14} className="spring" /> : <CalendarPlus size={eenvoudig ? 18 : 14} />}
+              {eenvoudig && gekozen ? `Optie op ${datumKort(d)}` : datumKort(d)}
             </button>
           )
         })}
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
-        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Shortlist')}><Star size={16} className="wip text-amber-500" /> Op shortlist</button>
-        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Bekeken')}><Eye size={16} /> Bekeken</button>
-        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Afgewezen')}><ThumbsDown size={16} className="text-rose-500" /> Afwijzen</button>
+        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Shortlist')}><Star size={16} className="wip text-amber-500" /> {eenvoudig ? 'Bewaren' : 'Op shortlist'}</button>
+        {!eenvoudig && <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Bekeken')}><Eye size={16} /> Bekeken</button>}
+        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Afgewezen')}><ThumbsDown size={16} className="text-rose-500" /> {eenvoudig ? 'Niet interessant' : 'Afwijzen'}</button>
       </div>
     </Lade>
   )

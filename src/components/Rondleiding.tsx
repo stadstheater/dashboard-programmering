@@ -2,7 +2,8 @@ import { ArrowLeft, ArrowRight, Lightbulb, X } from '@phosphor-icons/react'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { create } from 'zustand'
-import { UITLEG } from '../data/uitleg'
+import { padVanSleutel, uitlegSleutel, uitlegVoor } from '../data/uitleg'
+import { useStore } from '../store/useStore'
 import { cx } from './ui'
 
 const SLEUTEL = 'coulisse-uitleg-v1'
@@ -54,12 +55,14 @@ function zoekDoel(doel?: string) {
 /** Start de uitleg automatisch bij het eerste bezoek aan een pagina. */
 export function useAutomatischeUitleg() {
   const { pathname } = useLocation()
+  const modus = useStore((s) => s.modus)
   const start = useUitleg((s) => s.start)
   useEffect(() => {
-    if (!UITLEG[pathname] || gezien().includes(pathname)) return
-    const t = setTimeout(() => start(pathname), 900)
+    const sleutel = uitlegSleutel(pathname, modus)
+    if (!uitlegVoor(sleutel) || gezien().includes(sleutel)) return
+    const t = setTimeout(() => start(sleutel), 900)
     return () => clearTimeout(t)
-  }, [pathname, start])
+  }, [pathname, modus, start])
 }
 
 export default function Rondleiding() {
@@ -70,12 +73,12 @@ export default function Rondleiding() {
   const [kader, setKader] = useState<Kader | null>(null)
   const ballonRef = useRef<HTMLDivElement>(null)
   const [ballonHoogte, setBallonHoogte] = useState(220)
-  const uitleg = route ? UITLEG[route] : null
+  const uitleg = uitlegVoor(route)
   const huidig = uitleg?.stappen[stap]
 
   useEffect(() => setStap(0), [route])
   useEffect(() => {
-    if (route && route !== pathname) stop()
+    if (route && padVanSleutel(route) !== pathname) stop()
   }, [pathname, route, stop])
 
   const meet = useCallback(() => {

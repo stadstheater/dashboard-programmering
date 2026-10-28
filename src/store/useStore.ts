@@ -22,8 +22,13 @@ export interface Filters {
 
 export const LEGE_FILTERS: Filters = { genres: [], zalen: [], statussen: [], doelgroepen: [], motivaties: [], zoek: '' }
 
+export type Modus = 'eenvoudig' | 'uitgebreid'
+
 interface State {
   dataset: Dataset
+  modus: Modus
+  setModus: (m: Modus) => void
+  zetOptie: (aanbodId: string, datum: string, zaal: Zaal) => void
   seizoen: string
   filters: Filters
   scenario: ScenarioItem[]
@@ -99,6 +104,21 @@ export const useStore = create<State>()(
   persist(
     (set, get) => ({
       dataset: genereerDataset(),
+      modus: 'eenvoudig',
+      setModus: (modus) => set({ modus }),
+      zetOptie: (aanbodId, datum, zaal) => {
+        const { dataset } = get()
+        const a = dataset.aanbod.find((x) => x.id === aanbodId)
+        if (!a) return
+        const v = { ...scenarioNaarVoorstelling({ aanbodId, datum, zaal }, a, 'Optie'), id: `o-${a.id}-${datum}`, bron: 'builder' as const }
+        set({
+          dataset: {
+            ...dataset,
+            voorstellingen: [...dataset.voorstellingen.filter((x) => x.id !== v.id), v].sort((x, y) => x.datum.localeCompare(y.datum)),
+            aanbod: dataset.aanbod.map((x) => (x.id === aanbodId ? { ...x, status: 'Ingepland' } : x)),
+          },
+        })
+      },
       seizoen: HUIDIG_SEIZOEN,
       filters: LEGE_FILTERS,
       scenario: [],
@@ -163,9 +183,9 @@ export const useStore = create<State>()(
       },
     }),
     {
-      name: 'coulisse-dashboard-v1',
+      name: 'coulisse-dashboard-v2',
       storage: veiligeOpslag,
-      partialize: ({ dataset, seizoen, scenario }) => ({ dataset, seizoen, scenario }),
+      partialize: ({ dataset, seizoen, scenario, modus }) => ({ dataset, seizoen, scenario, modus }),
     },
   ),
 )

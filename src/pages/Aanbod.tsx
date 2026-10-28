@@ -1,6 +1,6 @@
 import { CheckCircle, Package, Rows, Sparkle, SquaresFour, Star, Target, Tray, MagnifyingGlass } from '@phosphor-icons/react'
 import { useMemo, useState } from 'react'
-import { GenreLabel, IcoonBol, Kaart, KpiTegel, Leeg, Paginakop, ScoreRing, StatusLabel, Tabs, cx } from '../components/ui'
+import { CdmLabel, GenreLabel, Kaart, KpiTegel, Leeg, Paginakop, PastBijOns, ScoreRing, StatusLabel, Tabs, cx } from '../components/ui'
 import { staffel } from '../lib/animatie'
 import type { Aanbod as AanbodType, AanbodStatus } from '../data/types'
 import { AANBOD_STATUSSEN, DOELGROEPEN, GENRES, IMPRESARIATEN, MOTIVATIES, segmentVan } from '../data/vocab'
@@ -26,6 +26,8 @@ export default function Aanbod() {
   const [sortering, setSortering] = useState<Sortering>('match')
   const [weergave, setWeergave] = useState<'kaarten' | 'tabel'>('kaarten')
   const [aantal, setAantal] = useState(24)
+  const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
+  const [alleenGoed, setAlleenGoed] = useState(false)
 
   const lijst = useMemo(() => {
     const q = zoek.trim().toLowerCase()
@@ -38,6 +40,7 @@ export default function Aanbod() {
         (!motivatie || a.motivaties.includes(motivatie)) &&
         a.uitkoopsom <= budget &&
         (!alleenNieuw || !matches.get(a.id)?.bekend) &&
+        (!alleenGoed || (matches.get(a.id)?.score ?? 0) >= 70) &&
         (!q || `${a.titel} ${a.artiest} ${a.impresariaat}`.toLowerCase().includes(q)),
     )
     const s = {
@@ -55,10 +58,35 @@ export default function Aanbod() {
 
   return (
     <div>
-      <Paginakop titel="Aanbod impresariaten" icoon={Tray} kleur="#d97706" sub="Alle geïmporteerde producties voor seizoen 27/28. De matchscore weegt doelgroepgaten, motivaties, onze historie, vrije data en de financiële verhouding.">
-        <Tabs waarde={weergave} onChange={setWeergave} opties={[{ id: 'kaarten', label: <span className="flex items-center gap-1.5"><SquaresFour size={15} /> Kaarten</span> }, { id: 'tabel', label: <span className="flex items-center gap-1.5"><Rows size={15} /> Tabel</span> }]} />
+      <Paginakop
+        titel={eenvoudig ? 'Aanbod' : 'Aanbod impresariaten'}
+        icoon={Tray}
+        kleur="#d97706"
+        sub={eenvoudig
+          ? 'Voorstellingen die impresariaten ons aanbieden voor volgend seizoen. Bovenaan staat wat het best bij ons publiek en onze agenda past.'
+          : 'Alle geïmporteerde producties voor seizoen 27/28. De matchscore weegt doelgroepgaten, motivaties, onze historie, vrije data en de financiële verhouding.'}
+      >
+        {!eenvoudig && <Tabs waarde={weergave} onChange={setWeergave} opties={[{ id: 'kaarten', label: <span className="flex items-center gap-1.5"><SquaresFour size={15} /> Kaarten</span> }, { id: 'tabel', label: <span className="flex items-center gap-1.5"><Rows size={15} /> Tabel</span> }]} />}
       </Paginakop>
 
+      {eenvoudig ? (
+        <div className="verschijn flex flex-wrap items-center gap-3 rounded-3xl bg-white p-4 shadow-[var(--shadow-zacht)] ring-1 ring-line">
+          <div className="relative min-w-56 flex-1">
+            <MagnifyingGlass size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
+            <input className="invoer !rounded-full !py-3 !pl-10 !text-base" placeholder="Zoek een voorstelling of artiest" value={zoek} onChange={(e) => setZoek(e.target.value)} />
+          </div>
+          <select className="invoer !w-auto !rounded-full !py-3 !text-base" value={genre} onChange={(e) => setGenre(e.target.value)}>
+            <option value="">Alle genres</option>
+            {GENRES.map((g) => <option key={g}>{g}</option>)}
+          </select>
+          <button onClick={() => setAlleenGoed(!alleenGoed)} className={cx('knop !px-4 !py-3 text-[15px]', alleenGoed ? 'knop-primair' : 'knop-zacht')}>
+            <CheckCircle size={18} /> Alleen wat goed past
+          </button>
+          <button onClick={() => setStatusFilter(status === 'Shortlist' ? 'Alle' : 'Shortlist')} className={cx('knop !px-4 !py-3 text-[15px]', status === 'Shortlist' ? 'knop-primair' : 'knop-zacht')}>
+            <Star size={18} /> Bewaard ({telStatus('Shortlist')})
+          </button>
+        </div>
+      ) : (<>
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
         <KpiTegel i={0} label="Producties in aanbod" waarde={aanbod.length} icoon={Package} kleur="citroen" />
         <KpiTegel i={1} label="Nieuw binnen" waarde={telStatus('Nieuw')} sub="nog niet bekeken" icoon={Sparkle} kleur="ijs" />
@@ -109,26 +137,29 @@ export default function Aanbod() {
           </div>
         </div>
       </Kaart>
+      </>)}
 
-      <div className="mt-4 text-sm text-ink-2">{lijst.length} producties</div>
+      <div className="mt-4 text-sm text-ink-2">{lijst.length} {eenvoudig ? 'voorstellingen' : 'producties'}</div>
       {!lijst.length && <div className="mt-3"><Leeg>Geen aanbod met deze filters.</Leeg></div>}
 
-      {weergave === 'kaarten' ? (
+      {eenvoudig || weergave === 'kaarten' ? (
         <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {lijst.slice(0, aantal).map((a, i) => {
             const m = matches.get(a.id)
             return (
               <article key={a.id} data-uitleg={i === 0 ? 'aanbod-kaart' : undefined} style={staffel(i % 24)} className="kaart verschijn group flex cursor-pointer flex-col p-5 transition duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hoog)]" onClick={() => toon(a.id)}>
                 <div className="flex items-start gap-3">
-                  <ScoreRing score={m?.score ?? 0} />
+                  {!eenvoudig && <ScoreRing score={m?.score ?? 0} />}
                   <div className="min-w-0 flex-1">
+                    {eenvoudig && <div className="mb-1.5"><PastBijOns score={m?.score ?? 0} /></div>}
                     <h3 className="font-display text-lg font-bold leading-snug">{a.titel}</h3>
                     <div className="text-sm text-ink-2">{a.impresariaat}</div>
                   </div>
                   <button
                     onClick={(e) => { e.stopPropagation(); setStatus(a.id, a.status === 'Shortlist' ? 'Bekeken' : 'Shortlist') }}
                     className={cx('grid h-9 w-9 place-items-center rounded-full transition', a.status === 'Shortlist' ? 'bg-citroen text-amber-500' : 'bg-[#faf5ef] text-muted hover:text-amber-500')}
-                    aria-label="Shortlist"
+                    aria-label={eenvoudig ? 'Bewaren' : 'Shortlist'}
+                    title={a.status === 'Shortlist' ? 'Bewaard' : 'Bewaren'}
                     data-uitleg={i === 0 ? 'shortlist' : undefined}
                   >
                     <Star key={a.status} size={18} weight={a.status === 'Shortlist' ? 'fill' : 'bold'} className={a.status === 'Shortlist' ? 'spring' : ''} />
@@ -136,24 +167,22 @@ export default function Aanbod() {
                 </div>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   <GenreLabel genre={a.genre} klein />
-                  <StatusLabel status={a.status} klein />
+                  {!eenvoudig && <StatusLabel status={a.status} klein />}
                   {a.premiere && <span className="rounded-full bg-snoep px-2 py-0.5 text-[11px] font-bold text-pink-700">Première</span>}
                   {m && !m.bekend && <span className="rounded-full bg-citroen px-2 py-0.5 text-[11px] font-bold text-amber-800">Nieuw voor ons</span>}
                 </div>
                 <p className="mt-3 line-clamp-2 text-sm text-ink-2">{a.omschrijving}</p>
-                <div className="mt-3 flex items-center gap-1">
-                  {a.doelgroepen.map((d) => {
-                    const s = segmentVan(DOELGROEPEN, d)
-                    return s ? <span key={d} title={s.naam}><IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={28} rond className="ring-2 ring-white transition group-hover:-translate-y-0.5" /></span> : null
-                  })}
+                <div className="mt-3 flex flex-wrap items-center gap-1">
+                  {a.doelgroepen.map((d) => <CdmLabel key={d} naam={d} groot />)}
                   <span className="ml-auto flex gap-1">{a.motivaties.map((x) => { const s = segmentVan(MOTIVATIES, x); return s ? <span key={x} title={s.naam}><s.icoon size={16} style={{ color: s.kleur }} /></span> : null })}</span>
                 </div>
                 {m && m.redenen[0] && <div className="mt-3 flex items-center gap-1.5 rounded-xl bg-munt/70 px-3 py-2 text-xs font-medium text-emerald-900"><Sparkle size={14} className="shrink-0 text-emerald-600" /> {m.redenen.find((r) => r.type === 'plus')?.tekst ?? m.redenen[0].tekst}</div>}
-                <div className="mt-auto grid grid-cols-3 gap-2 border-t border-line pt-3 text-center text-xs">
+                {!eenvoudig && <div className="mt-auto grid grid-cols-3 gap-2 border-t border-line pt-3 text-center text-xs">
                   <div><div className="text-muted">Uitkoop</div><div className="font-bold">{euro(a.uitkoopsom)}</div></div>
                   <div><div className="text-muted">Verwacht</div><div className="font-bold">{getal(a.verwacht)}</div></div>
                   <div><div className="text-muted">Data vrij</div><div className="font-bold">{m?.vrijeData.length ?? 0}/{a.beschikbareData.length}</div></div>
-                </div>
+                </div>}
+                {eenvoudig && <div className="mt-auto pt-3 text-sm font-semibold text-violet">Bekijk en plan in →</div>}
               </article>
             )
           })}
@@ -176,7 +205,7 @@ export default function Aanbod() {
                     <td className="px-3 py-2 text-ink-2">{a.impresariaat}</td>
                     <td className="px-3 py-2"><GenreLabel genre={a.genre} klein /></td>
                     <td className="whitespace-nowrap px-3 py-2 text-ink-2">{datumKort(a.periodeStart)} tot {datumKort(a.periodeEind)}</td>
-                    <td className="px-3 py-2"><span className="flex gap-1">{a.doelgroepen.map((d) => { const s = segmentVan(DOELGROEPEN, d); return s ? <span key={d} title={s.naam}><s.icoon size={16} style={{ color: s.kleur }} /></span> : null })}</span></td>
+                    <td className="px-3 py-2"><span className="flex gap-1">{a.doelgroepen.map((d) => <CdmLabel key={d} naam={d} />)}</span></td>
                     <td className="px-3 py-2 text-right tabular-nums">{euro(a.uitkoopsom)}</td>
                     <td className="px-3 py-2 text-right tabular-nums">{getal(a.verwacht)}</td>
                     <td className="px-3 py-2"><StatusLabel status={a.status} klein /></td>

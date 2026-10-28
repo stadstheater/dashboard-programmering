@@ -1,16 +1,23 @@
 import {
-  CalendarDots, ChartLineUp, Flask, Gauge, Hammer, Lightbulb, MaskHappy, Question, Star, Tray, UsersThree,
+  CalendarDots, ChartLineUp, Flask, Gauge, Hammer, Lightbulb, MaskHappy, Question, Star, SunHorizon, Tray, UsersThree,
 } from '@phosphor-icons/react'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import { UITLEG } from '../data/uitleg'
+import { uitlegSleutel, uitlegVoor } from '../data/uitleg'
 import { HUIDIG_SEIZOEN, PLAN_SEIZOEN, SEIZOENEN } from '../data/vocab'
-import { useStore } from '../store/useStore'
+import { useStore, type Modus } from '../store/useStore'
 import { AanbodLade, VoorstellingLade } from './Details'
 import Rondleiding, { useAutomatischeUitleg, useUitleg } from './Rondleiding'
 import { cx } from './ui'
 
-const NAV = [
+const NAV_EENVOUDIG = [
+  { to: '/', label: 'Vandaag', icoon: SunHorizon, kleur: '#ff6b57' },
+  { to: '/kalender', label: 'Kalender', icoon: CalendarDots, kleur: '#2a78d6' },
+  { to: '/aanbod', label: 'Aanbod', icoon: Tray, kleur: '#d97706' },
+  { to: '/doelgroepen', label: 'Publiek', icoon: UsersThree, kleur: '#0f9f84' },
+]
+
+const NAV_UITGEBREID = [
   { to: '/', label: 'Cockpit', icoon: Gauge, kleur: '#ff6b57' },
   { to: '/kalender', label: 'Kalender', icoon: CalendarDots, kleur: '#2a78d6' },
   { to: '/aanbod', label: 'Aanbod', icoon: Tray, kleur: '#d97706' },
@@ -22,9 +29,58 @@ const NAV = [
   { to: '/builder', label: 'Databuilder', icoon: Hammer, kleur: '#475569' },
 ]
 
+export const useNav = () => (useStore((s) => s.modus) === 'eenvoudig' ? NAV_EENVOUDIG : NAV_UITGEBREID)
+
+/** Schakelaar tussen eenvoudig en uitgebreid. */
+export function ModusSchakelaar() {
+  const modus = useStore((s) => s.modus)
+  const setModus = useStore((s) => s.setModus)
+  const aan = modus === 'uitgebreid'
+  const wissel = (m: Modus) => setModus(m)
+  return (
+    <button
+      data-uitleg="modus"
+      onClick={() => wissel(aan ? 'eenvoudig' : 'uitgebreid')}
+      className="flex shrink-0 items-center gap-2 rounded-full border border-line bg-white py-1 pl-3 pr-1 text-sm font-semibold text-ink shadow-sm transition hover:bg-[#fff6ee]"
+      aria-pressed={aan}
+      title={aan ? 'Terug naar de eenvoudige weergave' : 'Toon alle onderdelen en details'}
+    >
+      Uitgebreid
+      <span className={cx('relative h-6 w-11 rounded-full transition-colors duration-300', aan ? 'bg-violet' : 'bg-[#e7ded3]')}>
+        <span className={cx('absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all duration-300 ease-[cubic-bezier(.3,1.4,.5,1)]', aan ? 'left-[22px]' : 'left-0.5')} />
+      </span>
+    </button>
+  )
+}
+
+/** Eenvoudige seizoenkeuze: dit seizoen, volgend seizoen of een eerder seizoen. */
+function EenvoudigeSeizoenKiezer() {
+  const seizoen = useStore((s) => s.seizoen)
+  const setSeizoen = useStore((s) => s.setSeizoen)
+  const eerder = SEIZOENEN.filter((s) => s < HUIDIG_SEIZOEN)
+  const knop = (actief: boolean) => cx('whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm font-semibold transition active:scale-95', actief ? 'bg-ink text-white shadow' : 'text-ink-2 hover:bg-perzik/60')
+  return (
+    <div data-uitleg="seizoenkiezer" className="dun-scroll flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-line bg-white p-1 shadow-sm">
+      <button className={knop(seizoen === HUIDIG_SEIZOEN)} onClick={() => setSeizoen(HUIDIG_SEIZOEN)}>Dit seizoen</button>
+      <button className={knop(seizoen === PLAN_SEIZOEN)} onClick={() => setSeizoen(PLAN_SEIZOEN)}>Volgend seizoen</button>
+      <select
+        aria-label="Eerder seizoen"
+        value={eerder.includes(seizoen as (typeof eerder)[number]) ? seizoen : ''}
+        onChange={(e) => e.target.value && setSeizoen(e.target.value)}
+        className={cx('cursor-pointer appearance-none rounded-full px-3.5 py-1.5 text-sm font-semibold outline-none', eerder.includes(seizoen as (typeof eerder)[number]) ? 'bg-ink text-white' : 'bg-transparent text-ink-2 hover:bg-perzik/60')}
+      >
+        <option value="">Eerder</option>
+        {[...eerder].reverse().map((s) => <option key={s} value={s}>Seizoen {s}</option>)}
+      </select>
+    </div>
+  )
+}
+
 export function SeizoenKiezer() {
   const seizoen = useStore((s) => s.seizoen)
   const setSeizoen = useStore((s) => s.setSeizoen)
+  const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
+  if (eenvoudig) return <EenvoudigeSeizoenKiezer />
   return (
     <div data-uitleg="seizoenkiezer" className="dun-scroll flex max-w-full gap-1 overflow-x-auto rounded-full border border-line bg-white p-1 shadow-sm">
       {SEIZOENEN.map((s) => (
@@ -55,12 +111,23 @@ function Logo({ klein }: { klein?: boolean }) {
 
 /** Zijbalk met een indicator die meeschuift naar het actieve onderdeel. */
 function Zijnavigatie({ pathname }: { pathname: string }) {
+  const NAV = useNav()
   const navRef = useRef<HTMLElement>(null)
   const [indicator, setIndicator] = useState<{ top: number; height: number } | null>(null)
+  const modus = useStore((s) => s.modus)
   useLayoutEffect(() => {
-    const actief = navRef.current?.querySelector<HTMLElement>('a[aria-current="page"]')
-    setIndicator(actief ? { top: actief.offsetTop, height: actief.offsetHeight } : null)
-  }, [pathname])
+    const meet = () => {
+      const actief = navRef.current?.querySelector<HTMLElement>('a[aria-current="page"]')
+      setIndicator(actief ? { top: actief.offsetTop, height: actief.offsetHeight } : null)
+    }
+    meet()
+    const frame = requestAnimationFrame(meet)
+    window.addEventListener('resize', meet)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('resize', meet)
+    }
+  }, [pathname, NAV, modus])
   return (
     <nav ref={navRef} className="relative flex flex-1 flex-col gap-1">
       {indicator && (
@@ -91,6 +158,11 @@ function Zijnavigatie({ pathname }: { pathname: string }) {
 
 export default function Layout() {
   const { pathname } = useLocation()
+  const NAV = useNav()
+  const modus = useStore((s) => s.modus)
+  useEffect(() => {
+    document.documentElement.classList.toggle('eenvoudig', modus === 'eenvoudig')
+  }, [modus])
   const actief = NAV.find((n) => (n.to === '/' ? pathname === '/' : pathname.startsWith(n.to)))
   const startUitleg = useUitleg((s) => s.start)
   useAutomatischeUitleg()
@@ -122,11 +194,12 @@ export default function Layout() {
               {actief && <span className="font-semibold text-ink">{actief.label}</span>}
               <span className="rounded-full bg-citroen px-2 py-0.5 text-[11px] font-bold text-amber-800">dummy data</span>
             </div>
-            <div className="flex min-w-0 items-center gap-2">
-              {UITLEG[pathname] && (
+            <div className="flex min-w-0 max-w-full flex-wrap items-center justify-end gap-2">
+              <ModusSchakelaar />
+              {uitlegVoor(uitlegSleutel(pathname, modus)) && (
                 <button
                   data-uitleg="uitleg-knop"
-                  onClick={() => startUitleg(pathname)}
+                  onClick={() => startUitleg(uitlegSleutel(pathname, modus))}
                   className="wip grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-white text-violet shadow-sm transition hover:bg-lavendel"
                   aria-label="Uitleg van deze pagina"
                   title="Uitleg van deze pagina"

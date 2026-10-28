@@ -13,6 +13,12 @@ import Historie from './pages/Historie'
 import Kalender from './pages/Kalender'
 import Motivaties from './pages/Motivaties'
 import Scenario from './pages/Scenario'
+import Vandaag from './pages/Vandaag'
+import { useStore } from './store/useStore'
+
+function Start() {
+  return useStore((s) => s.modus) === 'eenvoudig' ? <Vandaag /> : <Cockpit />
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -20,7 +26,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<Cockpit />} />
+          <Route index element={<Start />} />
           <Route path="kalender" element={<Kalender />} />
           <Route path="aanbod" element={<Aanbod />} />
           <Route path="scenario" element={<Scenario />} />
@@ -29,7 +35,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="historie" element={<Historie />} />
           <Route path="artiesten" element={<Artiesten />} />
           <Route path="builder" element={<Builder />} />
-          <Route path="*" element={<Cockpit />} />
+          <Route path="*" element={<Start />} />
         </Route>
       </Routes>
     </BrowserRouter>

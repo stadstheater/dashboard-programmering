@@ -1,9 +1,9 @@
-import { CalendarDots, CaretLeft, CaretRight, Palette, Plus, Sparkle, TrafficSignal } from '@phosphor-icons/react'
+import { CalendarDots, CaretLeft, CaretRight, Funnel, Palette, Plus, Sparkle, TrafficSignal } from '@phosphor-icons/react'
 import { staffel } from '../lib/animatie'
 import { useMemo, useState } from 'react'
 import FilterBar from '../components/FilterBar'
 import { Legenda } from '../components/charts'
-import { GenreLabel, Kaart, Lade, Paginakop, ScoreRing, StatusLabel, Tabs, cx } from '../components/ui'
+import { GenreLabel, Kaart, Lade, Match, Paginakop, StatusLabel, Tabs, cx } from '../components/ui'
 import { isoDatum, naarDatum, seizoenStartJaar } from '../data/generate'
 import type { Voorstelling, Zaal } from '../data/types'
 import { GENRE_FAMILIES, PLAN_SEIZOEN, STATUSSEN, ZALEN, familieVan } from '../data/vocab'
@@ -33,13 +33,13 @@ function maandDagen(jaar: number, maand: number) {
   return dagen[35].getMonth() === maand ? dagen : dagen.slice(0, 35)
 }
 
-function Pil({ v, kleuring, onClick }: { v: Voorstelling; kleuring: Kleuring; onClick: () => void }) {
+function Pil({ v, kleuring, onClick, groot }: { v: Voorstelling; kleuring: Kleuring; onClick: () => void; groot?: boolean }) {
   const kleur = kleurVan(v, kleuring)
   return (
     <button
       onClick={onClick}
       title={`${v.titel} · ${v.zaal} · ${v.status}`}
-      className={cx('group flex w-full items-center gap-1.5 truncate rounded-lg px-1.5 py-1 text-left text-[11.5px] font-semibold leading-tight text-ink transition hover:-translate-y-px hover:shadow', v.status === 'Geannuleerd' && 'line-through opacity-50', v.bron === 'scenario' && 'outline-2 outline-dashed outline-violet')}
+      className={cx('group flex w-full items-center gap-1.5 truncate rounded-lg px-1.5 text-left font-semibold leading-tight text-ink transition hover:-translate-y-px hover:shadow', groot ? 'py-1.5 text-[13px]' : 'py-1 text-[11.5px]', v.status === 'Geannuleerd' && 'line-through opacity-50', v.bron === 'scenario' && 'outline-2 outline-dashed outline-violet')}
       style={{ background: kleur + '22' }}
     >
       {kleuring === 'genre' ? (() => { const I = familieVan(v.genre).icoon; return <I size={12} className="shrink-0 transition group-hover:scale-125" style={{ color: kleur }} /> })() : <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: kleur }} />}
@@ -70,6 +70,9 @@ export default function Kalender() {
     return isoDatum(d)
   })
   const maand = SEIZOENSMAANDEN[maandIndex]
+  const eenvoudig = useStore((st) => st.modus) === 'eenvoudig'
+  const [filtersOpen, setFiltersOpen] = useState(false)
+  const toonWeergave: Weergave = eenvoudig ? 'maand' : weergave
   const maandJaar = maand >= 8 ? jaar : jaar + 1
 
   const perDag = useMemo(() => {
@@ -88,31 +91,46 @@ export default function Kalender() {
 
   return (
     <div>
-      <Paginakop titel="Kalender" icoon={CalendarDots} kleur="#2a78d6" sub={<>Seizoen {seizoen} per maand, week of in één overzicht. Gestippelde vakjes zijn vrije weekendavonden in de Grote zaal: klik erop voor passende suggesties uit het aanbod.</>}>
-        {kop}
+      <Paginakop
+        titel="Kalender"
+        icoon={CalendarDots}
+        kleur="#2a78d6"
+        sub={eenvoudig
+          ? <>Alle voorstellingen van seizoen {seizoen} per maand. Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal.</>
+          : <>Seizoen {seizoen} per maand, week of in één overzicht. Gestippelde vakjes zijn vrije weekendavonden in de Grote zaal: klik erop voor passende suggesties uit het aanbod.</>}
+      >
+        {eenvoudig ? (
+          <button data-uitleg="filter-knop" onClick={() => setFiltersOpen(!filtersOpen)} className={cx('knop !px-4 !py-2.5 text-[15px]', filtersOpen ? 'knop-primair' : 'knop-zacht')}>
+            <Funnel size={18} /> Filteren
+          </button>
+        ) : kop}
       </Paginakop>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <FilterBar />
-        <label className="flex items-center gap-2 text-sm font-semibold text-ink-2">
-          <input type="checkbox" checked={vlekken} onChange={(e) => setVlekken(e.target.checked)} className="h-4 w-4 accent-violet-600" />
-          Toon witte vlekken
-        </label>
-      </div>
+      {(!eenvoudig || filtersOpen) && (
+        <div className="verschijn mb-4 flex flex-wrap items-center justify-between gap-3">
+          <FilterBar verberg={eenvoudig ? ['statussen', 'motivaties'] : []} />
+          {!eenvoudig && (
+            <label className="flex items-center gap-2 text-sm font-semibold text-ink-2">
+              <input type="checkbox" checked={vlekken} onChange={(e) => setVlekken(e.target.checked)} className="h-4 w-4 accent-violet-600" />
+              Toon witte vlekken
+            </label>
+          )}
+        </div>
+      )}
 
-      {weergave === 'maand' && (
+      {toonWeergave === 'maand' && (
         <Kaart
           uitleg="kalender-raster"
           titel={<span className="capitalize">{MAANDNAMEN_LANG[maand]} {maandJaar}</span>}
           sub={`${gefilterd.filter((v) => maandVan(v.datum) === maand).length} voorstellingen`}
           actie={
             <div className="flex gap-1">
-              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === 0} onClick={() => setMaandIndex(maandIndex - 1)} aria-label="Vorige maand"><CaretLeft size={18} /></button>
-              <div className="dun-scroll hidden max-w-md gap-1 overflow-x-auto md:flex">
+              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === 0} onClick={() => setMaandIndex(maandIndex - 1)} aria-label="Vorige maand"><CaretLeft size={18} />{eenvoudig && <span className="hidden sm:inline">Vorige</span>}</button>
+              <div className={cx('dun-scroll hidden max-w-md gap-1 overflow-x-auto', !eenvoudig && 'md:flex')}>
                 {SEIZOENSMAANDEN.map((m, i) => (
                   <button key={m} onClick={() => setMaandIndex(i)} className={cx('rounded-full px-2.5 py-1 text-xs font-semibold', i === maandIndex ? 'bg-ink text-white' : 'bg-white text-ink-2 ring-1 ring-line')}>{MAANDNAMEN[m]}</button>
                 ))}
               </div>
-              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === SEIZOENSMAANDEN.length - 1} onClick={() => setMaandIndex(maandIndex + 1)} aria-label="Volgende maand"><CaretRight size={18} /></button>
+              <button className="knop knop-zacht !px-2.5" disabled={maandIndex === SEIZOENSMAANDEN.length - 1} onClick={() => setMaandIndex(maandIndex + 1)} aria-label="Volgende maand">{eenvoudig && <span className="hidden sm:inline">Volgende</span>}<CaretRight size={18} /></button>
             </div>
           }
         >
@@ -132,7 +150,8 @@ export default function Kalender() {
                     key={iso}
                     style={staffel(celIndex % 7 + Math.floor(celIndex / 7))}
                     className={cx(
-                      'plop flex min-h-[118px] flex-col gap-1 rounded-2xl p-1.5 transition',
+                      'plop flex flex-col gap-1 rounded-2xl p-1.5 transition',
+                      eenvoudig ? 'min-h-[132px]' : 'min-h-[118px]',
                       inMaand ? 'bg-white ring-1 ring-line' : 'bg-transparent opacity-40',
                       isVrij && 'bg-[repeating-linear-gradient(45deg,#fff,#fff_6px,#f7f2ff_6px,#f7f2ff_12px)] outline-2 outline-dashed outline-violet/40',
                       isVandaag && 'ring-2 ring-koraal',
@@ -142,11 +161,11 @@ export default function Kalender() {
                       <span className={cx('text-xs font-bold', isVandaag ? 'rounded-full bg-koraal px-1.5 text-white' : 'text-ink-2')}>{d.getDate()}</span>
                       {isVrij && (
                         <button data-uitleg="witte-vlek" onClick={() => setVlekDatum({ datum: iso, zaal: 'Grote zaal' })} className="puls-violet flex items-center gap-0.5 rounded-full bg-violet/10 px-1.5 py-0.5 text-[10px] font-bold text-violet transition hover:scale-110 hover:bg-violet hover:text-white" title="Vrije avond in de Grote zaal: bekijk suggesties">
-                          <Sparkle size={11} /> vrij
+                          <Sparkle size={11} /> {eenvoudig ? 'Iets inplannen?' : 'vrij'}
                         </button>
                       )}
                     </div>
-                    {inMaand && items.map((v) => <Pil key={v.id} v={v} kleuring={kleuring} onClick={() => toon(v.id)} />)}
+                    {inMaand && items.map((v) => <Pil key={v.id} v={v} kleuring={kleuring} groot={eenvoudig} onClick={() => toon(v.id)} />)}
                   </div>
                 )
               })}
@@ -156,9 +175,9 @@ export default function Kalender() {
         </Kaart>
       )}
 
-      {weergave === 'week' && <WeekWeergave weekStart={weekStart} setWeekStart={setWeekStart} perDag={perDag} kleuring={kleuring} onVrij={setVlekDatum} />}
+      {toonWeergave === 'week' && <WeekWeergave weekStart={weekStart} setWeekStart={setWeekStart} perDag={perDag} kleuring={kleuring} onVrij={setVlekDatum} />}
 
-      {weergave === 'seizoen' && (
+      {toonWeergave === 'seizoen' && (
         <Kaart titel={`Seizoensoverzicht ${seizoen}`} sub="Kleurintensiteit is het aantal bezoekers per dag. Klik op een maand om in te zoomen.">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {SEIZOENSMAANDEN.map((m, i) => {
@@ -197,7 +216,7 @@ export default function Kalender() {
         </Kaart>
       )}
 
-      {weergave === 'lijst' && <LijstWeergave lijst={gefilterd} onKies={toon} />}
+      {toonWeergave === 'lijst' && <LijstWeergave lijst={gefilterd} onKies={toon} />}
 
       <SuggestieLade vlek={vlekDatum} onSluit={() => setVlekDatum(null)} seizoen={seizoen} />
     </div>
@@ -344,6 +363,8 @@ function LijstWeergave({ lijst, onKies }: { lijst: Voorstelling[]; onKies: (id: 
 function SuggestieLade({ vlek, onSluit, seizoen }: { vlek: { datum: string; zaal: Zaal } | null; onSluit: () => void; seizoen: string }) {
   const aanbod = useStore((s) => s.dataset.aanbod)
   const voegToe = useStore((s) => s.voegScenarioToe)
+  const zetOptie = useStore((s) => s.zetOptie)
+  const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
   const toonAanbod = useSelectie((s) => s.toonAanbod)
   const matches = useMatches()
   if (!vlek) return null
@@ -352,8 +373,8 @@ function SuggestieLade({ vlek, onSluit, seizoen }: { vlek: { datum: string; zaal
   const sorteer = (l: typeof aanbod) => [...l].sort((a, b) => (matches.get(b.id)?.score ?? 0) - (matches.get(a.id)?.score ?? 0)).slice(0, 6)
   return (
     <Lade open onSluit={onSluit} titel={`Vrij: ${datumLang(vlek.datum)}`}>
-      <p className="text-ink-2">De {vlek.zaal} is nog vrij. Dit aanbod past op deze datum, gesorteerd op matchscore.</p>
-      {seizoen !== PLAN_SEIZOEN && <p className="mt-3 rounded-2xl bg-citroen p-3 text-sm">Het aanbod van impresariaten is voor seizoen {PLAN_SEIZOEN}. Kies dat seizoen bovenaan voor de beste suggesties.</p>}
+      <p className="text-ink-2">{eenvoudig ? `De ${vlek.zaal} is nog vrij. Deze voorstellingen passen op deze datum, de beste staan bovenaan.` : `De ${vlek.zaal} is nog vrij. Dit aanbod past op deze datum, gesorteerd op matchscore.`}</p>
+      {seizoen !== PLAN_SEIZOEN && <p className="mt-3 rounded-2xl bg-citroen p-3 text-sm">Het aanbod van impresariaten is voor {eenvoudig ? 'volgend seizoen' : `seizoen ${PLAN_SEIZOEN}`}. Kies {eenvoudig ? '"Volgend seizoen"' : 'dat seizoen'} bovenaan voor de beste suggesties.</p>}
       {[{ titel: 'Beschikbaar op precies deze datum', items: sorteer(exact), direct: true }, { titel: 'Tourt in deze periode (datum navragen)', items: sorteer(inPeriode), direct: false }].map((groep) => (
         <div key={groep.titel} className="mt-5">
           <h3 className="mb-2 font-bold">{groep.titel}</h3>
@@ -361,14 +382,14 @@ function SuggestieLade({ vlek, onSluit, seizoen }: { vlek: { datum: string; zaal
           <div className="space-y-2">
             {groep.items.map((a) => (
               <div key={a.id} className="flex items-center gap-3 rounded-2xl bg-white p-3 ring-1 ring-line">
-                <ScoreRing score={matches.get(a.id)?.score ?? 0} grootte={46} />
+                <Match score={matches.get(a.id)?.score ?? 0} grootte={46} />
                 <button className="min-w-0 flex-1 text-left" onClick={() => toonAanbod(a.id)}>
                   <div className="truncate font-semibold hover:underline">{a.titel}</div>
                   <div className="text-xs text-ink-2">{a.genre} · {a.impresariaat}</div>
                 </button>
                 {groep.direct && (
-                  <button className="knop knop-primair !px-3 !py-1.5" onClick={() => { voegToe({ aanbodId: a.id, datum: vlek.datum, zaal: vlek.zaal }); onSluit() }}>
-                    <Plus size={14} /> Plan
+                  <button className="knop knop-primair !px-3 !py-1.5" onClick={() => { if (eenvoudig) zetOptie(a.id, vlek.datum, vlek.zaal); else voegToe({ aanbodId: a.id, datum: vlek.datum, zaal: vlek.zaal }); onSluit() }}>
+                    <Plus size={14} /> {eenvoudig ? 'Zet als optie' : 'Plan'}
                   </button>
                 )}
               </div>

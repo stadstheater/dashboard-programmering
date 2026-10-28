@@ -1,7 +1,8 @@
 import { X, type Icon } from '@phosphor-icons/react'
 import { useEffect, type CSSProperties, type ReactNode } from 'react'
-import { AANBOD_STATUSSEN, STATUSSEN, familieVan, type Segment } from '../data/vocab'
+import { AANBOD_STATUSSEN, DOELGROEPEN, STATUSSEN, familieVan, inktVoor, isLicht, type Segment } from '../data/vocab'
 import { staffel, useOptellen } from '../lib/animatie'
+import { useStore } from '../store/useStore'
 
 export function cx(...c: (string | false | null | undefined)[]) {
   return c.filter(Boolean).join(' ')
@@ -19,7 +20,7 @@ export function IcoonBol({ icoon: I, kleur, grootte = 36, rond, className, style
   return (
     <span
       className={cx('inline-grid shrink-0 place-items-center', rond ? 'rounded-full' : 'rounded-[30%]', className)}
-      style={{ width: grootte, height: grootte, background: kleur + '24', color: kleur, ...style }}
+      style={{ width: grootte, height: grootte, background: isLicht(kleur) ? kleur : kleur + '24', color: isLicht(kleur) ? inktVoor(kleur) : kleur, ...style }}
     >
       <I weight="fill" size={Math.round(grootte * 0.56)} />
     </span>
@@ -119,7 +120,24 @@ export function StatusLabel({ status, klein }: { status: string; klein?: boolean
   )
 }
 
+/** Doelgroeplabel in de kleur van het Culturele Doelgroepenmodel, met de afkorting. */
+export function CdmLabel({ naam, segment, groot, metNaam, className }: { naam?: string; segment?: Segment; groot?: boolean; metNaam?: boolean; className?: string }) {
+  const s = segment ?? DOELGROEPEN.find((d) => d.naam === naam)
+  if (!s) return null
+  return (
+    <span
+      title={`${s.naam} (${s.kort})`}
+      className={cx('inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full font-extrabold tracking-wide', groot ? 'px-2.5 py-1 text-xs' : 'px-1.5 py-px text-[10px]', isLicht(s.kleur) && 'ring-1 ring-black/10', className)}
+      style={{ background: s.kleur, color: inktVoor(s.kleur) }}
+    >
+      {s.kort}
+      {metNaam && <span className="font-semibold tracking-normal">{s.naam}</span>}
+    </span>
+  )
+}
+
 export function SegmentChip({ segment, klein, actief = true, onClick }: { segment: Segment; klein?: boolean; actief?: boolean; onClick?: () => void }) {
+  if (segment.hoofdgroep && !onClick) return <CdmLabel segment={segment} groot={!klein} metNaam={!klein} className={cx(!actief && 'opacity-45')} />
   const Tag = onClick ? 'button' : 'span'
   const I = segment.icoon
   return (
@@ -207,8 +225,10 @@ export function Venster({ open, onSluit, titel, children }: { open: boolean; onS
 }
 
 /** Horizontale balk met een doelmarkering, voor aandeel versus streefwaarde. */
-export function DoelBalk({ label, icoon: I, kleur, aandeel, doel, max = 40, sub, i = 0 }: {
+export function DoelBalk({ label, icoon: I, kleur, aandeel, doel, max = 40, sub, i = 0, doelgroep }: {
   label: string
+  /** Naam van een CDM-doelgroep: toont dan het gekleurde label met afkorting. */
+  doelgroep?: string
   icoon?: Icon
   kleur: string
   aandeel: number
@@ -222,7 +242,7 @@ export function DoelBalk({ label, icoon: I, kleur, aandeel, doel, max = 40, sub,
     <div className="group" title={`${label}: ${aandeel.toFixed(1)}% (doel ${doel}%)`}>
       <div className="mb-1 flex items-baseline justify-between gap-2 text-sm">
         <span className="flex min-w-0 items-center gap-1.5 font-medium text-ink">
-          {I && <I weight="fill" size={16} className="shrink-0 self-center transition group-hover:scale-125" style={{ color: kleur }} />}
+          {doelgroep ? <CdmLabel naam={doelgroep} /> : I && <I weight="fill" size={16} className="shrink-0 self-center transition group-hover:scale-125" style={{ color: kleur }} />}
           <span className="truncate">{label}</span>
         </span>
         <span className="shrink-0 tabular-nums text-ink-2">
@@ -233,7 +253,7 @@ export function DoelBalk({ label, icoon: I, kleur, aandeel, doel, max = 40, sub,
         </span>
       </div>
       <div className="relative h-3 rounded-full bg-[#f6efe6]">
-        <div className="groei h-full rounded-full transition-[width] duration-700 group-hover:brightness-110" style={{ width: `${Math.min(100, (aandeel / max) * 100)}%`, background: kleur, ...staffel(i) }} />
+        <div className={cx('groei h-full rounded-full transition-[width] duration-700 group-hover:brightness-110', isLicht(kleur) && 'ring-1 ring-inset ring-black/15')} style={{ width: `${Math.min(100, (aandeel / max) * 100)}%`, background: kleur, ...staffel(i) }} />
         <div className="absolute -top-1 h-5 w-[3px] rounded-full bg-ink transition-[left] duration-700" style={{ left: `calc(${Math.min(100, (doel / max) * 100)}% - 1px)` }} title={`Doel ${doel}%`} />
       </div>
       {sub && <div className="mt-1 text-xs text-muted">{sub}</div>}
@@ -303,4 +323,20 @@ export function ScoreRing({ score, grootte = 52 }: { score: number; grootte?: nu
       <span className="font-display absolute inset-0 grid place-items-center text-sm font-extrabold">{score}</span>
     </div>
   )
+}
+
+/** Matchscore in gewone woorden. */
+export function pastTekst(score: number) {
+  return score >= 70 ? { tekst: 'Past goed', klasse: 'bg-emerald-50 text-emerald-700 ring-emerald-200' } : score >= 55 ? { tekst: 'Past redelijk', klasse: 'bg-amber-50 text-amber-800 ring-amber-200' } : { tekst: 'Past minder', klasse: 'bg-slate-100 text-slate-600 ring-slate-200' }
+}
+
+export function PastBijOns({ score }: { score: number }) {
+  const p = pastTekst(score)
+  return <span className={cx('inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold ring-1', p.klasse)} title={`Score ${score} van 100`}>{p.tekst}</span>
+}
+
+/** Ring met score in de uitgebreide weergave, woorden in de eenvoudige. */
+export function Match({ score, grootte }: { score: number; grootte?: number }) {
+  const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
+  return eenvoudig ? <PastBijOns score={score} /> : <ScoreRing score={score} grootte={grootte} />
 }

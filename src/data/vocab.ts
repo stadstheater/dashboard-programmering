@@ -1,7 +1,7 @@
 import {
-  Balloon, Bank, Baby, BookOpen, Brain, Champagne, Compass, Confetti, DiscoBall, GlobeHemisphereWest, Guitar, HouseLine,
+  Balloon, Bank, Baby, Binoculars, BookOpen, Brain, Champagne, Coffee, Compass, Confetti, DiscoBall, Fire, GlobeHemisphereWest, Guitar, HouseLine,
   MaskHappy, Microphone, MusicNotes, PersonArmsSpread, PianoKeys, Popcorn, ShoppingBag, Smiley, Sparkle, Star, Ticket,
-  TreeEvergreen, UsersThree, type Icon,
+  RocketLaunch, TreeEvergreen, UsersThree, type Icon,
 } from '@phosphor-icons/react'
 import type { AanbodStatus, Status, Zaal } from './types'
 
@@ -37,27 +37,66 @@ export const AANBOD_STATUSSEN: { naam: AanbodStatus; kleur: string; zacht: strin
 /** Categorisch palet (gevalideerd op kleurenblindheid, vaste volgorde). */
 export const PALET = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#6250d6', '#e34948', '#0e9fb5']
 
+export type Hoofdgroep = 'Intensief' | 'Medium' | 'Licht'
+
 export interface Segment {
   naam: string
+  /** Afkorting bij doelgroepen (zoals in de CDM-brochure), korte naam bij motivaties. */
   kort: string
   kleur: string
   icoon: Icon
   omschrijving: string
   /** Dummy aandeel van dit segment in het verzorgingsgebied (procent). */
   marktaandeel: number
+  hoofdgroep?: Hoofdgroep
 }
 
-export const DOELGROEPEN: Segment[] = [
-  { naam: 'Klassieke Cultuurliefhebbers', kort: 'Klassiek', kleur: PALET[0], icoon: Bank, marktaandeel: 9, omschrijving: 'Ouder, hoogopgeleid en trouw. Kiest voor kwaliteit, gevestigde namen en traditie.' },
-  { naam: 'Weelderige Cultuurminnaars', kort: 'Weelderig', kleur: PALET[1], icoon: Champagne, marktaandeel: 8, omschrijving: 'Welgesteld en breed geïnteresseerd. Combineert een avond uit graag met diner en arrangement.' },
-  { naam: 'Proevende Buitenwijkers', kort: 'Proevend', kleur: PALET[2], icoon: Popcorn, marktaandeel: 15, omschrijving: 'Gezinnen en stellen uit de buitenwijken die af en toe gaan voor bekende namen en een gezellige avond.' },
-  { naam: 'Actieve Vermaakvangers', kort: 'Vermaak', kleur: PALET[3], icoon: Confetti, marktaandeel: 13, omschrijving: 'Jonger en actief. Zoekt vermaak, humor en grote shows en beslist vaak laat.' },
-  { naam: 'Lokale Vrijetijdsgenieters', kort: 'Lokaal', kleur: PALET[4], icoon: HouseLine, marktaandeel: 18, omschrijving: 'Sterk lokaal georiënteerd, prijsbewust en gericht op toegankelijk en herkenbaar aanbod.' },
-  { naam: 'Kindrijke Cultuurvreters', kort: 'Kindrijk', kleur: PALET[5], icoon: Baby, marktaandeel: 12, omschrijving: 'Jonge gezinnen die cultuur belangrijk vinden voor hun kinderen. Familievoorstellingen en vakanties.' },
-  { naam: 'Sociale Cultuurhoppers', kort: 'Sociaal', kleur: PALET[6], icoon: UsersThree, marktaandeel: 9, omschrijving: 'Gaat graag met vrienden uit, staat open voor nieuw werk en deelt ervaringen online.' },
-  { naam: 'Flanerende Plezierzoekers', kort: 'Flanerend', kleur: PALET[7], icoon: ShoppingBag, marktaandeel: 10, omschrijving: 'Stedelijk en spontaan. Combineert uitgaan met winkelen en horeca, kiest voor plezier.' },
-  { naam: 'Culturele Alleseters', kort: 'Alleseter', kleur: PALET[8], icoon: GlobeHemisphereWest, marktaandeel: 6, omschrijving: 'Zeer cultuurminded en veelbezoeker van alle disciplines, ook experimenteel en internationaal.' },
+export const HOOFDGROEPEN: { naam: Hoofdgroep; uitleg: string }[] = [
+  { naam: 'Intensief', uitleg: 'Gaan vaak en graag naar cultuur' },
+  { naam: 'Medium', uitleg: 'Gaan regelmatig, vooral voor vermaak en bekende namen' },
+  { naam: 'Licht', uitleg: 'Gaan af en toe, als het dichtbij, gezellig of betaalbaar is' },
 ]
+
+/**
+ * Cultureel Doelgroepenmodel. Kleuren volgens Rotterdam Festivals (handout 2024).
+ * Bruisende en Ontspannen Buitenwijkers staan niet in die handout: hun kleuren zijn voorlopig gekozen.
+ */
+export const DOELGROEPEN: Segment[] = [
+  { naam: 'Culturele Alleseters', kort: 'CA', hoofdgroep: 'Intensief', kleur: '#ffff37', icoon: GlobeHemisphereWest, marktaandeel: 6, omschrijving: 'Zeer cultuurminded en veelbezoeker van alle disciplines, ook experimenteel en internationaal.' },
+  { naam: 'Kindrijke Cultuurvreters', kort: 'KVC', hoofdgroep: 'Intensief', kleur: '#febba0', icoon: Baby, marktaandeel: 8, omschrijving: 'Gezinnen die cultuur belangrijk vinden, ook voor hun kinderen. Familievoorstellingen en vakanties.' },
+  { naam: 'Weelderige Cultuurminnaars', kort: 'WC', hoofdgroep: 'Intensief', kleur: '#ff6600', icoon: Champagne, marktaandeel: 6, omschrijving: 'Welgesteld en breed geïnteresseerd. Combineert een avond uit graag met diner en arrangement.' },
+  { naam: 'Klassieke Cultuurliefhebbers', kort: 'KCL', hoofdgroep: 'Intensief', kleur: '#d70303', icoon: Bank, marktaandeel: 8, omschrijving: 'Ouder, hoogopgeleid en trouw. Kiest voor kwaliteit, gevestigde namen en traditie.' },
+  { naam: 'Startende Cultuurspeurders', kort: 'SCS', hoofdgroep: 'Medium', kleur: '#9edfe1', icoon: Binoculars, marktaandeel: 9, omschrijving: 'Twintigers en dertigers die cultuur aan het ontdekken zijn, vaak samen met vrienden.' },
+  { naam: 'Actieve Vermaakvangers', kort: 'AV', hoofdgroep: 'Medium', kleur: '#3e9bf8', icoon: Confetti, marktaandeel: 7, omschrijving: 'Jonger en actief. Zoekt vermaak, humor en grote shows en beslist vaak laat.' },
+  { naam: 'Proevende Buitenwijkers', kort: 'PB', hoofdgroep: 'Medium', kleur: '#00518e', icoon: Popcorn, marktaandeel: 10, omschrijving: 'Gezinnen en stellen uit de buitenwijken die af en toe gaan voor bekende namen en een gezellige avond.' },
+  { naam: 'Bruisende Buitenwijkers', kort: 'BB', hoofdgroep: 'Medium', kleur: '#8b3fd9', icoon: Fire, marktaandeel: 7, omschrijving: 'Buitenwijkers die houden van een feestelijke avond uit: grote shows, muziek en gezelligheid.' },
+  { naam: 'Ontspannen Buitenwijkers', kort: 'OB', hoofdgroep: 'Medium', kleur: '#c9a3f0', icoon: Coffee, marktaandeel: 8, omschrijving: 'Rustige buitenwijkers die cultuur zien als ontspanning: herkenbaar, dichtbij en zonder gedoe.' },
+  { naam: 'Nieuwsgierige Toekomstgrijpers', kort: 'NT', hoofdgroep: 'Licht', kleur: '#ade97b', icoon: RocketLaunch, marktaandeel: 5, omschrijving: 'Jong en stedelijk. Zoekt nieuwe vormen, crossovers en makers van nu.' },
+  { naam: 'Flanerende Plezierzoekers', kort: 'FP', hoofdgroep: 'Licht', kleur: '#009b3a', icoon: ShoppingBag, marktaandeel: 9, omschrijving: 'Stedelijk en spontaan. Combineert uitgaan met winkelen en horeca, kiest voor plezier.' },
+  { naam: 'Sociale Cultuurhoppers', kort: 'SCH', hoofdgroep: 'Licht', kleur: '#426e42', icoon: UsersThree, marktaandeel: 8, omschrijving: 'Gaat graag met vrienden uit, staat open voor nieuw werk en deelt ervaringen online.' },
+  { naam: 'Lokale Vrijetijdsgenieters', kort: 'LV', hoofdgroep: 'Licht', kleur: '#7e6c02', icoon: HouseLine, marktaandeel: 9, omschrijving: 'Sterk lokaal georiënteerd, prijsbewust en gericht op toegankelijk en herkenbaar aanbod.' },
+]
+
+/** Leesbare tekstkleur (donker of wit) op een achtergrondkleur. */
+export function inktVoor(hex: string) {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+  const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4))
+  const l = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+  // Kies de tekstkleur met het meeste contrast (inkt heeft een luminantie van ongeveer 0,013).
+  return (l + 0.05) / (0.013 + 0.05) >= 1.05 / (l + 0.05) ? '#1d1b2f' : '#ffffff'
+}
+
+/** Donkerdere variant van een kleur, voor lijnen en iconen in lichte CDM-kleuren. */
+export function donkerder(hex: string, factor = 0.62) {
+  const [r, g, b] = [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * factor))
+  return `#${[r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('')}`
+}
+
+/** Lichte kleuren hebben een rand nodig om op wit zichtbaar te blijven. */
+export function isLicht(hex: string) {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))
+  return 0.299 * r + 0.587 * g + 0.114 * b > 175
+}
 
 export const MOTIVATIES: Segment[] = [
   { naam: 'Plezier', kort: 'Plezier', kleur: PALET[0], icoon: Smiley, marktaandeel: 0, omschrijving: 'Een leuke avond uit, lachen en ontspannen.' },

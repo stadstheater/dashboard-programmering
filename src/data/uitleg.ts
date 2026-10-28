@@ -87,3 +87,53 @@ export const UITLEG: Record<string, { naam: string; stappen: UitlegStap[] }> = {
     ],
   },
 }
+
+/** Kortere rondleidingen voor de eenvoudige weergave. */
+export const UITLEG_EENVOUDIG: Record<string, { naam: string; stappen: UitlegStap[] }> = {
+  '/': {
+    naam: 'Vandaag',
+    stappen: [
+      { titel: 'Welkom bij Coulisse', tekst: 'Hier zie je in één oogopslag hoe het seizoen ervoor staat en wat er aandacht nodig heeft. Alles is nu nog gevuld met voorbeelddata.' },
+      { doel: 'vandaag-cijfers', titel: 'Drie cijfers', tekst: 'Hoeveel voorstellingen, hoeveel bezoekers en hoe vol de zalen zitten. Groen is goed, oranje vraagt om aandacht.' },
+      { doel: 'vandaag-aandacht', titel: 'Wat vraagt aandacht?', tekst: 'Hier staan de belangrijkste punten. Klik op de knop om er meteen mee aan de slag te gaan.' },
+      { doel: 'seizoenkiezer', titel: 'Ander seizoen bekijken', tekst: 'Kies "Dit seizoen" of "Volgend seizoen". Oudere seizoenen vind je onder "Eerder".' },
+      { doel: 'modus', titel: 'Meer details?', tekst: 'Zet "Uitgebreid" aan voor alle grafieken en extra onderdelen. Je kunt altijd terug.' },
+    ],
+  },
+  '/kalender': {
+    naam: 'Kalender',
+    stappen: [
+      { doel: 'kalender-raster', titel: 'Je maandoverzicht', tekst: 'Elke voorstelling staat op zijn datum. Klik erop voor alle details. Met de pijltjes ga je naar een andere maand.' },
+      { doel: 'witte-vlek', titel: 'Vrije avonden', tekst: 'Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal. Klik op "Iets inplannen?" voor passende voorstellingen.' },
+      { doel: 'filter-knop', titel: 'Filteren', tekst: 'Wil je alleen bijvoorbeeld cabaret zien? Klik op "Filteren".' },
+    ],
+  },
+  '/aanbod': {
+    naam: 'Aanbod',
+    stappen: [
+      { doel: 'aanbod-kaart', titel: 'Voorstellingen die je kunt boeken', tekst: 'Bovenaan staat wat het best bij ons past. Het label "Past goed" kijkt naar ons publiek, eerdere resultaten en vrije data.' },
+      { doel: 'shortlist', titel: 'Bewaren', tekst: 'Interessant? Klik op de ster om de voorstelling te bewaren.' },
+      { doel: 'aanbod-kaart', titel: 'Inplannen', tekst: 'Open een voorstelling en klik op een vrije datum. Hij komt dan als optie in de kalender.' },
+    ],
+  },
+  '/doelgroepen': {
+    naam: 'Publiek',
+    stappen: [
+      { doel: 'segmenten', titel: 'Wie komt er?', tekst: 'Elke kaart is een groep uit het Cultureel Doelgroepenmodel, met de kleur en afkorting uit de brochure. Rood betekent: die groep bereiken we te weinig.' },
+      { doel: 'spotlight', titel: 'Meer weten over een groep', tekst: 'Klik op een kaart. Hier zie je wat er eerder goed werkte en welk aanbod bij deze groep past.' },
+      { doel: 'publiek-tabs', titel: 'Waarom komen ze?', tekst: 'Wissel naar de motivaties: plezier, ontdekken, traditie en meer.' },
+    ],
+  },
+}
+
+/** Sleutel van de rondleiding voor een pagina, afhankelijk van de weergave. */
+export function uitlegSleutel(pad: string, modus: 'eenvoudig' | 'uitgebreid') {
+  return modus === 'eenvoudig' && UITLEG_EENVOUDIG[pad] ? `e:${pad}` : pad
+}
+
+export function uitlegVoor(sleutel: string | null) {
+  if (!sleutel) return null
+  return sleutel.startsWith('e:') ? UITLEG_EENVOUDIG[sleutel.slice(2)] ?? null : UITLEG[sleutel] ?? null
+}
+
+export const padVanSleutel = (sleutel: string) => (sleutel.startsWith('e:') ? sleutel.slice(2) : sleutel)

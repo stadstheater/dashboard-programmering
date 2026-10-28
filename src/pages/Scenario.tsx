@@ -4,7 +4,7 @@ import { staffel } from '../lib/animatie'
 import { useMemo, useState } from 'react'
 import { Bar, BarChart, CartesianGrid, ReferenceDot, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { TipKaart } from '../components/charts'
-import { GenreLabel, Kaart, Leeg, Paginakop, ScoreRing, Tabs, cx } from '../components/ui'
+import { CdmLabel, GenreLabel, Kaart, Leeg, Paginakop, ScoreRing, Tabs, cx } from '../components/ui'
 import { isoDatum, seizoenStartJaar } from '../data/generate'
 import { DOELGROEPEN, MOTIVATIES, PLAN_SEIZOEN, familieVan } from '../data/vocab'
 import {
@@ -161,7 +161,7 @@ export default function Scenario() {
                     <div className="truncate text-sm font-semibold">{a.titel}</div>
                     <div className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-2">
                       {(() => { const f = familieVan(a.genre); return <f.icoon size={13} style={{ color: f.kleur }} /> })()}
-                      <span className="truncate">{a.doelgroepen.slice(0, 2).map((d) => DOELGROEPEN.find((x) => x.naam === d)?.kort).join(', ')}</span>
+                      <span className="flex gap-1">{a.doelgroepen.slice(0, 3).map((d) => <CdmLabel key={d} naam={d} />)}</span>
                     </div>
                   </button>
                   {gepland.length > 0 && <span className="rounded-full bg-violet px-2 py-0.5 text-[11px] font-bold text-white">{gepland.length}x</span>}

@@ -124,16 +124,16 @@ const TITELS: Record<string, string[]> = {
 const PERSOONLIJK = new Set(['Cabaret', 'Theatercollege', 'Muziektheater'])
 
 const PROFIEL: Record<string, { m: string[]; d: string[]; kracht: number; zaal: Zaal }> = {
-  Cabaret: { m: ['Plezier', 'Populair', 'Ontdekken', 'Inhoudelijk'], d: ['Klassieke Cultuurliefhebbers', 'Weelderige Cultuurminnaars', 'Actieve Vermaakvangers', 'Proevende Buitenwijkers', 'Sociale Cultuurhoppers'], kracht: 0.78, zaal: 'Grote zaal' },
-  Muziek: { m: ['Plezier', 'Populair', 'Traditioneel'], d: ['Klassieke Cultuurliefhebbers', 'Lokale Vrijetijdsgenieters', 'Weelderige Cultuurminnaars', 'Proevende Buitenwijkers', 'Flanerende Plezierzoekers'], kracht: 0.75, zaal: 'Grote zaal' },
-  'Jeugd & Familie': { m: ['Plezier', 'Toegankelijk & betaalbaar theater', 'Traditioneel', 'Leerzaam'], d: ['Kindrijke Cultuurvreters', 'Proevende Buitenwijkers', 'Lokale Vrijetijdsgenieters'], kracht: 0.72, zaal: 'Grote zaal' },
-  Musical: { m: ['Plezier', 'Populair', 'Inspiratie'], d: ['Proevende Buitenwijkers', 'Lokale Vrijetijdsgenieters', 'Weelderige Cultuurminnaars', 'Flanerende Plezierzoekers'], kracht: 0.84, zaal: 'Grote zaal' },
-  Toneel: { m: ['Inhoudelijk', 'Inspiratie', 'Ontdekken'], d: ['Klassieke Cultuurliefhebbers', 'Weelderige Cultuurminnaars', 'Culturele Alleseters', 'Sociale Cultuurhoppers'], kracht: 0.62, zaal: 'Grote zaal' },
-  Show: { m: ['Plezier', 'Populair'], d: ['Actieve Vermaakvangers', 'Flanerende Plezierzoekers', 'Proevende Buitenwijkers', 'Lokale Vrijetijdsgenieters'], kracht: 0.8, zaal: 'Grote zaal' },
-  Special: { m: ['Plezier', 'Traditioneel', 'Toegankelijk & betaalbaar theater'], d: ['Lokale Vrijetijdsgenieters', 'Klassieke Cultuurliefhebbers', 'Proevende Buitenwijkers'], kracht: 0.66, zaal: 'Grote zaal' },
-  Theatercollege: { m: ['Leerzaam', 'Inhoudelijk', 'Inspiratie'], d: ['Klassieke Cultuurliefhebbers', 'Culturele Alleseters', 'Weelderige Cultuurminnaars'], kracht: 0.7, zaal: 'Kleine zaal' },
+  Cabaret: { m: ['Plezier', 'Populair', 'Ontdekken', 'Inhoudelijk'], d: ['Klassieke Cultuurliefhebbers', 'Weelderige Cultuurminnaars', 'Actieve Vermaakvangers', 'Proevende Buitenwijkers', 'Sociale Cultuurhoppers', 'Ontspannen Buitenwijkers'], kracht: 0.78, zaal: 'Grote zaal' },
+  Muziek: { m: ['Plezier', 'Populair', 'Traditioneel'], d: ['Klassieke Cultuurliefhebbers', 'Lokale Vrijetijdsgenieters', 'Weelderige Cultuurminnaars', 'Proevende Buitenwijkers', 'Flanerende Plezierzoekers', 'Bruisende Buitenwijkers'], kracht: 0.75, zaal: 'Grote zaal' },
+  'Jeugd & Familie': { m: ['Plezier', 'Toegankelijk & betaalbaar theater', 'Traditioneel', 'Leerzaam'], d: ['Kindrijke Cultuurvreters', 'Proevende Buitenwijkers', 'Lokale Vrijetijdsgenieters', 'Ontspannen Buitenwijkers'], kracht: 0.72, zaal: 'Grote zaal' },
+  Musical: { m: ['Plezier', 'Populair', 'Inspiratie'], d: ['Proevende Buitenwijkers', 'Bruisende Buitenwijkers', 'Lokale Vrijetijdsgenieters', 'Weelderige Cultuurminnaars', 'Flanerende Plezierzoekers'], kracht: 0.84, zaal: 'Grote zaal' },
+  Toneel: { m: ['Inhoudelijk', 'Inspiratie', 'Ontdekken'], d: ['Klassieke Cultuurliefhebbers', 'Weelderige Cultuurminnaars', 'Culturele Alleseters', 'Sociale Cultuurhoppers', 'Nieuwsgierige Toekomstgrijpers'], kracht: 0.62, zaal: 'Grote zaal' },
+  Show: { m: ['Plezier', 'Populair'], d: ['Actieve Vermaakvangers', 'Bruisende Buitenwijkers', 'Flanerende Plezierzoekers', 'Proevende Buitenwijkers', 'Startende Cultuurspeurders'], kracht: 0.8, zaal: 'Grote zaal' },
+  Special: { m: ['Plezier', 'Traditioneel', 'Toegankelijk & betaalbaar theater'], d: ['Lokale Vrijetijdsgenieters', 'Ontspannen Buitenwijkers', 'Klassieke Cultuurliefhebbers', 'Proevende Buitenwijkers'], kracht: 0.66, zaal: 'Grote zaal' },
+  Theatercollege: { m: ['Leerzaam', 'Inhoudelijk', 'Inspiratie'], d: ['Klassieke Cultuurliefhebbers', 'Culturele Alleseters', 'Weelderige Cultuurminnaars', 'Startende Cultuurspeurders'], kracht: 0.7, zaal: 'Kleine zaal' },
   Muziektheater: { m: ['Inspiratie', 'Plezier', 'Inhoudelijk'], d: ['Klassieke Cultuurliefhebbers', 'Weelderige Cultuurminnaars', 'Sociale Cultuurhoppers'], kracht: 0.6, zaal: 'Kleine zaal' },
-  Dans: { m: ['Ontdekken', 'Inspiratie', 'Plezier'], d: ['Culturele Alleseters', 'Sociale Cultuurhoppers', 'Weelderige Cultuurminnaars', 'Flanerende Plezierzoekers'], kracht: 0.55, zaal: 'Grote zaal' },
+  Dans: { m: ['Ontdekken', 'Inspiratie', 'Plezier'], d: ['Culturele Alleseters', 'Nieuwsgierige Toekomstgrijpers', 'Startende Cultuurspeurders', 'Sociale Cultuurhoppers', 'Weelderige Cultuurminnaars'], kracht: 0.55, zaal: 'Grote zaal' },
   'Klassieke muziek': { m: ['Traditioneel', 'Inhoudelijk'], d: ['Klassieke Cultuurliefhebbers', 'Weelderige Cultuurminnaars', 'Lokale Vrijetijdsgenieters'], kracht: 0.72, zaal: 'Kleine zaal' },
   Opera: { m: ['Traditioneel', 'Inspiratie'], d: ['Klassieke Cultuurliefhebbers', 'Weelderige Cultuurminnaars', 'Culturele Alleseters'], kracht: 0.74, zaal: 'Grote zaal' },
 }
@@ -463,9 +463,10 @@ function genereerAanbod(rng: Rng, acts: Act[], gebruikt: Set<string>): Aanbod[] 
 
 export const STANDAARD_DOELEN: Doelen = {
   doelgroepen: {
-    'Klassieke Cultuurliefhebbers': 22, 'Weelderige Cultuurminnaars': 14, 'Proevende Buitenwijkers': 14,
-    'Actieve Vermaakvangers': 12, 'Lokale Vrijetijdsgenieters': 11, 'Kindrijke Cultuurvreters': 10,
-    'Sociale Cultuurhoppers': 7, 'Flanerende Plezierzoekers': 7, 'Culturele Alleseters': 3,
+    'Culturele Alleseters': 4, 'Kindrijke Cultuurvreters': 9, 'Weelderige Cultuurminnaars': 12, 'Klassieke Cultuurliefhebbers': 18,
+    'Startende Cultuurspeurders': 6, 'Actieve Vermaakvangers': 9, 'Proevende Buitenwijkers': 11, 'Bruisende Buitenwijkers': 5,
+    'Ontspannen Buitenwijkers': 5, 'Nieuwsgierige Toekomstgrijpers': 3, 'Flanerende Plezierzoekers': 6, 'Sociale Cultuurhoppers': 5,
+    'Lokale Vrijetijdsgenieters': 7,
   },
   motivaties: {
     Plezier: 32, Populair: 14, Traditioneel: 11, Ontdekken: 12, Inhoudelijk: 12, Inspiratie: 7,

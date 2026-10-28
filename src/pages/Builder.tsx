@@ -2,11 +2,11 @@ import { ArrowsClockwise, DiceFive, X, DownloadSimple, FileJs, FileXls, Hammer, 
 import { wisAlleUitleg } from '../components/Rondleiding'
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { GenreLabel, Kaart, KpiTegel, Paginakop, SegmentChip, StatusLabel, Tabs, Venster, cx } from '../components/ui'
+import { CdmLabel, GenreLabel, Kaart, KpiTegel, Paginakop, SegmentChip, StatusLabel, Tabs, Venster, cx } from '../components/ui'
 import { STANDAARD_DOELEN, seizoenVanDatum } from '../data/generate'
 import type { Aanbod, AanbodStatus, Dataset, Doelen, Status, Voorstelling, Zaal } from '../data/types'
 import {
-  AANBOD_STATUSSEN, DOELGROEPEN, GEMIDDELDE_PRIJS, GENRES, GENRE_FAMILIES, IMPRESARIATEN, MOTIVATIES, SEIZOENEN, STATUSSEN, ZALEN, capaciteitVan,
+  AANBOD_STATUSSEN, DOELGROEPEN, GEMIDDELDE_PRIJS, GENRES, GENRE_FAMILIES, IMPRESARIATEN, MOTIVATIES, SEIZOENEN, STATUSSEN, ZALEN, capaciteitVan, inktVoor,
 } from '../data/vocab'
 import { datumKort, euro, getal } from '../lib/calc'
 import { downloadJson, exporteerExcel, leesProgrammeringExcel } from '../lib/excel'
@@ -17,10 +17,7 @@ type Tab = 'voorstellingen' | 'aanbod' | 'doelen' | 'dataset'
 function SegmentIconen({ namen }: { namen: string[] }) {
   return (
     <span className="flex gap-1">
-      {namen.map((n) => {
-        const s = DOELGROEPEN.find((x) => x.naam === n)
-        return s ? <span key={n} title={s.naam}><s.icoon size={16} style={{ color: s.kleur }} /></span> : null
-      })}
+      {namen.map((n) => <CdmLabel key={n} naam={n} />)}
     </span>
   )
 }
@@ -45,8 +42,8 @@ function SegmentKiezer({ lijst, gekozen, max, onChange }: { lijst: typeof DOELGR
             type="button"
             key={s.naam}
             onClick={() => onChange(i >= 0 ? gekozen.filter((g) => g !== s.naam) : gekozen.length < max ? [...gekozen, s.naam] : gekozen)}
-            className={cx('flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold transition', i >= 0 ? 'border-transparent text-white' : 'border-line bg-white text-ink-2 hover:bg-[#fff6ee]')}
-            style={i >= 0 ? { background: s.kleur } : undefined}
+            className={cx('flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold transition', i >= 0 ? 'border-transparent' : 'border-line bg-white text-ink-2 hover:bg-[#fff6ee]')}
+            style={i >= 0 ? { background: s.kleur, color: inktVoor(s.kleur) } : undefined}
           >
             {i >= 0 && <span className="grid h-4 w-4 place-items-center rounded-full bg-white/30 text-[10px]">{i + 1}</span>}
             {i < 0 && <s.icoon size={14} style={{ color: s.kleur }} />}

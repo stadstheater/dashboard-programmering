@@ -316,7 +316,7 @@ export function maakSignalen(lijst: Voorstelling[], doelen: Doelen, seizoen: str
       soort: 'let op',
       icoon: hoogste.segment.icoon,
       kleur: hoogste.segment.kleur,
-      titel: `Veel focus op ${hoogste.segment.kort}`,
+      titel: `Veel focus op ${hoogste.segment.naam}`,
       tekst: `${hoogste.aandeel.toFixed(1).replace('.', ',')}% van het bereik tegenover een doel van ${hoogste.doel}%.`,
       link: '/doelgroepen',
     })

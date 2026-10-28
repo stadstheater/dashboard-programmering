@@ -32,6 +32,12 @@
 
 html, body, #root { height: 100%; }
 
+/* Eenvoudige weergave: iets grotere tekst en rustigere effecten. */
+html.eenvoudig { font-size: 17px; }
+@media (max-width: 640px) { html.eenvoudig { font-size: 16px; } }
+html.eenvoudig .glans::after { display: none; }
+html.eenvoudig .puls-violet { animation: none; }
+
 body {
   background-color: var(--color-bg);
   background-image:

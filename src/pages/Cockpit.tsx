@@ -128,7 +128,7 @@ export default function Cockpit() {
         <Kaart i={4} uitleg="balans" titel="Balans in doelgroepen" sub="Aandeel in het bereik ten opzichte van het seizoensdoel (zwart streepje)" actie={<Link to="/doelgroepen" className="knop knop-zacht">Verdiepen <ArrowRight size={15} /></Link>}>
           <div className="space-y-3.5">
             {DOELGROEPEN.map((d, i) => (
-              <DoelBalk i={i} key={d.naam} label={d.naam} icoon={d.icoon} kleur={d.kleur} aandeel={dg[d.naam] ?? 0} doel={doelen.doelgroepen[d.naam] ?? 0} max={35} />
+              <DoelBalk i={i} key={d.naam} label={d.naam} doelgroep={d.naam} kleur={d.kleur} aandeel={dg[d.naam] ?? 0} doel={doelen.doelgroepen[d.naam] ?? 0} max={25} />
             ))}
           </div>
         </Kaart>
