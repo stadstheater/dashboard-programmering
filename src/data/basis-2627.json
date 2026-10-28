@@ -1,0 +1,5607 @@
+[
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-01",
+"titel": "Comedy Club Haug",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "257974017-1772698076",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-02",
+"titel": "Beach Boys' Best (reprise)",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "264356097-1765956856",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-01",
+"titel": "Beach Boys' Best",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "265687809-1765956844",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-23",
+"titel": "Sweet Lake City Bluesfestival",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "269568257-1762069491",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-14",
+"titel": "Het Klassieke Uurtje",
+"genre": "Klassieke muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "275307777-1761812208",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-04",
+"titel": "Het Klassieke Uurtje",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "276519681-1761812182",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-06",
+"titel": "Het Klassiek Uurtje",
+"genre": "Klassieke muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "278751745-1761812226",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-18",
+"titel": "Het Klassieke Uurtje",
+"genre": "Klassieke muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "281474561-1761812248",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2027-06-26",
+"titel": "Titus & Fien De Revue (4+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Geannuleerd",
+"verwacht": 500,
+"id": "286041857-1773214988",
+"motivaties": [],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-29",
+"titel": "Carmina Burana",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "286564865-1759129706",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-27",
+"titel": "Peter Pannekoek (Try-out)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "291500545-1759129771",
+"motivaties": [
+"Inhoudelijk",
+"Populair"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-11",
+"titel": "Zwanenmeer",
+"genre": "Dans",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "292813313-1770193929",
+"motivaties": [
+"Traditioneel",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Kindrijke Cultuurvreters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-03",
+"titel": "BENR",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "307159297-1772698331",
+"motivaties": [
+"Populair",
+"Ontdekken"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Klassieke Cultuurliefhebbers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-27",
+"titel": "Najib Amhali & Roué Verveer",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "319940353-1768985191",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-10",
+"titel": "Beuk! (4+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "320652801-1768809544",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-30",
+"titel": "The Cosmic Carnival",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "342837761-1736153323",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-10-29",
+"titel": "Kluun & Yvanka van der Zwaan",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "356360705-1787643116",
+"motivaties": [
+"Plezier",
+"Leerzaam"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-26",
+"titel": "Ruud Smulders",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "392823297-1770973553",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-04",
+"titel": "Janice Blok",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 120,
+"id": "395261697-1772789574",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Flanerende Plezierzoekers",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-01",
+"titel": "Woezel & Pip De Musical (2+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "409244161-1762941411",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-11",
+"titel": "Heb je mijn zusje gezien? (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "416642049-1767781334",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-17",
+"titel": "Huub van der Lubbe en Jan Robijns",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "420352257-1780646914",
+"motivaties": [
+"Inspiratie",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-17",
+"titel": "Starman - The Dutch David Bowie Tribute",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "421899265-1762942699",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-07",
+"titel": "Pim & Pom (2+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "428862977-1767781416",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-20",
+"titel": "Bouke",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "438765825-1758100643",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-20",
+"titel": "De Ridder Zonder Billen (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "439611137-1767781523",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-30",
+"titel": "Fred van Leer (reprise)",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "445278721-1750922466",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-23",
+"titel": "Thunder From Down Under",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "447587073-1755259934",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-27",
+"titel": "Woordgrapf",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": null,
+"id": "456196097-1791530151",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-13",
+"titel": "Fajah Lourens (Try-out)",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "462625793-1758790700",
+"motivaties": [
+"Inspiratie",
+"Populair"
+],
+"doelgroepen": [
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-09",
+"titel": "Child of Destiny",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "463724545-1767864433",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-10",
+"titel": "Leaving for Nashville",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 600,
+"id": "473866497-1767864484",
+"motivaties": [
+"Populair",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-17",
+"titel": "Nijntje op de fiets (2+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "474798337-1769597443",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-11",
+"titel": "Laat Me",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "474838273-1767864671",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-08",
+"titel": "Erik Wegewijs",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "476285697-1780647923",
+"motivaties": [
+"Inspiratie",
+"Leerzaam"
+],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-09",
+"titel": "Zwartekatdag cabaretmarathon",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "479044609-1755262386",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-21",
+"titel": "Esther van der Voort",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "479358465-1770199777",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-24",
+"titel": "Hugo de Groot, de Musical",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "484940545-1766142162",
+"motivaties": [
+"Inhoudelijk",
+"Inspiratie"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-23",
+"titel": "Jeroens Clan",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "503493889-1770200103",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Kindrijke Cultuurvreters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-17",
+"titel": "Bob Koomen",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "504707841-1770200164",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-28",
+"titel": "Najib Amhali & Roué Verveer",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "508063489-1762595986",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-13",
+"titel": "Guido Weijers",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "516819713-1762946901",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Klassieke Cultuurliefhebbers",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2026-09-26",
+"titel": "Cha Chi Versaci",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "536099073-1759135615",
+"motivaties": [
+"Populair",
+"Inspiratie"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-01",
+"titel": "Naakt voor de rechter",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "538728193-1773596353",
+"motivaties": [
+"Leerzaam",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-16",
+"titel": "De Bevers",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "548798977-1759135807",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-03",
+"titel": "Glodi Lugungu",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "554060033-1755760975",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-19",
+"titel": "Sjaak Bral",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "615020289-1763115500",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2027-03-06",
+"titel": "Blauwe Vinkjes (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": null,
+"id": "616636673-1759137197",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-18",
+"titel": "De Broers van Arkel",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 120,
+"id": "618403073-1759137289",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-19",
+"titel": "Jandino",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "637251073-1759138014",
+"motivaties": [
+"Populair",
+"Traditioneel"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-11",
+"titel": "Van der Laan & Woe",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "637601281-1767871631",
+"motivaties": [
+"Populair",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-11",
+"titel": "De Cabaretcombi",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "656978433-1773048090",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-06",
+"titel": "Treasure",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 650,
+"id": "660303105-1773392850",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-20",
+"titel": "De Verbouwing",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "667398657-1762509861",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-11",
+"titel": "Huisgenoten",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "674063105-1762510027",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-11",
+"titel": "Andries Tunru & Stefan Hendrikx",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "712133121-1759395409",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-23",
+"titel": "De Nog Grotere Slijmmusical (6+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "717112065-1752753000",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-05",
+"titel": "De Règâhs",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "723895297-1759138356",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-26",
+"titel": "Fimme Bakker",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 120,
+"id": "761823233-1759395500",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-22",
+"titel": "Isabelle Beernaert",
+"genre": "Dans",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "761944321-1763310789",
+"motivaties": [
+"Inspiratie",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-07",
+"titel": "The Dutch Eagles",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "765621505-1762511709",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-24",
+"titel": "A Tribute to John Denver",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 600,
+"id": "765722625-1762512449",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-12",
+"titel": "Rob & Emiel",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "767986945-1759395547",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-08",
+"titel": "Joël Borelli",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "769771777-1759138490",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-26",
+"titel": "Jeannine la Rose",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "774902017-1772621426",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-15",
+"titel": "Bee Gees by MainCourse",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "777041153-1755085651",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-14",
+"titel": "Timebox",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "777841665-1759138621",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-26",
+"titel": "Scapino Ballet Rotterdam",
+"genre": "Dans",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "780137729-1762951415",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-10",
+"titel": "Meester Mark",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "780577537-1759395791",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-03",
+"titel": "Popup Choir",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "780765697-1759395864",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Lokale Vrijetijdsgenieters",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-16",
+"titel": "Bee Gees by MainCourse",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "789965569-1755085756",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-19",
+"titel": "Nienke Plas",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 700,
+"id": "792329473-1759138825",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-25",
+"titel": "Deng Boy",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "793731329-1772621663",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Sociale Cultuurhoppers",
+"Flanerende Plezierzoekers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2027-06-26",
+"titel": "Titus & Fien De Revue (4+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Geannuleerd",
+"verwacht": 500,
+"id": "794407681-1773221900",
+"motivaties": [],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-18",
+"titel": "Yentl en de Boer (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "796261121-1757412254",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-26",
+"titel": "Peter Pannekoek (Try-out)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "806702593-1758796091",
+"motivaties": [
+"Inhoudelijk",
+"Populair"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-17",
+"titel": "Kees van Amstel",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "806947073-1772621926",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-13",
+"titel": "RATATATATA! (try-out)",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "815766017-1758894584",
+"motivaties": [
+"Plezier",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-24",
+"titel": "bROTHERS iN bAND",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "819286273-1755086293",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-14",
+"titel": "Michael Varekamp & The Legends (try-out)",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "827547137-1762512899",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Lokale Vrijetijdsgenieters",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2027-01-13",
+"titel": "Supergaande",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Theatercafé",
+"verwacht": null,
+"id": "843313921-1768308405",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-04",
+"titel": "The Illusionists (try out)",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "849685249-1755086655",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-21",
+"titel": "De Notenkraker",
+"genre": "Dans",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "851133697-1768559050",
+"motivaties": [
+"Traditioneel",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-13",
+"titel": "Jawad Es Soufi",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "861582081-1768474681",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-27",
+"titel": "Daniel Arends (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "870066177-1758706368",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-03",
+"titel": "Boeing Boeing",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "871901441-1758895509",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-05",
+"titel": "The Illusionists (try out)",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "875746561-1755086779",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-02",
+"titel": "David Linszen (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "877435649-1758706672",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-09",
+"titel": "CineMusic Filmorkest",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 650,
+"id": "878648065-1769775852",
+"motivaties": [
+"Ontdekken",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-04",
+"titel": "Kasper van der Laan",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "879533825-1758706879",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-05",
+"titel": "Kasper van der Laan",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "880320769-1758706941",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-17",
+"titel": "Jay Francis",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "886083329-1760438214",
+"motivaties": [
+"Populair",
+"Inspiratie"
+],
+"doelgroepen": [
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-14",
+"titel": "Lovella Telesford",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "890033665-1759139663",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Sociale Cultuurhoppers",
+"Flanerende Plezierzoekers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-07",
+"titel": "Leids Cabaret Festival",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "891669761-1758707305",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-13",
+"titel": "Harry Sacksioni (reprise)",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "891793409-1755086870",
+"motivaties": [
+"Traditioneel",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-03",
+"titel": "Patrick Laureij (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "897207297-1758708257",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-25",
+"titel": "Richard Groenendijk",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "897602049-1732614266",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-04",
+"titel": "Merijn Scholten",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "901260289-1758708400",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Kindrijke Cultuurvreters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-26",
+"titel": "Richard Groenendijk",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "902008577-1732614301",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-03",
+"titel": "Merijn Scholten",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "902409729-1758708411",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Kindrijke Cultuurvreters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Optie",
+"datum": "2027-02-22",
+"titel": "La Traviata",
+"genre": null,
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": null,
+"id": "909568257-1768309189",
+"motivaties": [
+"Traditioneel",
+"Inhoudelijk"
+],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-12",
+"titel": "Opvoeden, hoe dan…!?",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "910221825-1762517746",
+"motivaties": [
+"Leerzaam",
+"Plezier"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-13",
+"titel": "Roué Verveer",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 600,
+"id": "910925825-1760438651",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Sociale Cultuurhoppers",
+"Lokale Vrijetijdsgenieters",
+"Flanerende Plezierzoekers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-14",
+"titel": "Roué Verveer",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 600,
+"id": "912868353-1760438669",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Sociale Cultuurhoppers",
+"Lokale Vrijetijdsgenieters",
+"Flanerende Plezierzoekers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-23",
+"titel": "La Traviata",
+"genre": "Opera",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "916936449-1768309201",
+"motivaties": [
+"Traditioneel",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-27",
+"titel": "The Best of Simon & Garfunkel",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "928379393-1755086968",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Lokale Vrijetijdsgenieters",
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-27",
+"titel": "Ed Struijlaart",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "948075265-1769779213",
+"motivaties": [
+"Populair",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-07",
+"titel": "Kaaskop & Van Vleuten",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "948868865-1759314441",
+"motivaties": [
+"Traditioneel",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Optie",
+"datum": "2027-01-20",
+"titel": "Wim Kieft & Eddy van der Ley",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": null,
+"id": "952085761-1759314728",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-16",
+"titel": "Joost Spijkers",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "952468225-1755087072",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-20",
+"titel": "Gerard en Rosanne Alderliefste",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "957481985-1759314874",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-26",
+"titel": "Esmay Usmany",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 50,
+"id": "965619457-1764158276",
+"motivaties": [
+"Inhoudelijk",
+"Inspiratie"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-24",
+"titel": "Buddy Vedder & Shelley Bos",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "979896065-1759399096",
+"motivaties": [
+"Inhoudelijk",
+"Leerzaam"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-04",
+"titel": "Rundfunk",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "983356161-1755087498",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-08",
+"titel": "Nasrdin Dchar",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 300,
+"id": "987891969-1759399270",
+"motivaties": [
+"Inspiratie",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-14",
+"titel": "RATATATATA (try-out)",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "991838465-1769779984",
+"motivaties": [
+"Plezier",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-10-29",
+"titel": "Roel & Jos Maalderink",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1000295169-1757413911",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-26",
+"titel": "Rob Kemps",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1002664961-1759399402",
+"motivaties": [
+"Leerzaam",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-10-30",
+"titel": "Play Supertramp",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1009460225-1760013914",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-17",
+"titel": "Lies en Aaf",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1014007553-1759399491",
+"motivaties": [
+"Plezier",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Kindrijke Cultuurvreters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2026-10-16",
+"titel": "Joost Oomen",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Geannuleerd",
+"verwacht": 75,
+"id": "1016149761-1759399589",
+"motivaties": [
+"Inhoudelijk",
+"Ontdekken"
+],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-10",
+"titel": "David van Rosmalen (try-out)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1017158401-1759399715",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-14",
+"titel": "Pieter Derks (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1029629953-1755087685",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-11",
+"titel": "Groenenberg & de Jong",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 120,
+"id": "1036094209-1760014522",
+"motivaties": [
+"Inspiratie"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-06",
+"titel": "Sherlock Holmes",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1041108225-1773401668",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-22",
+"titel": "De Speelgoedfabriek draait door (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1050198017-1768385614",
+"motivaties": [
+"Toegankelijk & betaalbaar theater",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-22",
+"titel": "De Speelgoedfabriek draait door (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1051121665-1768385616",
+"motivaties": [
+"Toegankelijk & betaalbaar theater",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-06",
+"titel": "Japke-d. Bouma",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1053243649-1770120893",
+"motivaties": [
+"Leerzaam",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-20",
+"titel": "Ernst, Bobbie en de Rest (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": "3+",
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1060334849-1773223720",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-14",
+"titel": "LIFT",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1070670849-1759403432",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-31",
+"titel": "Tineke Schouten (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1073396993-1755088236",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-19",
+"titel": "Dikkie Dik (2+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1078004225-1756471530",
+"motivaties": [
+"Toegankelijk & betaalbaar theater",
+"Plezier"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-12",
+"titel": "Fajah Lourens",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1078138113-1756820156",
+"motivaties": [
+"Inspiratie",
+"Populair"
+],
+"doelgroepen": [
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-21",
+"titel": "40ste Groninger Studenten Cabaret Festival",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1081555713-1769699158",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers",
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-01",
+"titel": "Tineke Schouten (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1085272577-1755088295",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-09",
+"titel": "Nora",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1092900609-1759403621",
+"motivaties": [
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-28",
+"titel": "Baby Reindeer",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 80,
+"id": "1103055105-1759403772",
+"motivaties": [
+"Inhoudelijk",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": null,
+"status": "Concept",
+"datum": "2027-02-24",
+"titel": "inleiding",
+"genre": null,
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": null,
+"id": "1121188865-1768311940",
+"motivaties": [],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-10",
+"titel": "De Bestorming (try-out)",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1122327297-1759404047",
+"motivaties": [
+"Inhoudelijk",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-07",
+"titel": "Sherlock Holmes",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1125932289-1762518852",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-09",
+"titel": "Tosca",
+"genre": "Opera",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1136413953-1773406206",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-05",
+"titel": "Sabrina Starke",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 85,
+"id": "1148232961-1769699901",
+"motivaties": [
+"Ontdekken",
+"Inspiratie"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-22",
+"titel": "Johnny de Mol",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1148534529-1763465618",
+"motivaties": [
+"Inhoudelijk",
+"Populair"
+],
+"doelgroepen": [
+"Sociale Cultuurhoppers",
+"Lokale Vrijetijdsgenieters",
+"Flanerende Plezierzoekers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-11",
+"titel": "Niels Geusebroek",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 130,
+"id": "1149642497-1758291100",
+"motivaties": [
+"Plezier",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-19",
+"titel": "Roxeanne Hazes",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1150113793-1758290980",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-15",
+"titel": "De Kleine Prins (8+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1156551937-1762163893",
+"motivaties": [
+"Inspiratie",
+"Plezier"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-22",
+"titel": "De Speelgoedfabriek draait door (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1158089985-1762163909",
+"motivaties": [
+"Toegankelijk & betaalbaar theater",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-21",
+"titel": "De Gele Duikmachine (4+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1167245569-1762519562",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Klassieke Cultuurliefhebbers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-06",
+"titel": "The Dubliners Experience",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 600,
+"id": "1173803521-1761742147",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-18",
+"titel": "Back to the Country",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1174131201-1761741882",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Lokale Vrijetijdsgenieters",
+"Klassieke Cultuurliefhebbers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-20",
+"titel": "The 70's Unplugged",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1177360641-1761742589",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-04",
+"titel": "Cameretten",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1178290177-1769700180",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-19",
+"titel": "Her Majesty",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 600,
+"id": "1178948097-1760018825",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-21",
+"titel": "The Wieners",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 90,
+"id": "1199709697-1773224997",
+"motivaties": [
+"Toegankelijk & betaalbaar theater",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2027-04-07",
+"titel": "Jan Beuving",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1200676609-1761659227",
+"motivaties": [
+"Plezier",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-10",
+"titel": "De Cabaretcombi",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 120,
+"id": "1204910849-1772631267",
+"motivaties": [
+"Toegankelijk & betaalbaar theater",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-19",
+"titel": "Dikkie Dik (2+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1213501185-1763563960",
+"motivaties": [
+"Toegankelijk & betaalbaar theater",
+"Plezier"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-14",
+"titel": "Oscar Smit",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1218561281-1761659682",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-25",
+"titel": "Peter Pannekoek (Try-out)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1235595265-1757418006",
+"motivaties": [
+"Populair",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-21",
+"titel": "The Wieners",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 90,
+"id": "1236538369-1773225220",
+"motivaties": [
+"Toegankelijk & betaalbaar theater",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-20",
+"titel": "De Ridder Zonder Billen (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1245839105-1773520652",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-17",
+"titel": "Bettina Holwerda",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1250973185-1758291447",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-22",
+"titel": "Wina Ricardo",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1265890049-1757418085",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-12",
+"titel": "Valentina Tóth",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 120,
+"id": "1265958401-1757418049",
+"motivaties": [
+"Ontdekken",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-20",
+"titel": "Ernst, Bobbie en de Rest (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": "3+",
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1268066049-1763130906",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-20",
+"titel": "Wim Kieft & Eddy van der Ley",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 300,
+"id": "1277424897-1773520971",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-18",
+"titel": "Nabil",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "1300987393-1761745147",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": null,
+"status": "Concept",
+"datum": "2027-02-22",
+"titel": "inleiding",
+"genre": null,
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": null,
+"id": "1301559553-1768822811",
+"motivaties": [],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-22",
+"titel": "Esther van der Voort",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1304558337-1761745073",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-07",
+"titel": "Piaf",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "1304865025-1751277044",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-19",
+"titel": "Berit Companjen",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1305180417-1761745212",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-23",
+"titel": "De Grote Oudejaars Kwis 2026",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1311382785-1756995771",
+"motivaties": [
+"Plezier",
+"Leerzaam"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-07",
+"titel": "Anne & Bas",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1345650433-1773316590",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2026-10-24",
+"titel": "101 Dalmatiërs de musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1360378881-1773225885",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-03",
+"titel": "Van Vleuten en Van Muiswinkel",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1360499969-1756996890",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-01",
+"titel": "De Muziekbingo",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Theatercafé",
+"verwacht": 80,
+"id": "1363135489-1772535361",
+"motivaties": [
+"Plezier",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-18",
+"titel": "Tribute to the Cats Band",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1365212673-1748437456",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Lokale Vrijetijdsgenieters",
+"Klassieke Cultuurliefhebbers",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-13",
+"titel": "The Sound of Springsteen",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "1369729793-1758291894",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-04",
+"titel": "Titanique",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1382055681-1737548068",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-10",
+"titel": "Ewout Genemans",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1382874113-1770833999",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-05",
+"titel": "Titanique",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1387317505-1737548186",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-20",
+"titel": "De Muziekbingo",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Theatercafé",
+"verwacht": null,
+"id": "1387558913-1772535463",
+"motivaties": [
+"Plezier",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2026-10-25",
+"titel": "101 Dalmatiërs de musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1387743745-1773226284",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-17",
+"titel": "Anansi de Spin en de Gulzige Tijger (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 300,
+"id": "1390778881-1773522248",
+"motivaties": [
+"Plezier",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-17",
+"titel": "Nijntje op de fiets (2+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1391931137-1773522256",
+"motivaties": [],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-09",
+"titel": "CATS de musical",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1403697409-1737548425",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Actieve Vermaakvangers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-12",
+"titel": "CATS de musical",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1404238849-1737548430",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Actieve Vermaakvangers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-11",
+"titel": "CATS de musical",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1404587777-1737548429",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Actieve Vermaakvangers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-13",
+"titel": "CATS de musical",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1404684801-1737548431",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Actieve Vermaakvangers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-17",
+"titel": "Kamerata Zuid & Francis van Broekhuizen",
+"genre": "Klassieke muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1404693505-1758292696",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-10",
+"titel": "CATS de musical",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1404750337-1737548427",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Actieve Vermaakvangers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-24",
+"titel": "Steyn de Leeuwe",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1405379841-1773414049",
+"motivaties": [
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-18",
+"titel": "Jim Bakkum & Orkest Koninklijke Luchtmacht",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 650,
+"id": "1406127361-1758292468",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Proevende Buitenwijkers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-06",
+"titel": "Nigel Otermans (6+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 300,
+"id": "1413337345-1761661589",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-13",
+"titel": "ICE",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1418572801-1777382979",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Flanerende Plezierzoekers",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Geannuleerd",
+"datum": "2027-04-30",
+"titel": "Hokjesdenker",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 250,
+"id": "1426448897-1758292930",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-09",
+"titel": "Cat Smits Company",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 20,
+"id": "1428428289-1761661758",
+"motivaties": [
+"Inhoudelijk",
+"Leerzaam"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Culturele Alleseters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-24",
+"titel": "Recirquel",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "1428939777-1756729246",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-10",
+"titel": "Henkjan Smits & The Glamrocks",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1433449985-1761661828",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-06",
+"titel": "Compagnia Baccalà",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1435811585-1756729533",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-18",
+"titel": "Wildebras (6+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1439951617-1758293188",
+"motivaties": [
+"Leerzaam",
+"Plezier"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Klassieke Cultuurliefhebbers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-10-15",
+"titel": "Sven Ratzke",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "1445868545-1756729739",
+"motivaties": [
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-06",
+"titel": "Girls on Fire 3",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1452427265-1762522129",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-20",
+"titel": "De Ridder Zonder Billen (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1454231041-1779893480",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-05",
+"titel": "Harm Edens",
+"genre": "Theatercollege",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1470547457-1756730102",
+"motivaties": [
+"Plezier",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-23",
+"titel": "Jan Akkerman",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1471670785-1756730287",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-21",
+"titel": "De Gele Duikmachine (4+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1472748289-1748010697",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Klassieke Cultuurliefhebbers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-21",
+"titel": "Back To Black",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 450,
+"id": "1473272065-1756730396",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-28",
+"titel": "Vlieg met me mee",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1475748865-1737548834",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-27",
+"titel": "The Dutch Tenors",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1476495361-1756730635",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-18",
+"titel": "Janke Dekker",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 50,
+"id": "1478064897-1756730789",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-29",
+"titel": "Vlieg met me mee",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1479103745-1737548850",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-30",
+"titel": "Vlieg met me mee",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1483211521-1737548869",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-17",
+"titel": "Nederland/België",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1483378433-1756730911",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": null,
+"status": "Optie",
+"datum": "2027-02-17",
+"titel": "nijntje SO",
+"genre": null,
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": null,
+"id": "1485192449-1773522815",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-07",
+"titel": "Pim & Pom (2+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1496719361-1773522960",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-10",
+"titel": "FUSE",
+"genre": "Klassieke muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 300,
+"id": "1500670977-1761662147",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-18",
+"titel": "Eye of Melian",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1509334529-1769619741",
+"motivaties": [
+"Traditioneel",
+"Inspiratie"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": null,
+"status": "Concept",
+"datum": "2027-05-06",
+"titel": "Hemelvaart",
+"genre": null,
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": null,
+"id": "1523457025-1789650286",
+"motivaties": [],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-10-28",
+"titel": "William Janz - Amor De Mis Amores",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1531791873-1760638345",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Sociale Cultuurhoppers",
+"Lokale Vrijetijdsgenieters",
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-13",
+"titel": "Blauwe Vinkjes (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1536664321-1783345532",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-05",
+"titel": "Yorick van Norden",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1537801985-1761662567",
+"motivaties": [
+"Traditioneel",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-07",
+"titel": "De Muziekbingo",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Theatercafé",
+"verwacht": 80,
+"id": "1542938369-1772536612",
+"motivaties": [
+"Plezier",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-15",
+"titel": "Juf Braaksel De Musical (6+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1548954369-1748011099",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-17",
+"titel": "Kees Prins (try-out)",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "1549242113-1761662692",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-09",
+"titel": "De Muziekbingo",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Theatercafé",
+"verwacht": 80,
+"id": "1551254785-1772536655",
+"motivaties": [
+"Plezier",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-11",
+"titel": "Kapsalon de Musical",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1556759553-1757696708",
+"motivaties": [
+"Plezier",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-28",
+"titel": "Aladdin De Musical (4+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1581421057-1748011348",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-25",
+"titel": "Stijn de Groot",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1591518465-1770644863",
+"motivaties": [
+"Ontdekken",
+"Inspiratie"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Optie",
+"datum": "2027-01-27",
+"titel": "Rob Scheepers Succes Optie",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": null,
+"id": "1599147009-1761749318",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-01",
+"titel": "Thijs Kemperink",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 120,
+"id": "1599348225-1761749379",
+"motivaties": [
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-25",
+"titel": "Fred van Leer (reprise)",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1608194561-1777899072",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-25",
+"titel": "Tim Kroezen",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1625616897-1761749658",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-27",
+"titel": "Chris Verlaan",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1628281089-1761749718",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Optie",
+"datum": "2027-02-17",
+"titel": "Anansi de Spin en de Gulzige Tijger (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": null,
+"id": "1636617473-1759749247",
+"motivaties": [
+"Plezier",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-12",
+"titel": "CATS de musical",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "1650657793-1773228713",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Actieve Vermaakvangers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-21",
+"titel": "Donna's Hot Stuff",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1676580609-1744117688",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-06",
+"titel": "Eigenlijk",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1717388289-1760965556",
+"motivaties": [
+"Inhoudelijk",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-24",
+"titel": "Rayen Panday",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1721712385-1759753393",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Weelderige Cultuurminnaars",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-16",
+"titel": "Marie Koet",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1722072577-1759753022",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-31",
+"titel": "Ronald Goedemondt",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1723730689-1759753857",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": null,
+"status": "Financieel afgehandeld",
+"datum": "2026-10-02",
+"titel": "Patrick Laureij (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1738105345-1759754509",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-30",
+"titel": "Sem Konijn",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1740564225-1760966034",
+"motivaties": [
+"Ontdekken",
+"Leerzaam"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-14",
+"titel": "Pippi en de Piraten (6+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1740872705-1750171694",
+"motivaties": [
+"Plezier",
+"Inspiratie"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-13",
+"titel": "De Verleiders",
+"genre": "Toneel",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 700,
+"id": "1779913473-1760966464",
+"motivaties": [
+"Leerzaam",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-04",
+"titel": "Kikker is Kikker (3+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1786727937-1750172130",
+"motivaties": [
+"Populair",
+"Inspiratie"
+],
+"doelgroepen": [
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers",
+"Flanerende Plezierzoekers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-09",
+"titel": "Next Street Boys",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": null,
+"id": "1788126721-1773321048",
+"motivaties": [],
+"doelgroepen": []
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-25",
+"titel": "101 Dalmatiërs de musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1790235393-1745408867",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-24",
+"titel": "101 Dalmatiërs de musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1790243329-1745408867",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-23",
+"titel": "101 Dalmatiërs de musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "1790251777-1745408867",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-22",
+"titel": "101 Dalmatiërs de musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 200,
+"id": "1790259969-1745408867",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-28",
+"titel": "Rob Scheepers",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "1809180417-1761752136",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-07",
+"titel": "Iris Rulkens",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "1811287041-1761752166",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Flanerende Plezierzoekers",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-28",
+"titel": "Ronald Snijders",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 100,
+"id": "1955040001-1770219461",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-24",
+"titel": "Blauwe Vinkjes (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Kleine zaal",
+"verwacht": 160,
+"id": "2084140033-1777646696",
+"motivaties": [
+"Ontdekken",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Kindrijke Cultuurvreters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-22",
+"titel": "Esther van der Voort (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "2124675329-1772122042",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Sociale Cultuurhoppers",
+"Kindrijke Cultuurvreters",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-12",
+"titel": "Introdans",
+"genre": "Dans",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "2176208897-1762873266",
+"motivaties": [
+"Inhoudelijk",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-02",
+"titel": "ISH Dance Collective",
+"genre": "Dans",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "2183537921-1762790939",
+"motivaties": [
+"Inspiratie",
+"Ontdekken"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-19",
+"titel": "Sjaak Bral",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "2202395137-1749132065",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-02-28",
+"titel": "Aladdin De Musical (4+)",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "2290774785-1773236341",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-07",
+"titel": "GROLLO",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 300,
+"id": "2292118017-1773324278",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-28",
+"titel": "Carmina Burana",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "2313095937-1768229833",
+"motivaties": [
+"Inhoudelijk",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-13",
+"titel": "De Muziekbingo",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Theatercafé",
+"verwacht": 80,
+"id": "2324059137-1773066924",
+"motivaties": [
+"Plezier",
+"Toegankelijk & betaalbaar theater"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers",
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-17",
+"titel": "The Young Analogues",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "2337438977-1764091933",
+"motivaties": [
+"Populair",
+"Traditioneel"
+],
+"doelgroepen": [
+"Weelderige Cultuurminnaars",
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-03-27",
+"titel": "Daniel Arends (reprise)",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "2419190785-1773237406",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Flanerende Plezierzoekers",
+"Sociale Cultuurhoppers",
+"Actieve Vermaakvangers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-25",
+"titel": "Dolf Jansen",
+"genre": "Cabaret",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "2472158209-1749145215",
+"motivaties": [
+"Plezier",
+"Inhoudelijk"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers",
+"Actieve Vermaakvangers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-12-17",
+"titel": "3JS",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 650,
+"id": "2476374273-1749145293",
+"motivaties": [
+"Plezier",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel afgehandeld",
+"datum": "2026-09-19",
+"titel": "ABBA The Music (reprise)",
+"genre": "Show",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "2484487937-1749145776",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Proevende Buitenwijkers",
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Financieel af te handelen",
+"datum": "2026-10-16",
+"titel": "Pink Floyd Project",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 600,
+"id": "2489806593-1749145846",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-10-31",
+"titel": "Charly Luske",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "2494124289-1749145910",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars",
+"Lokale Vrijetijdsgenieters",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-06-16",
+"titel": "Motel Westcoast 20 Years!",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "2498526721-1749145992",
+"motivaties": [
+"Plezier",
+"Traditioneel"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars",
+"Proevende Buitenwijkers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-11-19",
+"titel": "Voor Haar",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 600,
+"id": "2504111361-1749146059",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-01-09",
+"titel": "TOP 2000 LIVE",
+"genre": "Muziek",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 760,
+"id": "2508943105-1749146126",
+"motivaties": [
+"Traditioneel",
+"Populair"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Proevende Buitenwijkers",
+"Lokale Vrijetijdsgenieters",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-22",
+"titel": "Dolly Dots de Musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "2519881217-1749146261",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-21",
+"titel": "Dolly Dots de Musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "2525034753-1749146327",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-04-20",
+"titel": "Dolly Dots de Musical (try-out)",
+"genre": "Musical",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 350,
+"id": "2547615233-1749148668",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Lokale Vrijetijdsgenieters",
+"Sociale Cultuurhoppers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2026-09-16",
+"titel": "Grande Première 26/27",
+"genre": "Special",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 500,
+"id": "2556166657-1749149302",
+"motivaties": [
+"Ontdekken",
+"Inspiratie"
+],
+"doelgroepen": [
+"Klassieke Cultuurliefhebbers",
+"Weelderige Cultuurminnaars"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-16",
+"titel": "Zeg maar Ja tegen het leven",
+"genre": "Muziektheater",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 550,
+"id": "2643614721-1773240206",
+"motivaties": [
+"Traditioneel",
+"Plezier"
+],
+"doelgroepen": [
+"Lokale Vrijetijdsgenieters",
+"Klassieke Cultuurliefhebbers"
+]
+},
+{
+"seizoen": "Seizoen 26/27",
+"status": "Bevestigd",
+"datum": "2027-05-23",
+"titel": "De Nog Grotere Slijmmusical 6+",
+"genre": "Jeugd & Familie",
+"leeftijd": null,
+"zaal": "Grote zaal",
+"verwacht": 400,
+"id": "2705542401-1773241054",
+"motivaties": [
+"Populair",
+"Plezier"
+],
+"doelgroepen": [
+"Actieve Vermaakvangers",
+"Kindrijke Cultuurvreters",
+"Flanerende Plezierzoekers"
+]
+}
+]

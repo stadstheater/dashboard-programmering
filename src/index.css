@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #fff8f1;
+  --color-ink: #1d1b2f;
+  --color-ink-2: #55526f;
+  --color-muted: #8a87a2;
+  --color-line: #f0e6da;
+  --color-card: #ffffff;
+
+  --color-koraal: #ff6b57;
+  --color-zon: #ffbf2e;
+  --color-mint: #22c7a9;
+  --color-violet: #8b5cf6;
+  --color-lucht: #38bdf8;
+  --color-roze: #f472b6;
+  --color-limoen: #84cc16;
+
+  --color-perzik: #ffe7df;
+  --color-citroen: #fff4c7;
+  --color-munt: #d6f7ef;
+  --color-lavendel: #eee8ff;
+  --color-ijs: #e0f3ff;
+  --color-snoep: #ffe3f0;
+
+  --shadow-zacht: 0 1px 2px rgb(29 27 47 / 0.04), 0 8px 24px -12px rgb(29 27 47 / 0.12);
+  --shadow-hoog: 0 2px 4px rgb(29 27 47 / 0.05), 0 18px 40px -16px rgb(29 27 47 / 0.22);
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(60rem 30rem at 110% -10%, #ffe3f0 0%, transparent 60%),
+    radial-gradient(50rem 28rem at -10% 110%, #d6f7ef 0%, transparent 60%),
+    radial-gradient(40rem 22rem at 50% -20%, #fff4c7 0%, transparent 60%);
+  background-attachment: fixed;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.01em; }
+
+.kaart {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-zacht);
+}
+
+.knop {
+  display: inline-flex; align-items: center; gap: .5rem;
+  border-radius: 9999px; padding: .5rem 1rem; font-weight: 600; font-size: .875rem;
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.knop:hover { transform: translateY(-1px); }
+.knop:active { transform: translateY(0); }
+.knop-primair { background: var(--color-ink); color: white; box-shadow: var(--shadow-zacht); }
+.knop-primair:hover { background: #2f2c4a; }
+.knop-zacht { background: white; color: var(--color-ink); border: 1px solid var(--color-line); }
+.knop-zacht:hover { background: #fffaf5; box-shadow: var(--shadow-zacht); }
+.knop-koraal { background: var(--color-koraal); color: white; }
+
+.invoer {
+  width: 100%; border-radius: .9rem; border: 1px solid var(--color-line); background: white;
+  padding: .55rem .8rem; font-size: .875rem; outline: none; transition: box-shadow .15s, border-color .15s;
+}
+.invoer:focus { border-color: var(--color-violet); box-shadow: 0 0 0 4px rgb(139 92 246 / .15); }
+
+.verschijn { animation: verschijn .35s ease both; }
+@keyframes verschijn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.schuif-in { animation: schuif .25s ease both; }
+@keyframes schuif { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.dun-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+.dun-scroll::-webkit-scrollbar-thumb { background: #eadfd2; border-radius: 99px; }
+
+.recharts-tooltip-wrapper { outline: none; }
+.recharts-surface:focus { outline: none; }
+
+/* Gridkinderen mogen krimpen, zodat lange titels nooit horizontaal scrollen veroorzaken. */
+.grid > * { min-width: 0; }
