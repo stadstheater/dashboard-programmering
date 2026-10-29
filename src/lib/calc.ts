@@ -17,21 +17,14 @@ export function dagenTot(iso: string, peildatum = vandaag()) {
 export const bezoekers = (v: Voorstelling, peildatum = vandaag()) =>
   !actief(v) ? 0 : isVerleden(v, peildatum) ? v.eindstand : v.verwacht
 
-/** Dummy voorverkoopcurve: hoe dichter bij de speeldatum, hoe meer kaarten verkocht. */
+/** Dummy voorverkoopcurve: hoe dichter bij de speeldatum, hoe meer kaarten verkocht. Opties en concepten zijn nog niet in verkoop. */
 export function verkochtTotNu(v: Voorstelling, peildatum = vandaag()) {
   if (!actief(v)) return 0
   const d = dagenTot(v.datum, peildatum)
   if (d < 0) return v.eindstand
+  if (v.status === 'Optie' || v.status === 'Concept') return 0
   const fractie = Math.pow(Math.min(1, Math.max(0.06, 1 - d / 320)), 1.5)
   return Math.round(v.eindstand * fractie)
-}
-
-/** Prognose: lineaire verwachting op basis van verkooptempo vergeleken met de normcurve. */
-export function voorverkoopIndex(v: Voorstelling, peildatum = vandaag()) {
-  const d = dagenTot(v.datum, peildatum)
-  if (d < 0 || !actief(v)) return null
-  const norm = Math.pow(Math.min(1, Math.max(0.06, 1 - d / 320)), 1.5) * v.verwacht
-  return norm > 0 ? verkochtTotNu(v, peildatum) / norm : null
 }
 
 export const bezetting = (v: Voorstelling, peildatum = vandaag()) => bezoekers(v, peildatum) / v.capaciteit

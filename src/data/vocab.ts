@@ -5,9 +5,14 @@ import {
 } from '@phosphor-icons/react'
 import type { AanbodStatus, Status, Zaal } from './types'
 
-export const SEIZOENEN = ['22/23', '23/24', '24/25', '25/26', '26/27', '27/28'] as const
-export const HUIDIG_SEIZOEN = '26/27'
-export const PLAN_SEIZOEN = '27/28'
+/** Een seizoen loopt van augustus tot en met juli. Het lopende seizoen volgt uit de datum van vandaag. */
+const nu = new Date()
+export const HUIDIG_STARTJAAR = nu.getMonth() >= 7 ? nu.getFullYear() : nu.getFullYear() - 1
+export const seizoenLabel = (startjaar: number) => `${String(startjaar % 100).padStart(2, '0')}/${String((startjaar + 1) % 100).padStart(2, '0')}`
+/** Vier seizoenen historie, het lopende seizoen en het seizoen in opbouw. */
+export const SEIZOENEN: string[] = [-4, -3, -2, -1, 0, 1].map((i) => seizoenLabel(HUIDIG_STARTJAAR + i))
+export const HUIDIG_SEIZOEN = seizoenLabel(HUIDIG_STARTJAAR)
+export const PLAN_SEIZOEN = seizoenLabel(HUIDIG_STARTJAAR + 1)
 
 export const ZALEN: { naam: Zaal; capaciteit: number; kort: string }[] = [
   { naam: 'Grote zaal', capaciteit: 760, kort: 'GZ' },

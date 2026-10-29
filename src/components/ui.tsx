@@ -3,7 +3,6 @@ import { useEffect, type CSSProperties, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { AANBOD_STATUSSEN, DOELGROEPEN, STATUSSEN, familieVan, inktVoor, isLicht, type Segment } from '../data/vocab'
 import { staffel, useOptellen } from '../lib/animatie'
-import { useStore } from '../store/useStore'
 
 export function cx(...c: (string | false | null | undefined)[]) {
   return c.filter(Boolean).join(' ')
@@ -54,66 +53,17 @@ export function Kaart({ titel, sub, actie, children, className, kleur, i = 0, ui
   )
 }
 
-const TEGEL_STIJL = {
-  perzik: { verloop: 'from-perzik to-perzik-2', kleur: '#f4664d' },
-  citroen: { verloop: 'from-citroen to-citroen-2', kleur: '#d48a00' },
-  munt: { verloop: 'from-munt to-munt-2', kleur: '#139a78' },
-  lavendel: { verloop: 'from-lavendel to-lavendel-2', kleur: '#7c5cf0' },
-  ijs: { verloop: 'from-ijs to-ijs-2', kleur: '#1f83c9' },
-  snoep: { verloop: 'from-snoep to-snoep-2', kleur: '#db3f86' },
-}
-
 export function Getal({ waarde, opmaak }: { waarde: number; opmaak: (n: number) => string }) {
   const w = useOptellen(waarde)
   return <>{opmaak(w)}</>
-}
-
-export function KpiTegel({ label, waarde, opmaak, sub, icoon: I, kleur = 'perzik', voortgang, i = 0 }: {
-  label: string
-  waarde: number | ReactNode
-  opmaak?: (n: number) => string
-  sub?: ReactNode
-  icoon?: Icon
-  kleur?: keyof typeof TEGEL_STIJL
-  voortgang?: number
-  i?: number
-}) {
-  const stijl = TEGEL_STIJL[kleur]
-  return (
-    <div
-      className={cx('verschijn group relative overflow-hidden rounded-3xl bg-gradient-to-br p-5 shadow-[var(--shadow-zacht)] transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-hoog)]', stijl.verloop)}
-      style={staffel(i)}
-    >
-      <span className="pointer-events-none absolute -right-6 -bottom-8 opacity-[0.09] transition duration-500 group-hover:scale-110 group-hover:-rotate-6" style={{ color: stijl.kleur }}>
-        {I && <I weight="fill" size={120} />}
-      </span>
-      <div className="relative flex items-center justify-between">
-        <span className="text-[13px] font-semibold text-ink-2">{label}</span>
-        {I && (
-          <span className="wip grid h-9 w-9 place-items-center rounded-2xl bg-oppervlak/75 shadow-sm" style={{ color: stijl.kleur }}>
-            <I weight="fill" size={19} />
-          </span>
-        )}
-      </div>
-      <div className="font-display relative mt-2 whitespace-nowrap text-[1.7rem] font-extrabold tracking-tight text-ink tabular-nums sm:text-3xl xl:text-[1.75rem] 2xl:text-[2.1rem]">
-        {typeof waarde === 'number' ? <Getal waarde={waarde} opmaak={opmaak ?? ((n) => Math.round(n).toLocaleString('nl-NL'))} /> : waarde}
-      </div>
-      {sub && <div className="relative mt-1 text-[13px] text-ink-2">{sub}</div>}
-      {voortgang !== undefined && (
-        <div className="relative mt-3 h-2 overflow-hidden rounded-full bg-oppervlak/60">
-          <div className="groei h-full rounded-full bg-ink/80" style={{ width: `${Math.min(100, voortgang * 100)}%`, ...staffel(i) }} />
-        </div>
-      )}
-    </div>
-  )
 }
 
 export function StatusLabel({ status, klein }: { status: string; klein?: boolean }) {
   const s = STATUSSEN.find((x) => x.naam === status) ?? AANBOD_STATUSSEN.find((x) => x.naam === status)
   return (
     <span
-      className={cx('inline-flex items-center gap-1.5 whitespace-nowrap rounded-full font-semibold', klein ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs')}
-      style={{ background: s?.zacht ?? '#eee', color: s?.kleur ?? '#333' }}
+      className={cx('status-label inline-flex items-center gap-1.5 whitespace-nowrap rounded-full font-semibold', klein ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs')}
+      style={{ ['--k' as string]: s?.kleur ?? '#64748b' }}
     >
       <span className="h-1.5 w-1.5 rounded-full" style={{ background: s?.kleur }} />
       {status}
@@ -290,7 +240,7 @@ export function Paginakop({ titel, icoon: I, kleur, sub, children }: { titel: st
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div>
         <h1 className="font-display flex items-center gap-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-          <span className="zweef grid h-12 w-12 place-items-center rounded-2xl text-white shadow-[var(--shadow-hoog)]" style={{ background: `linear-gradient(135deg, ${kleur}, ${kleur}bb)` }}>
+          <span className="grid h-12 w-12 place-items-center rounded-2xl text-white shadow-[var(--shadow-hoog)]" style={{ background: `linear-gradient(135deg, ${kleur}, ${kleur}bb)` }}>
             <I weight="fill" size={26} />
           </span>
           {titel}
@@ -302,45 +252,12 @@ export function Paginakop({ titel, icoon: I, kleur, sub, children }: { titel: st
   )
 }
 
-export function ScoreRing({ score, grootte = 52 }: { score: number; grootte?: number }) {
-  const r = grootte / 2 - 5
-  const omtrek = 2 * Math.PI * r
-  const kleur = score >= 75 ? '#16a34a' : score >= 55 ? '#d97706' : '#dc2626'
-  return (
-    <div className="relative shrink-0" style={{ width: grootte, height: grootte }} title={`Matchscore ${score} van 100`}>
-      <svg width={grootte} height={grootte} className="-rotate-90">
-        <circle cx={grootte / 2} cy={grootte / 2} r={r} fill="none" stroke="var(--color-spoor)" strokeWidth={6} />
-        <circle
-          className="ring-teken"
-          cx={grootte / 2}
-          cy={grootte / 2}
-          r={r}
-          fill="none"
-          stroke={kleur}
-          strokeWidth={6}
-          strokeLinecap="round"
-          strokeDasharray={omtrek}
-          strokeDashoffset={omtrek * (1 - score / 100)}
-          style={{ ['--omtrek' as string]: omtrek, transition: 'stroke-dashoffset .6s ease' }}
-        />
-      </svg>
-      <span className="font-display absolute inset-0 grid place-items-center text-sm font-extrabold">{score}</span>
-    </div>
-  )
-}
-
 /** Matchscore in gewone woorden. */
 export function pastTekst(score: number) {
   return score >= 70 ? { tekst: 'Past goed', klasse: 'bg-emerald-50 text-emerald-700 ring-emerald-200' } : score >= 55 ? { tekst: 'Past redelijk', klasse: 'bg-amber-50 text-amber-800 ring-amber-200' } : { tekst: 'Past minder', klasse: 'bg-slate-100 text-slate-600 ring-slate-200' }
 }
 
-export function PastBijOns({ score }: { score: number }) {
+export function PastBijOns({ score, klein }: { score: number; klein?: boolean }) {
   const p = pastTekst(score)
-  return <span className={cx('inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-bold ring-1', p.klasse)} title={`Score ${score} van 100`}>{p.tekst}</span>
-}
-
-/** Ring met score in de uitgebreide weergave, woorden in de eenvoudige. */
-export function Match({ score, grootte }: { score: number; grootte?: number }) {
-  const eenvoudig = useStore((s) => s.modus) === 'eenvoudig'
-  return eenvoudig ? <PastBijOns score={score} /> : <ScoreRing score={score} grootte={grootte} />
+  return <span className={cx('inline-flex shrink-0 items-center whitespace-nowrap rounded-full font-bold ring-1', klein ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs', p.klasse)} title={`Past bij ons: ${score} van 100`}>{p.tekst}</span>
 }

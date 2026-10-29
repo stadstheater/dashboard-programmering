@@ -21,16 +21,7 @@ function begroeting() {
 const KNOP: Record<string, string> = {
   '/aanbod': 'Bekijk passend aanbod',
   '/kalender': 'Open de kalender',
-  '/doelgroepen': 'Bekijk het publiek',
-  '/motivaties': 'Bekijk het publiek',
-  '/scenario': 'Open de kalender',
-}
-
-/** Signaleringen herschreven zonder vakjargon. */
-function gewoneTaal(titel: string) {
-  return titel
-    .replace(/mogelijke kannibalisaties?/, 'voorstellingen die elkaar mogelijk beconcurreren')
-    .replace('Veel focus op', 'Veel publiek uit groep')
+  '/publiek': 'Bekijk het publiek',
 }
 
 function GroteCijfer({ label, waarde, opmaak, zin, goed, icoon: I, kleur, info, i }: {
@@ -38,7 +29,7 @@ function GroteCijfer({ label, waarde, opmaak, zin, goed, icoon: I, kleur, info, 
   waarde: number
   opmaak: (n: number) => string
   zin: string
-  goed: boolean
+  goed?: boolean
   icoon: typeof Ticket
   kleur: string
   info: string
@@ -48,11 +39,11 @@ function GroteCijfer({ label, waarde, opmaak, zin, goed, icoon: I, kleur, info, 
     <div className="kaart verschijn group p-6" style={staffel(i)}>
       <div className="flex items-center justify-between gap-3">
         <span className="flex items-center gap-1.5 text-base font-semibold text-ink-2">{label} <Info>{info}</Info></span>
-        <IcoonBol icoon={I} kleur={kleur} grootte={44} className="wip" />
+        <IcoonBol icoon={I} kleur={kleur} grootte={44} />
       </div>
       <div className="font-display mt-3 text-5xl font-extrabold tracking-tight tabular-nums"><Getal waarde={waarde} opmaak={opmaak} /></div>
       <div className="mt-3 flex items-center gap-2">
-        <span className={cx('rounded-full px-3 py-1 text-sm font-bold', goed ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800')}>{goed ? 'Goed' : 'Let op'}</span>
+        {goed !== undefined && <span className={cx('rounded-full px-3 py-1 text-sm font-bold', goed ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800')}>{goed ? 'Goed' : 'Let op'}</span>}
         <span className="text-[15px] text-ink-2">{zin}</span>
       </div>
     </div>
@@ -74,7 +65,13 @@ export default function Vandaag() {
   const totaal = som(a, (v) => bezoekers(v, peil))
   const bezGoed = bez * 100 >= doelen.bezetting - 3
   const aantalGoed = a.length >= doelen.aantal * 0.9 || seizoen === PLAN_SEIZOEN
-  const welkSeizoen = seizoen === HUIDIG_SEIZOEN ? 'Dit seizoen' : seizoen === PLAN_SEIZOEN ? 'Volgend seizoen' : `Seizoen ${seizoen}`
+  const welkSeizoen = seizoen === HUIDIG_SEIZOEN ? 'Dit seizoen' : seizoen === PLAN_SEIZOEN ? 'Volgend seizoen' : `In seizoen ${seizoen}`
+  const vol = <b className="text-ink">{procent(bez)}</b>
+  const zin = seizoen === PLAN_SEIZOEN
+    ? <>{welkSeizoen} ({seizoen}) verwachten we de zalen gemiddeld {vol} vol te krijgen, met wat er nu gepland staat.</>
+    : seizoen < HUIDIG_SEIZOEN
+      ? <>{welkSeizoen} zaten de zalen gemiddeld {vol} vol{bezGoed ? ', dat ging goed.' : `, het doel was ${doelen.bezetting}%.`}</>
+      : <>{welkSeizoen} ({seizoen}) zitten de zalen gemiddeld {vol} vol{bezGoed ? ', dat gaat goed.' : `, ons doel is ${doelen.bezetting}%.`}</>
 
   return (
     <div className="text-[15.5px]">
@@ -82,15 +79,15 @@ export default function Vandaag() {
         titel={`${begroeting()}!`}
         icoon={SunHorizon}
         kleur="#ff6b57"
-        sub={<>Het is {datumLang(peil)}. {welkSeizoen} ({seizoen}) zitten de zalen gemiddeld <b className="text-ink">{procent(bez)}</b> vol{bezGoed ? ', dat gaat goed.' : `, ons doel is ${doelen.bezetting}%.`}</>}
+        sub={<>Het is {datumLang(peil)}. {zin}</>}
       />
 
       <div data-uitleg="vandaag-cijfers" className="grid gap-5 md:grid-cols-3">
         <GroteCijfer i={0} label="Voorstellingen" waarde={a.length} opmaak={getal} icoon={Ticket} kleur="#ff6b57" goed={aantalGoed}
           zin={seizoen === PLAN_SEIZOEN ? 'al gepland of in optie' : `doel: ${doelen.aantal}`}
           info="Alle voorstellingen van dit seizoen die niet geannuleerd zijn, inclusief opties." />
-        <GroteCijfer i={1} label="Bezoekers" waarde={totaal} opmaak={getal} icoon={UsersThree} kleur="#d48a00" goed
-          zin="geteld en verwacht"
+        <GroteCijfer i={1} label="Bezoekers" waarde={totaal} opmaak={getal} icoon={UsersThree} kleur="#d48a00"
+          zin={seizoen < HUIDIG_SEIZOEN ? 'echte bezoekers' : 'geteld en verwacht'}
           info="Voor voorstellingen die al geweest zijn tellen we de echte bezoekers, voor de rest wat we verwachten." />
         <GroteCijfer i={2} label="Zalen gemiddeld vol" waarde={bez} opmaak={(n) => procent(n)} icoon={Armchair} kleur="#139a78" goed={bezGoed}
           zin={`doel: ${doelen.bezetting}%`}
@@ -105,11 +102,11 @@ export default function Vandaag() {
               <div key={s.titel} className="verschijn flex flex-wrap items-center gap-4 rounded-2xl bg-vlak p-4 ring-1 ring-line" style={staffel(i + 4)}>
                 <IcoonBol icoon={s.icoon} kleur={s.kleur} grootte={44} />
                 <div className="min-w-[13rem] flex-1">
-                  <div className="text-base font-bold">{gewoneTaal(s.titel)}</div>
+                  <div className="text-base font-bold">{s.titel}</div>
                   <p className="mt-0.5 text-sm text-ink-2">{s.tekst}</p>
                 </div>
                 {s.link && (
-                  <Link to={s.link === '/scenario' || s.link === '/motivaties' ? (s.link === '/scenario' ? '/kalender' : '/doelgroepen') : s.link} className="knop knop-primair w-full justify-center !px-4 !py-2.5 text-[15px] sm:w-auto">
+                  <Link to={s.link} className="knop knop-primair w-full justify-center !px-4 !py-2.5 text-[15px] sm:w-auto">
                     {KNOP[s.link] ?? 'Bekijken'} <ArrowRight size={16} />
                   </Link>
                 )}
@@ -150,7 +147,7 @@ export default function Vandaag() {
         </Kaart>
       </div>
 
-      <Kaart i={5} className="mt-6" titel="Publiek in balans" sub="Deze groepen uit het Cultureel Doelgroepenmodel bereiken we nu te weinig" actie={<Link to="/doelgroepen" className="knop knop-zacht"><UsersThree size={16} /> Bekijk het publiek</Link>}>
+      <Kaart i={5} className="mt-6" titel="Publiek in balans" sub="Deze groepen uit het Cultureel Doelgroepenmodel bereiken we nu te weinig" actie={<Link to="/publiek" className="knop knop-zacht"><UsersThree size={16} /> Bekijk het publiek</Link>}>
         {!achterblijvers.length && <p className="text-ink-2">Alle groepen zitten rond hun doel. Mooi!</p>}
         <div className="grid gap-4 md:grid-cols-3">
           {achterblijvers.map((x, i) => (

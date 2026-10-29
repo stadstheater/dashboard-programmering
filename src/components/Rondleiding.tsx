@@ -3,10 +3,9 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import { useLocation } from 'react-router-dom'
 import { create } from 'zustand'
 import { padVanSleutel, uitlegSleutel, uitlegVoor } from '../data/uitleg'
-import { useStore } from '../store/useStore'
 import { cx } from './ui'
 
-const SLEUTEL = 'coulisse-uitleg-v1'
+const SLEUTEL = 'coulisse-uitleg-v2'
 
 function gezien(): string[] {
   try {
@@ -55,14 +54,13 @@ function zoekDoel(doel?: string) {
 /** Start de uitleg automatisch bij het eerste bezoek aan een pagina. */
 export function useAutomatischeUitleg() {
   const { pathname } = useLocation()
-  const modus = useStore((s) => s.modus)
   const start = useUitleg((s) => s.start)
   useEffect(() => {
-    const sleutel = uitlegSleutel(pathname, modus)
+    const sleutel = uitlegSleutel(pathname)
     if (!uitlegVoor(sleutel) || gezien().includes(sleutel)) return
     const t = setTimeout(() => start(sleutel), 900)
     return () => clearTimeout(t)
-  }, [pathname, modus, start])
+  }, [pathname, start])
 }
 
 export default function Rondleiding() {
@@ -173,7 +171,7 @@ export default function Rondleiding() {
       <div className="absolute inset-0" onClick={(e) => e.stopPropagation()} />
       <div key={stap} ref={ballonRef} className="plop absolute rounded-3xl bg-oppervlak p-5 shadow-2xl ring-1 ring-black/5" style={ballon}>
         <div className="flex items-start gap-3">
-          <span className="zweef grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-zon to-koraal text-white shadow">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-zon to-koraal text-white shadow">
             <Lightbulb weight="fill" size={22} />
           </span>
           <div className="min-w-0 flex-1">

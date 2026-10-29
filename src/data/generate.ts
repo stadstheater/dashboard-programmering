@@ -1,7 +1,7 @@
 import basis from './basis-2627.json'
 import type { Aanbod, AanbodStatus, Dataset, Doelen, Status, Voorstelling, Zaal } from './types'
 import {
-  DOELGROEPEN, GEMIDDELDE_PRIJS, GENRES, IMPRESARIATEN, capaciteitVan,
+  DOELGROEPEN, GEMIDDELDE_PRIJS, GENRES, HUIDIG_STARTJAAR, IMPRESARIATEN, PLAN_SEIZOEN, SEIZOENEN, capaciteitVan,
 } from './vocab'
 
 /* ---------- Willekeur met seed, zodat dezelfde seed dezelfde dataset geeft ---------- */
@@ -171,8 +171,10 @@ function hash(tekst: string) {
 
 export function artiestUitTitel(titel: string) {
   return titel
-    .replace(/\s*\((reprise|extra|middag|avond|try-?out|première)[^)]*\)\s*/gi, '')
-    .replace(/\s+(2|II)$/i, '')
+    .replace(/\s*\((reprise|extra|middag|avond|try-?out|première)[^)]*\)\s*/gi, ' ')
+    .replace(/\s*\(\d{1,2}\+\)\s*/g, ' ')
+    .replace(/\s+(2|II)\s*$/i, '')
+    .replace(/\s+/g, ' ')
     .trim()
 }
 
@@ -255,7 +257,7 @@ function rondAf(x: number, stap: number) {
 }
 
 function prijsVoor(rng: Rng, genre: string, zaal: Zaal, seizoen: string) {
-  const inflatie = 1 + (seizoenStartJaar(seizoen) - 2026) * 0.04
+  const inflatie = 1 + (seizoenStartJaar(seizoen) - HUIDIG_STARTJAAR) * 0.04
   const zaalFactor = zaal === 'Grote zaal' ? 1.08 : zaal === 'Theatercafé' ? 0.7 : 0.88
   return rondAf((GEMIDDELDE_PRIJS[genre] ?? 28) * zaalFactor * inflatie * tussen(rng, 0.9, 1.12), 0.5)
 }
@@ -427,7 +429,7 @@ function genereerAanbod(rng: Rng, acts: Act[], gebruikt: Set<string>, { seizoen,
       titel = PERSOONLIJK.has(act.genre)
         ? `${act.artiest}: ${kies(rng, TITELS[act.genre] ?? TITELS.Special)}`
         : act.genre === 'Muziek' || act.genre === 'Show'
-          ? `${act.artiest} ${kies(rng, ['2028', 'Jubileumtour', 'The Encore', 'Live'])}`
+          ? `${act.artiest} ${kies(rng, [String(HUIDIG_STARTJAAR + 2), 'Jubileumtour', 'The Encore', 'Live'])}`
           : `${act.artiest} ${kies(rng, ['(nieuwe productie)', '2', '(jubileum)', '(herneming)'])}`
     } else {
       act = nieuweAct(rng, gewogen(rng, genres, gewichten), gebruikt)
@@ -450,8 +452,9 @@ function genereerAanbod(rng: Rng, acts: Act[], gebruikt: Set<string>, { seizoen,
     const prijs = prijsVoor(rng, act.genre, act.zaal, seizoen)
     const zalen: Zaal[] = act.zaal === 'Grote zaal' && rng() < 0.2 ? ['Grote zaal', 'Kleine zaal'] : [act.zaal]
     // Aanbod voor het lopende seizoen is recent binnengekomen, aanbod voor volgend seizoen sinds de zomer.
-    const ontvangen = vanaf ? naarDatum(vanaf) : new Date(2026, 6, 1)
+    const ontvangen = vanaf ? naarDatum(vanaf) : new Date(HUIDIG_STARTJAAR, 6, 1)
     ontvangen.setDate(ontvangen.getDate() + (vanaf ? -geheel(rng, 0, 45) : geheel(rng, 0, 118)))
+    if (ontvangen > new Date()) ontvangen.setTime(Date.now())
     uit.push({
       id: `${prefix}-${i + 1}`,
       titel,
@@ -521,12 +524,22 @@ export const STANDAARD_DOELEN: Doelen = {
 
 /* ---------- Alles samen ---------- */
 
+/** Startjaar van het seizoen waaruit de basis komt. */
+const BASIS_STARTJAAR = 2026
+
 export function genereerDataset(seed = 2627): Dataset {
   const rng = maakRng(seed)
   const gebruikt = new Set<string>()
 
-  // Huidig seizoen uit de Excel-basis.
-  const huidig = (basis as BasisRij[]).map((rij) => basisNaarVoorstelling(rij, rng))
+  // Huidig seizoen uit de (geanonimiseerde) basis. De basis is seizoen 26/27; in een later seizoen
+  // schuiven de datums per jaar 52 weken op, zodat de weekdagen gelijk blijven.
+  const verschuiving = (HUIDIG_STARTJAAR - BASIS_STARTJAAR) * 364
+  const huidig = (basis as BasisRij[]).map((rij) => {
+    if (!verschuiving) return basisNaarVoorstelling(rij, rng)
+    const d = naarDatum(rij.datum)
+    d.setDate(d.getDate() + verschuiving)
+    return basisNaarVoorstelling({ ...rij, datum: isoDatum(d), seizoen: null }, rng)
+  })
 
   // Acts afleiden uit de basis, zodat artiesten ook in de historie terugkomen.
   const perArtiest = new Map<string, Voorstelling[]>()
@@ -550,7 +563,7 @@ export function genereerDataset(seed = 2627): Dataset {
   const dummyActs = new Map<string, Act[]>()
   const teller = { n: 0 }
   const historie: Voorstelling[] = []
-  const historischeSeizoenen: [string, number][] = [['22/23', 214], ['23/24', 231], ['24/25', 246], ['25/26', 259]]
+  const historischeSeizoenen: [string, number][] = [[SEIZOENEN[0], 214], [SEIZOENEN[1], 231], [SEIZOENEN[2], 246], [SEIZOENEN[3], 259]]
   historischeSeizoenen.forEach(([seizoen, aantal], i) => {
     historie.push(
       ...genereerSeizoen(rng, {
@@ -563,10 +576,10 @@ export function genereerDataset(seed = 2627): Dataset {
     )
   })
 
-  // Seizoen 27/28 is in opbouw: een deel staat al in optie of is bevestigd.
+  // Het volgende seizoen is in opbouw: een deel staat al in optie of is bevestigd.
   const bezet2728 = new Set<string>()
   const volgend = genereerSeizoen(rng, {
-    seizoen: '27/28',
+    seizoen: PLAN_SEIZOEN,
     aantal: 96,
     driftIndex: -0.2,
     status: (r) => gewogen(r, ['Bevestigd', 'Optie', 'Concept'] as Status[], [45, 35, 20]),
@@ -575,7 +588,7 @@ export function genereerDataset(seed = 2627): Dataset {
 
   const alleActs = [...basisActs, ...[...dummyActs.values()].flat()]
   const aanbod = [
-    ...genereerAanbod(rng, alleActs, gebruikt, { seizoen: '27/28', aantal: 168, prefix: 'a' }),
+    ...genereerAanbod(rng, alleActs, gebruikt, { seizoen: PLAN_SEIZOEN, aantal: 168, prefix: 'a' }),
     // Eigen willekeur, zodat de rest van de dataset gelijk blijft aan eerdere versies.
     ...genereerAanbodHuidig(seed, alleActs, gebruikt, [...historie, ...huidig, ...volgend]),
   ].sort((a, b) => b.ontvangen.localeCompare(a.ontvangen))

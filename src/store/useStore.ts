@@ -1,15 +1,9 @@
 import { useMemo } from 'react'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { genereerDataset, seizoenVanDatum } from '../data/generate'
-import type { Aanbod, AanbodStatus, Dataset, Doelen, Status, Voorstelling, Zaal } from '../data/types'
-import { HUIDIG_SEIZOEN, capaciteitVan } from '../data/vocab'
-
-export interface ScenarioItem {
-  aanbodId: string
-  datum: string
-  zaal: Zaal
-}
+import { genereerDataset, seizoenVanDatum, STANDAARD_DOELEN } from '../data/generate'
+import type { Aanbod, AanbodStatus, Dataset, Doelen, Voorstelling, Zaal } from '../data/types'
+import { HUIDIG_SEIZOEN, SEIZOENEN, capaciteitVan } from '../data/vocab'
 
 export interface Filters {
   genres: string[]
@@ -22,34 +16,23 @@ export interface Filters {
 
 export const LEGE_FILTERS: Filters = { genres: [], zalen: [], statussen: [], doelgroepen: [], motivaties: [], zoek: '' }
 
-export type Modus = 'eenvoudig' | 'uitgebreid'
 export type Thema = 'licht' | 'donker'
 
 interface State {
   dataset: Dataset
-  modus: Modus
-  setModus: (m: Modus) => void
   thema: Thema
   setThema: (t: Thema) => void
   zetOptie: (aanbodId: string, datum: string, zaal: Zaal) => void
   seizoen: string
   filters: Filters
-  scenario: ScenarioItem[]
   setSeizoen: (s: string) => void
   setFilters: (f: Partial<Filters>) => void
   wisFilters: () => void
-  genereer: (seed: number) => void
-  laadDataset: (d: Dataset) => void
+  opnieuwBeginnen: () => void
   upsertVoorstelling: (v: Voorstelling) => void
   verwijderVoorstelling: (id: string) => void
-  upsertAanbod: (a: Aanbod) => void
-  verwijderAanbod: (id: string) => void
   setAanbodStatus: (id: string, status: AanbodStatus) => void
   setDoelen: (d: Doelen) => void
-  voegScenarioToe: (item: ScenarioItem) => void
-  verwijderScenario: (aanbodId: string, datum: string) => void
-  wisScenario: () => void
-  bevestigScenario: () => number
 }
 
 /** Opslag in de browser die nooit een fout gooit (privévenster, geblokkeerde opslag). */
@@ -77,21 +60,24 @@ const veiligeOpslag = createJSONStorage(() => ({
   },
 }))
 
-export function scenarioNaarVoorstelling(item: ScenarioItem, a: Aanbod, status: Status = 'Concept'): Voorstelling {
-  const capaciteit = capaciteitVan(item.zaal)
-  const verwacht = Math.min(capaciteit, a.zalen.includes(item.zaal) ? a.verwacht : Math.round(capaciteit * 0.7))
+export const OPSLAG_SLEUTEL = 'coulisse-dashboard-v2'
+
+/** Maakt van een aanbod op een datum een voorstelling in de kalender. */
+export function aanbodNaarVoorstelling(a: Aanbod, datum: string, zaal: Zaal): Voorstelling {
+  const capaciteit = capaciteitVan(zaal)
+  const verwacht = Math.min(capaciteit, a.zalen.includes(zaal) ? a.verwacht : Math.round(capaciteit * 0.7))
   return {
-    id: `s-${a.id}-${item.datum}`,
-    seizoen: seizoenVanDatum(item.datum),
-    status,
-    datum: item.datum,
+    id: `o-${a.id}-${datum}`,
+    seizoen: seizoenVanDatum(datum),
+    status: 'Optie',
+    datum,
     tijd: a.genre === 'Jeugd & Familie' ? '14:00' : '20:15',
     titel: a.titel,
     artiest: a.artiest,
     impresariaat: a.impresariaat,
     genre: a.genre,
     leeftijd: null,
-    zaal: item.zaal,
+    zaal,
     capaciteit,
     verwacht,
     eindstand: verwacht,
@@ -99,23 +85,37 @@ export function scenarioNaarVoorstelling(item: ScenarioItem, a: Aanbod, status: 
     uitkoopsom: a.uitkoopsom,
     motivaties: a.motivaties,
     doelgroepen: a.doelgroepen,
-    bron: 'scenario',
+    bron: 'builder',
   }
+}
+
+const isTekstLijst = (x: unknown) => Array.isArray(x) && x.every((y) => typeof y === 'string')
+
+/** Controleert of opgeslagen data compleet genoeg is om het dashboard mee te tekenen. */
+export function isGeldigeDataset(d: unknown): d is Dataset {
+  const ds = d as Dataset
+  if (!ds || !Array.isArray(ds.voorstellingen) || !Array.isArray(ds.aanbod) || !ds.doelen) return false
+  const v = ds.voorstellingen.every((x) =>
+    x && typeof x.id === 'string' && typeof x.datum === 'string' && typeof x.titel === 'string' && typeof x.capaciteit === 'number'
+      && isTekstLijst(x.doelgroepen) && isTekstLijst(x.motivaties))
+  const a = ds.aanbod.every((x) =>
+    x && typeof x.id === 'string' && typeof x.periodeStart === 'string' && isTekstLijst(x.zalen) && x.zalen.length > 0
+      && isTekstLijst(x.beschikbareData) && isTekstLijst(x.doelgroepen) && isTekstLijst(x.motivaties))
+  const doelen = ['doelgroepen', 'motivaties', 'genres'].every((k) => typeof (ds.doelen as unknown as Record<string, unknown>)[k] === 'object')
+  return v && a && doelen
 }
 
 export const useStore = create<State>()(
   persist(
     (set, get) => ({
       dataset: genereerDataset(),
-      modus: 'eenvoudig',
-      setModus: (modus) => set({ modus }),
       thema: 'licht',
       setThema: (thema) => set({ thema }),
       zetOptie: (aanbodId, datum, zaal) => {
         const { dataset } = get()
         const a = dataset.aanbod.find((x) => x.id === aanbodId)
         if (!a) return
-        const v = { ...scenarioNaarVoorstelling({ aanbodId, datum, zaal }, a, 'Optie'), id: `o-${a.id}-${datum}`, bron: 'builder' as const }
+        const v = aanbodNaarVoorstelling(a, datum, zaal)
         set({
           dataset: {
             ...dataset,
@@ -126,12 +126,10 @@ export const useStore = create<State>()(
       },
       seizoen: HUIDIG_SEIZOEN,
       filters: LEGE_FILTERS,
-      scenario: [],
       setSeizoen: (seizoen) => set({ seizoen }),
       setFilters: (f) => set({ filters: { ...get().filters, ...f } }),
       wisFilters: () => set({ filters: LEGE_FILTERS }),
-      genereer: (seed) => set({ dataset: genereerDataset(seed), scenario: [] }),
-      laadDataset: (dataset) => set({ dataset, scenario: [] }),
+      opnieuwBeginnen: () => set({ dataset: genereerDataset(), seizoen: HUIDIG_SEIZOEN, filters: LEGE_FILTERS }),
       upsertVoorstelling: (v) =>
         set(({ dataset }) => {
           const bestaat = dataset.voorstellingen.some((x) => x.id === v.id)
@@ -141,85 +139,60 @@ export const useStore = create<State>()(
           return { dataset: { ...dataset, voorstellingen: voorstellingen.sort((a, b) => a.datum.localeCompare(b.datum)) } }
         }),
       verwijderVoorstelling: (id) =>
-        set(({ dataset }) => ({ dataset: { ...dataset, voorstellingen: dataset.voorstellingen.filter((v) => v.id !== id) } })),
-      upsertAanbod: (a) =>
         set(({ dataset }) => {
-          const bestaat = dataset.aanbod.some((x) => x.id === a.id)
+          const weg = dataset.voorstellingen.find((v) => v.id === id)
+          const voorstellingen = dataset.voorstellingen.filter((v) => v.id !== id)
+          // Een optie uit het aanbod vrijgeven: het aanbod is weer beschikbaar als er geen andere optie van is.
+          const aanbodId = weg?.id.startsWith('o-') ? weg.id.slice(2, -11) : null
+          const nogIngepland = aanbodId && voorstellingen.some((v) => v.id.startsWith(`o-${aanbodId}-`))
           return {
             dataset: {
               ...dataset,
-              aanbod: bestaat ? dataset.aanbod.map((x) => (x.id === a.id ? a : x)) : [a, ...dataset.aanbod],
+              voorstellingen,
+              aanbod: aanbodId && !nogIngepland ? dataset.aanbod.map((a) => (a.id === aanbodId ? { ...a, status: 'Shortlist' } : a)) : dataset.aanbod,
             },
           }
         }),
-      verwijderAanbod: (id) =>
-        set(({ dataset, scenario }) => ({
-          dataset: { ...dataset, aanbod: dataset.aanbod.filter((a) => a.id !== id) },
-          scenario: scenario.filter((s) => s.aanbodId !== id),
-        })),
       setAanbodStatus: (id, status) =>
         set(({ dataset }) => ({
           dataset: { ...dataset, aanbod: dataset.aanbod.map((a) => (a.id === id ? { ...a, status } : a)) },
         })),
       setDoelen: (doelen) => set(({ dataset }) => ({ dataset: { ...dataset, doelen } })),
-      voegScenarioToe: (item) =>
-        set(({ scenario }) => ({
-          scenario: [...scenario.filter((s) => !(s.aanbodId === item.aanbodId && s.datum === item.datum)), item],
-        })),
-      verwijderScenario: (aanbodId, datum) =>
-        set(({ scenario }) => ({ scenario: scenario.filter((s) => !(s.aanbodId === aanbodId && s.datum === datum)) })),
-      wisScenario: () => set({ scenario: [] }),
-      bevestigScenario: () => {
-        const { scenario, dataset } = get()
-        const nieuw = scenario.flatMap((item) => {
-          const a = dataset.aanbod.find((x) => x.id === item.aanbodId)
-          return a ? [{ ...scenarioNaarVoorstelling(item, a, 'Optie'), id: `o-${a.id}-${item.datum}`, bron: 'builder' as const }] : []
-        })
-        const ingepland = new Set(scenario.map((s) => s.aanbodId))
-        set({
-          scenario: [],
-          dataset: {
-            ...dataset,
-            voorstellingen: [...dataset.voorstellingen, ...nieuw].sort((a, b) => a.datum.localeCompare(b.datum)),
-            aanbod: dataset.aanbod.map((a) => (ingepland.has(a.id) ? { ...a, status: 'Ingepland' } : a)),
-          },
-        })
-        return nieuw.length
-      },
     }),
     {
-      name: 'coulisse-dashboard-v2',
+      name: OPSLAG_SLEUTEL,
       storage: veiligeOpslag,
-      version: 1,
-      // Versie 1: aanbod voor het lopende seizoen toegevoegd. Bestaande wijzigingen blijven bewaard.
+      // Versie 2: geanonimiseerde basis en geen uitgebreide modus meer. Oude data wordt vervangen, de doelen blijven.
+      version: 2,
       migrate: (opgeslagen, versie) => {
-        const st = opgeslagen as Partial<State>
-        if (versie < 1 && st.dataset && !st.dataset.aanbod.some((a) => a.id.startsWith('h-'))) {
-          const extra = genereerDataset(st.dataset.seed).aanbod.filter((a) => a.id.startsWith('h-'))
-          st.dataset = { ...st.dataset, aanbod: [...st.dataset.aanbod, ...extra].sort((a, b) => b.ontvangen.localeCompare(a.ontvangen)) }
+        const st = (opgeslagen ?? {}) as Partial<State>
+        if (versie < 2) {
+          const doelen = st.dataset?.doelen
+          return { thema: st.thema, seizoen: HUIDIG_SEIZOEN, dataset: { ...genereerDataset(), doelen: doelen ?? STANDAARD_DOELEN } } as State
         }
         return st as State
       },
-      partialize: ({ dataset, seizoen, scenario, modus, thema }) => ({ dataset, seizoen, scenario, modus, thema }),
+      // Onvolledige of verouderde opslag (bijvoorbeeld uit een vorig seizoen) vervangen we door verse voorbeelddata.
+      merge: (opgeslagen, huidig) => {
+        const st = (opgeslagen ?? {}) as Partial<State>
+        const geldig = isGeldigeDataset(st.dataset) && seizoenVanDatum(st.dataset.gegenereerdOp.slice(0, 10)) === HUIDIG_SEIZOEN
+        return {
+          ...huidig,
+          thema: st.thema === 'donker' ? 'donker' : 'licht',
+          seizoen: st.seizoen && SEIZOENEN.includes(st.seizoen) ? st.seizoen : HUIDIG_SEIZOEN,
+          dataset: geldig ? st.dataset! : { ...huidig.dataset, doelen: st.dataset?.doelen ?? huidig.dataset.doelen },
+        }
+      },
+      partialize: ({ dataset, seizoen, thema }) => ({ dataset, seizoen, thema }),
     },
   ),
 )
 
-/** Voorstellingen van een seizoen, inclusief scenario-items wanneer gevraagd. */
-export function useSeizoen(seizoen?: string, metScenario = false) {
+/** Voorstellingen van een seizoen. */
+export function useSeizoen(seizoen?: string) {
   const s = useStore((st) => seizoen ?? st.seizoen)
   const voorstellingen = useStore((st) => st.dataset.voorstellingen)
-  const scenario = useStore((st) => st.scenario)
-  const aanbod = useStore((st) => st.dataset.aanbod)
-  return useMemo(() => {
-    const basis = voorstellingen.filter((v) => v.seizoen === s)
-    if (!metScenario) return basis
-    const extra = scenario.flatMap((item) => {
-      const a = aanbod.find((x) => x.id === item.aanbodId)
-      return a && seizoenVanDatum(item.datum) === s ? [scenarioNaarVoorstelling(item, a)] : []
-    })
-    return [...basis, ...extra].sort((a, b) => a.datum.localeCompare(b.datum))
-  }, [s, voorstellingen, scenario, aanbod, metScenario])
+  return useMemo(() => voorstellingen.filter((v) => v.seizoen === s), [s, voorstellingen])
 }
 
 export function pasFiltersToe(lijst: Voorstelling[], f: Filters) {

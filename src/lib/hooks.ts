@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { create } from 'zustand'
 import { seizoenVanDatum } from '../data/generate'
-import { scenarioNaarVoorstelling, useStore } from '../store/useStore'
+import { useStore } from '../store/useStore'
 import { artiestProfielen, berekenMatch, maakMatchContext, type Match } from './inzichten'
 
 /** Welke voorstelling of welk aanbod open staat in het detailpaneel. */
@@ -20,22 +20,17 @@ export const useSelectie = create<{
 /** Seizoen waarin een aanbod speelt (op basis van het begin van de speelperiode). */
 export const seizoenVanAanbod = (a: { periodeStart: string }) => seizoenVanDatum(a.periodeStart)
 
-/** Matchscores voor al het aanbod, elk tegen het eigen seizoen inclusief scenario. */
+/** Matchscores voor al het aanbod, elk tegen het eigen seizoen. */
 export function useMatches() {
   const alle = useStore((s) => s.dataset.voorstellingen)
   const doelen = useStore((s) => s.dataset.doelen)
   const aanbod = useStore((s) => s.dataset.aanbod)
-  const scenario = useStore((s) => s.scenario)
   return useMemo(() => {
     const contexten = new Map<string, ReturnType<typeof maakMatchContext>>()
     const contextVoor = (seizoen: string) => {
       let ctx = contexten.get(seizoen)
       if (!ctx) {
-        const extra = scenario.flatMap((item) => {
-          const a = aanbod.find((x) => x.id === item.aanbodId)
-          return a && seizoenVanDatum(item.datum) === seizoen ? [scenarioNaarVoorstelling(item, a)] : []
-        })
-        ctx = maakMatchContext([...alle.filter((v) => v.seizoen === seizoen), ...extra], alle, doelen)
+        ctx = maakMatchContext(alle.filter((v) => v.seizoen === seizoen), alle, doelen)
         contexten.set(seizoen, ctx)
       }
       return ctx
@@ -43,7 +38,7 @@ export function useMatches() {
     const uit = new Map<string, Match>()
     for (const a of aanbod) uit.set(a.id, berekenMatch(a, contextVoor(seizoenVanAanbod(a))))
     return uit
-  }, [alle, doelen, aanbod, scenario])
+  }, [alle, doelen, aanbod])
 }
 
 export function useArtiesten() {
