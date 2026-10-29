@@ -52,7 +52,7 @@ function SeizoenKiezer() {
         aria-label="Eerder seizoen"
         value={isEerder ? seizoen : ''}
         onChange={(e) => e.target.value && setSeizoen(e.target.value)}
-        className={cx('cursor-pointer appearance-none rounded-full px-3.5 py-1.5 text-sm font-semibold outline-none', isEerder ? 'bg-ink text-op-ink' : 'bg-transparent text-ink-2 hover:bg-zacht')}
+        className={cx('cursor-pointer appearance-none rounded-full px-3.5 py-1.5 text-center text-sm font-semibold outline-none [field-sizing:content] [text-align-last:center]', isEerder ? 'bg-ink text-op-ink' : 'bg-transparent text-ink-2 hover:bg-zacht')}
       >
         <option value="">Eerder</option>
         {[...eerder].reverse().map((s) => <option key={s} value={s}>Seizoen {s}</option>)}
