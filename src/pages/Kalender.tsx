@@ -29,10 +29,28 @@ function Merk({ v, kleuring, kleur }: { v: Voorstelling; kleuring: Kleuring; kle
 }
 
 const KLEURING_OPTIES: { id: Kleuring; label: React.ReactNode }[] = [
-  { id: 'genre', label: <><Palette size={16} /> Genre</> },
-  { id: 'doelgroep', label: <><UsersThree size={16} /> Doelgroep</> },
   { id: 'motivatie', label: <><Lightbulb size={16} /> Motivatie</> },
+  { id: 'doelgroep', label: <><UsersThree size={16} /> Doelgroep</> },
+  { id: 'genre', label: <><Palette size={16} /> Genre</> },
 ]
+
+/** De gekozen kleuring wordt in deze browser onthouden. */
+const KLEURING_SLEUTEL = 'coulisse-kalender-kleuring'
+function bewaardeKleuring(): Kleuring {
+  try {
+    const k = localStorage.getItem(KLEURING_SLEUTEL)
+    return KLEURING_OPTIES.some((o) => o.id === k) ? (k as Kleuring) : 'motivatie'
+  } catch {
+    return 'motivatie'
+  }
+}
+function bewaarKleuring(k: Kleuring) {
+  try {
+    localStorage.setItem(KLEURING_SLEUTEL, k)
+  } catch {
+    /* zonder opslag geldt de keuze alleen voor dit bezoek */
+  }
+}
 
 function maandDagen(jaar: number, maand: number) {
   const eerste = new Date(jaar, maand, 1)
@@ -69,7 +87,11 @@ export default function Kalender() {
   const toon = useSelectie((s) => s.toonVoorstelling)
   const lijst = useSeizoen()
   const gefilterd = useMemo(() => pasFiltersToe(lijst, filters), [lijst, filters])
-  const [kleuring, setKleuring] = useState<Kleuring>('genre')
+  const [kleuring, zetKleuring] = useState<Kleuring>(bewaardeKleuring)
+  const setKleuring = (k: Kleuring) => {
+    zetKleuring(k)
+    bewaarKleuring(k)
+  }
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [vlekDatum, setVlekDatum] = useState<{ datum: string; zaal: Zaal } | null>(null)
 
@@ -181,11 +203,11 @@ export default function Kalender() {
       </div>
       <div data-uitleg="doel-tabellen" className="grid gap-5 lg:grid-cols-3">
         <DoelTabel
-          titel="Genre"
-          icoon={Palette}
-          kleur="#2a78d6"
-          actief={kleuring === 'genre'}
-          rijen={GENRE_FAMILIES.map((f) => ({ naam: f.naam, kleur: f.kleur, doel: doelen.genres[f.naam] ?? 0, realisatie: verhouding.genre[f.naam] ?? 0, label: <><f.icoon size={15} style={{ color: f.kleur }} className="shrink-0" /><span className="truncate">{f.naam}</span></> }))}
+          titel="Motivatie"
+          icoon={Lightbulb}
+          kleur="#db2777"
+          actief={kleuring === 'motivatie'}
+          rijen={MOTIVATIES.map((m) => ({ naam: m.naam, kleur: m.kleur, doel: doelen.motivaties[m.naam] ?? 0, realisatie: verhouding.motivatie[m.naam] ?? 0, label: <><m.icoon size={15} style={{ color: m.kleur }} className="shrink-0" /><span className="truncate">{m.naam}</span></> }))}
         />
         <DoelTabel
           titel="Culturele doelgroep"
@@ -195,11 +217,11 @@ export default function Kalender() {
           rijen={DOELGROEPEN.map((d) => ({ naam: d.naam, kleur: d.kleur, doel: doelen.doelgroepen[d.naam] ?? 0, realisatie: verhouding.doelgroep[d.naam] ?? 0, label: <><CdmLabel segment={d} /><span className="truncate">{d.naam}</span></> }))}
         />
         <DoelTabel
-          titel="Motivatie"
-          icoon={Lightbulb}
-          kleur="#db2777"
-          actief={kleuring === 'motivatie'}
-          rijen={MOTIVATIES.map((m) => ({ naam: m.naam, kleur: m.kleur, doel: doelen.motivaties[m.naam] ?? 0, realisatie: verhouding.motivatie[m.naam] ?? 0, label: <><m.icoon size={15} style={{ color: m.kleur }} className="shrink-0" /><span className="truncate">{m.naam}</span></> }))}
+          titel="Genre"
+          icoon={Palette}
+          kleur="#2a78d6"
+          actief={kleuring === 'genre'}
+          rijen={GENRE_FAMILIES.map((f) => ({ naam: f.naam, kleur: f.kleur, doel: doelen.genres[f.naam] ?? 0, realisatie: verhouding.genre[f.naam] ?? 0, label: <><f.icoon size={15} style={{ color: f.kleur }} className="shrink-0" /><span className="truncate">{f.naam}</span></> }))}
         />
       </div>
 

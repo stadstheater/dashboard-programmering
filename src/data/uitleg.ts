@@ -23,9 +23,9 @@ export const UITLEG: Record<string, { naam: string; stappen: UitlegStap[] }> = {
       { doel: 'kalender-raster', titel: 'Je maandoverzicht', tekst: 'Elke voorstelling staat op zijn datum. Klik erop voor alle details. Met de pijltjes ga je naar een andere maand.' },
       { doel: 'plus-knop', titel: 'Zelf inplannen', tekst: 'Ga met je muis over een dag en klik op het plusje. Kies de Grote zaal (GZ) of Kleine zaal (KZ) en plan iets uit het aanbod in, of vul zelf een voorstelling in.' },
       { doel: 'witte-vlek', titel: 'Vrije avonden', tekst: 'Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal. Klik op "Iets inplannen?" voor voorstellingen uit het aanbod die op die datum kunnen.' },
-      { doel: 'kleuring', titel: 'Kleur naar keuze', tekst: 'Kies of de kalender kleurt op genre, op doelgroep (met de kleuren en afkortingen uit de brochure) of op motivatie.' },
+      { doel: 'kleuring', titel: 'Kleur naar keuze', tekst: 'Kies of de kalender kleurt op motivatie, op doelgroep (met de kleuren en afkortingen uit de brochure) of op genre. Je keuze wordt onthouden.' },
       { doel: 'filter-knop', titel: 'Filteren', tekst: 'Wil je alleen bijvoorbeeld cabaret zien? Klik op "Filteren".' },
-      { doel: 'doel-tabellen', titel: 'Doel en realisatie', tekst: 'Onder de kalender zie je per genre, doelgroep en motivatie wat we willen bereiken en hoe het nu gaat. Groen is boven het doel, rood eronder.' },
+      { doel: 'doel-tabellen', titel: 'Doel en realisatie', tekst: 'Onder de kalender zie je per motivatie, doelgroep en genre wat we willen bereiken en hoe het nu gaat. Groen is boven het doel, rood eronder.' },
     ],
   },
   '/aanbod': {
