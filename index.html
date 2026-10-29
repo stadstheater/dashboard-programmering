@@ -2,10 +2,17 @@
 <html lang="nl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#fff8f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Coulisse" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Coulisse</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,7 +21,10 @@
     <script>
       try {
         var opgeslagen = JSON.parse(localStorage.getItem('coulisse-dashboard-v2') || '{}').state || {}
-        if (opgeslagen.thema === 'donker') document.documentElement.classList.add('donker')
+        if (opgeslagen.thema === 'donker') {
+          document.documentElement.classList.add('donker')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#13111c')
+        }
       } catch (e) {}
     </script>
     <div id="root"></div>

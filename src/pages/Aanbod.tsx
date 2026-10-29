@@ -1,5 +1,5 @@
 import { CheckCircle, MagnifyingGlass, Star, Tray } from '@phosphor-icons/react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CdmLabel, GenreLabel, Leeg, Paginakop, PastBijOns, cx } from '../components/ui'
 import { GENRES, HUIDIG_SEIZOEN, MOTIVATIES, PLAN_SEIZOEN, segmentVan } from '../data/vocab'
 import { staffel } from '../lib/animatie'
@@ -20,6 +20,15 @@ export default function Aanbod() {
   const setSeizoen = useStore((s) => s.setSeizoen)
   const seizoen = gekozenSeizoen === HUIDIG_SEIZOEN ? HUIDIG_SEIZOEN : PLAN_SEIZOEN
   const afgelopen = gekozenSeizoen < HUIDIG_SEIZOEN
+
+  const meer = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = meer.current
+    if (!el) return
+    const kijker = new IntersectionObserver(([e]) => e.isIntersecting && setAantal((n) => n + 24), { rootMargin: '400px' })
+    kijker.observe(el)
+    return () => kijker.disconnect()
+  })
 
   const seizoenAanbod = useMemo(() => aanbod.filter((a) => seizoenVanAanbod(a) === seizoen && a.status !== 'Afgewezen'), [aanbod, seizoen])
   const bewaard = seizoenAanbod.filter((a) => a.status === 'Shortlist').length
@@ -56,32 +65,34 @@ export default function Aanbod() {
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative min-w-56 flex-1">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+        <div className="relative w-full sm:w-auto sm:min-w-56 sm:flex-1">
           <MagnifyingGlass size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
           <input className="invoer !rounded-full !py-3 !pl-10 !text-base" aria-label="Zoeken" placeholder="Zoek een voorstelling of artiest" value={zoek} onChange={(e) => setZoek(e.target.value)} />
         </div>
-        <select className="invoer !w-auto !rounded-full !py-3 !text-base" aria-label="Genre" value={genre} onChange={(e) => setGenre(e.target.value)}>
+        <div className="dun-scroll -mx-4 flex w-[calc(100%+2rem)] gap-2 overflow-x-auto px-4 pb-0.5 sm:contents">
+        <select className="invoer !w-auto shrink-0 !rounded-full !py-2.5 sm:!py-3 !text-base" aria-label="Genre" value={genre} onChange={(e) => setGenre(e.target.value)}>
           <option value="">Alle genres</option>
           {GENRES.map((g) => <option key={g}>{g}</option>)}
         </select>
-        <button onClick={() => setAlleenGoed(!alleenGoed)} aria-pressed={alleenGoed} className={cx('knop !px-4 !py-3 text-[15px]', alleenGoed ? 'knop-primair' : 'knop-zacht')}>
+        <button onClick={() => setAlleenGoed(!alleenGoed)} aria-pressed={alleenGoed} className={cx('knop shrink-0 whitespace-nowrap !px-4 !py-2.5 sm:!py-3 text-[15px]', alleenGoed ? 'knop-primair' : 'knop-zacht')}>
           <CheckCircle size={18} /> Past goed
         </button>
-        <button onClick={() => setAlleenBewaard(!alleenBewaard)} aria-pressed={alleenBewaard} className={cx('knop !px-4 !py-3 text-[15px]', alleenBewaard ? 'knop-primair' : 'knop-zacht')}>
+        <button onClick={() => setAlleenBewaard(!alleenBewaard)} aria-pressed={alleenBewaard} className={cx('knop shrink-0 whitespace-nowrap !px-4 !py-2.5 sm:!py-3 text-[15px]', alleenBewaard ? 'knop-primair' : 'knop-zacht')}>
           <Star size={18} /> Bewaard ({bewaard})
         </button>
+        </div>
       </div>
 
       <div className="mt-4 text-sm text-ink-2">{lijst.length} voorstellingen</div>
       {!lijst.length && <div className="mt-3"><Leeg>Geen aanbod met deze keuzes.</Leeg></div>}
 
-      <div className="mt-3 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-3 grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
         {lijst.slice(0, aantal).map((a, i) => {
           const m = matches.get(a.id)
           const plus = m?.redenen.find((r) => r.type === 'plus')
           return (
-            <article key={a.id} data-uitleg={i === 0 ? 'aanbod-kaart' : undefined} style={staffel(i % 24)} className="kaart verschijn flex cursor-pointer flex-col p-5 transition duration-300 hover:-translate-y-1" onClick={() => toon(a.id)}>
+            <article key={a.id} data-uitleg={i === 0 ? 'aanbod-kaart' : undefined} style={staffel(i % 24)} className="kaart verschijn flex cursor-pointer flex-col p-4 transition sm:p-5 duration-300 hover:-translate-y-1" onClick={() => toon(a.id)}>
               <div className="flex items-start gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
@@ -93,7 +104,7 @@ export default function Aanbod() {
                 </div>
                 <button
                   onClick={(e) => { e.stopPropagation(); setStatus(a.id, a.status === 'Shortlist' ? 'Bekeken' : 'Shortlist') }}
-                  className={cx('grid h-9 w-9 shrink-0 place-items-center rounded-full transition', a.status === 'Shortlist' ? 'bg-citroen text-amber-500' : 'bg-vlak text-muted hover:text-amber-500')}
+                  className={cx('tik grid h-10 w-10 shrink-0 place-items-center rounded-full transition', a.status === 'Shortlist' ? 'bg-citroen text-amber-500' : 'bg-vlak text-muted hover:text-amber-500')}
                   aria-label={a.status === 'Shortlist' ? 'Niet meer bewaren' : 'Bewaren'}
                   aria-pressed={a.status === 'Shortlist'}
                   title={a.status === 'Shortlist' ? 'Bewaard' : 'Bewaren'}
@@ -114,7 +125,7 @@ export default function Aanbod() {
         })}
       </div>
       {lijst.length > aantal && (
-        <div className="mt-6 text-center">
+        <div ref={meer} className="mt-6 text-center">
           <button className="knop knop-zacht" onClick={() => setAantal(aantal + 24)}>Toon meer ({lijst.length - aantal} over)</button>
         </div>
       )}

@@ -74,7 +74,7 @@ export function VoorstellingLade() {
         )}
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
         <Feit label={verleden ? 'Zaal vol' : 'Verwacht vol'} waarde={procent(bezetting(v))} />
         <Feit label="Kaartverkoop" waarde={euro(recette(v))} sub={`à ${euro(v.prijs)}`} />
         <Feit label="Kosten artiest" waarde={euro(v.uitkoopsom)} />
@@ -174,7 +174,18 @@ export function AanbodLade() {
   const gekozenZaal = zaal && a.zalen.includes(zaal) ? zaal : a.zalen[0]
   const peil = vandaag()
   return (
-    <Lade open onSluit={() => toon(null)} titel={a.titel} breed>
+    <Lade
+      open
+      onSluit={() => toon(null)}
+      titel={a.titel}
+      breed
+      voet={
+        <>
+          <button className="knop knop-zacht flex-1 justify-center sm:flex-none" onClick={() => setStatus(a.id, 'Shortlist')}><Star size={16} className="text-amber-500" /> Bewaren</button>
+          <button className="knop knop-zacht flex-1 justify-center sm:flex-none" onClick={() => setStatus(a.id, 'Afgewezen')}><ThumbsDown size={16} className="text-rose-500" /> Niet interessant</button>
+        </>
+      }
+    >
       <div className="flex flex-wrap items-center gap-2">
         <GenreLabel genre={a.genre} />
         {a.premiere && <span className="rounded-full bg-snoep px-2.5 py-1 text-xs font-bold text-pink-700">Première</span>}
@@ -185,7 +196,7 @@ export function AanbodLade() {
         {a.artiest} via <b className="text-ink">{a.impresariaat}</b>
       </p>
 
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
         <Feit label="Kosten artiest" waarde={euro(a.uitkoopsom)} />
         <Feit label="Kaartprijs" waarde={euro(a.prijsIndicatie)} />
         <Feit label="Verwacht" waarde={getal(a.verwacht)} sub="bezoekers" />
@@ -236,10 +247,6 @@ export function AanbodLade() {
         })}
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
-        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Shortlist')}><Star size={16} className="text-amber-500" /> Bewaren</button>
-        <button className="knop knop-zacht" onClick={() => setStatus(a.id, 'Afgewezen')}><ThumbsDown size={16} className="text-rose-500" /> Niet interessant</button>
-      </div>
     </Lade>
   )
 }

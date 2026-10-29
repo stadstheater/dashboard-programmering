@@ -14,6 +14,13 @@ Een eenvoudig programmeringsdashboard voor de programmeur van Stadstheater Zoete
 
 Rechtsboven wissel je tussen een licht en een donker thema, start je de uitleg van een pagina opnieuw en kies je het seizoen. Elke pagina toont bij het eerste bezoek een korte rondleiding.
 
+## Op een telefoon
+
+- Onderaan staat een tabbalk met de vijf onderdelen; bovenin alleen het logo, het thema, de uitleg en een knopje voor het seizoen.
+- De kalender toont een klein maandraster met een stip per voorstelling en daaronder de agenda met volledige titels. Tik op een dag om ernaartoe te springen, veeg opzij voor een andere maand. In de lopende maand begint de agenda bij vandaag.
+- Details openen als paneel van onderen; veeg het aan de greep omlaag om het te sluiten.
+- De app is te installeren op het beginscherm (Safari: Deel, Zet op beginscherm; Chrome: Installeren). Zonder verbinding opent hij met wat eerder is geladen (`public/sw.js`, `public/manifest.webmanifest`).
+
 ## Seizoenen
 
 Het lopende seizoen volgt uit de datum van vandaag (een seizoen loopt van augustus tot en met juli). Daarnaast zijn er vier seizoenen historie en het volgende seizoen in opbouw. Opgeslagen data uit een vorig seizoen wordt automatisch vervangen door verse voorbeelddata; de ingestelde doelen blijven bewaard.

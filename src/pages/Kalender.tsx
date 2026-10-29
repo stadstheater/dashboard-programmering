@@ -1,8 +1,8 @@
-import { CalendarDots, CaretLeft, CaretRight, Check, Funnel, Lightbulb, Palette, PencilSimple, Plus, Sparkle, UsersThree } from '@phosphor-icons/react'
-import { useMemo, useState } from 'react'
+import { CalendarDots, CaretLeft, CaretRight, CaretUp, Check, Funnel, Lightbulb, Palette, PencilSimple, Plus, Sparkle, UsersThree } from '@phosphor-icons/react'
+import { useMemo, useRef, useState, type TouchEvent } from 'react'
 import DoelTabel from '../components/DoelTabel'
 import FilterBar from '../components/FilterBar'
-import { CdmLabel, Kaart, Lade, Paginakop, PastBijOns, Tabs, cx } from '../components/ui'
+import { CdmLabel, Kaart, Lade, Leeg, Paginakop, PastBijOns, Tabs, cx } from '../components/ui'
 import { isoDatum, naarDatum, seizoenStartJaar, seizoenVanDatum } from '../data/generate'
 import type { Voorstelling, Zaal } from '../data/types'
 import { DOELGROEPEN, GEMIDDELDE_PRIJS, GENRES, GENRE_FAMILIES, MOTIVATIES, ZALEN, capaciteitVan, familieVan, segmentVan } from '../data/vocab'
@@ -10,7 +10,7 @@ import { staffel } from '../lib/animatie'
 import {
   MAANDNAMEN_LANG, SEIZOENSMAANDEN, aandelen, actief, bereikPerDoelgroep, bereikPerFamilie, bereikPerMotivatie, datumKort, datumLang, maandVan, vandaag,
 } from '../lib/calc'
-import { useMatches, useSelectie } from '../lib/hooks'
+import { useMatches, useMobiel, useSelectie } from '../lib/hooks'
 import { vindWitteVlekken } from '../lib/inzichten'
 import { pasFiltersToe, useSeizoen, useStore } from '../store/useStore'
 
@@ -22,10 +22,10 @@ const kleurVan = (v: Voorstelling, k: Kleuring) =>
       : segmentVan(MOTIVATIES, v.motivaties[0] ?? '')?.kleur ?? '#c9c3d6'
 
 /** Klein teken vooraan in een kalenderblok: genre-icoon, CDM-afkorting, motivatie-icoon of statusbolletje. */
-function Merk({ v, kleuring, kleur }: { v: Voorstelling; kleuring: Kleuring; kleur: string }) {
+function Merk({ v, kleuring, kleur, grootte = 12 }: { v: Voorstelling; kleuring: Kleuring; kleur: string; grootte?: number }) {
   if (kleuring === 'doelgroep') return v.doelgroepen[0] ? <CdmLabel naam={v.doelgroepen[0]} /> : null
   const I = kleuring === 'genre' ? familieVan(v.genre).icoon : segmentVan(MOTIVATIES, v.motivaties[0] ?? '')?.icoon
-  return I ? <I size={12} className="shrink-0 transition group-hover:scale-125" style={{ color: kleur }} /> : <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: kleur }} />
+  return I ? <I size={grootte} className="shrink-0 transition group-hover:scale-125" style={{ color: kleur }} /> : <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: kleur }} />
 }
 
 const KLEURING_OPTIES: { id: Kleuring; label: React.ReactNode }[] = [
@@ -93,6 +93,8 @@ export default function Kalender() {
     bewaarKleuring(k)
   }
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const mobiel = useMobiel()
+  const aantalFilters = filters.genres.length + filters.zalen.length + filters.doelgroepen.length + (filters.zoek ? 1 : 0)
   const [vlekDatum, setVlekDatum] = useState<{ datum: string; zaal: Zaal } | null>(null)
 
   const jaar = seizoenStartJaar(seizoen)
@@ -121,10 +123,17 @@ export default function Kalender() {
         kleur="#2a78d6"
         sub={<>Seizoen {seizoen} per maand. Gestreepte vakjes zijn vrije vrijdag- en zaterdagavonden in de Grote zaal.</>}
       >
-        <div className="flex flex-wrap items-center gap-2">
-          <Tabs<Kleuring> uitleg="kleuring" waarde={kleuring} onChange={setKleuring} opties={KLEURING_OPTIES} />
-          <button data-uitleg="filter-knop" aria-expanded={filtersOpen} onClick={() => setFiltersOpen(!filtersOpen)} className={cx('knop !px-4 !py-2.5 text-[15px]', filtersOpen ? 'knop-primair' : 'knop-zacht')}>
-            <Funnel size={18} /> Filteren
+        <div className="flex w-full items-center gap-2 sm:w-auto sm:flex-wrap">
+          <Tabs<Kleuring> uitleg="kleuring" waarde={kleuring} onChange={setKleuring} opties={KLEURING_OPTIES} vol />
+          <button
+            data-uitleg="filter-knop"
+            aria-expanded={filtersOpen}
+            aria-label="Filteren"
+            onClick={() => setFiltersOpen(!filtersOpen)}
+            className={cx('knop relative shrink-0 justify-center !px-0 !py-0 h-11 w-11 sm:h-auto sm:w-auto sm:!px-4 sm:!py-2.5 text-[15px]', filtersOpen ? 'knop-primair' : 'knop-zacht')}
+          >
+            <Funnel size={18} /> <span className="hidden sm:inline">Filteren</span>
+            {aantalFilters > 0 && <span className="absolute -top-1 -right-1 grid h-5 min-w-5 place-items-center rounded-full bg-koraal px-1 text-[11px] font-bold text-white">{aantalFilters}</span>}
           </button>
         </div>
       </Paginakop>
@@ -145,6 +154,21 @@ export default function Kalender() {
           </div>
         }
       >
+        {mobiel ? (
+          <MaandMobiel
+            key={`${seizoen}-${maandIndex}`}
+            jaar={maandJaar}
+            maand={maand}
+            perDag={perDag}
+            vrij={vrij}
+            peil={peil}
+            kleuring={kleuring}
+            onToon={toon}
+            onPlan={(datum) => setVlekDatum({ datum, zaal: 'Grote zaal' })}
+            onVorige={maandIndex > 0 ? () => setMaandIndex(maandIndex - 1) : undefined}
+            onVolgende={maandIndex < SEIZOENSMAANDEN.length - 1 ? () => setMaandIndex(maandIndex + 1) : undefined}
+          />
+        ) : (
         <div className="dun-scroll overflow-x-auto">
           <div key={`${seizoen}-${maandIndex}`} className="grid min-w-[760px] grid-cols-7 gap-1.5">
             {['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'].map((d) => (
@@ -194,6 +218,7 @@ export default function Kalender() {
             })}
           </div>
         </div>
+        )}
         <KleurLegenda kleuring={kleuring} />
       </Kaart>
 
@@ -204,6 +229,7 @@ export default function Kalender() {
       <div data-uitleg="doel-tabellen" className="grid gap-5 lg:grid-cols-3">
         <DoelTabel
           titel="Motivatie"
+          inklapbaar={mobiel}
           icoon={Lightbulb}
           kleur="#db2777"
           actief={kleuring === 'motivatie'}
@@ -211,6 +237,7 @@ export default function Kalender() {
         />
         <DoelTabel
           titel="Culturele doelgroep"
+          inklapbaar={mobiel}
           icoon={UsersThree}
           kleur="#0f9f84"
           actief={kleuring === 'doelgroep'}
@@ -218,6 +245,7 @@ export default function Kalender() {
         />
         <DoelTabel
           titel="Genre"
+          inklapbaar={mobiel}
           icoon={Palette}
           kleur="#2a78d6"
           actief={kleuring === 'genre'}
@@ -226,6 +254,145 @@ export default function Kalender() {
       </div>
 
       <PlanLade key={vlekDatum ? `${vlekDatum.datum}-${vlekDatum.zaal}` : 'leeg'} vlek={vlekDatum} onSluit={() => setVlekDatum(null)} />
+    </div>
+  )
+}
+
+const DAGLETTERS = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo']
+
+/**
+ * Maand op een telefoon: bovenaan een klein raster met een stip per voorstelling, daaronder de agenda
+ * met volledige titels. Een tik op een dag springt naar die dag; opzij vegen wisselt van maand.
+ */
+function MaandMobiel({ jaar, maand, perDag, vrij, peil, kleuring, onToon, onPlan, onVorige, onVolgende }: {
+  jaar: number
+  maand: number
+  perDag: Map<string, Voorstelling[]>
+  vrij: Set<string>
+  peil: string
+  kleuring: Kleuring
+  onToon: (id: string) => void
+  onPlan: (datum: string) => void
+  onVorige?: () => void
+  onVolgende?: () => void
+}) {
+  const [gekozen, setGekozen] = useState<string | null>(null)
+  const [eerderOpen, setEerderOpen] = useState(false)
+  const veeg = useRef<{ x: number; y: number } | null>(null)
+  const dagen = maandDagen(jaar, maand)
+  const agenda = dagen
+    .filter((d) => d.getMonth() === maand)
+    .map(isoDatum)
+    .filter((iso) => (perDag.get(iso)?.length ?? 0) > 0 || vrij.has(iso))
+  // In de lopende maand beginnen we bij vandaag; de dagen ervoor klap je open als je ze wilt zien.
+  const eerder = agenda.filter((iso) => iso < peil)
+  const zichtbaar = eerderOpen || eerder.length === agenda.length ? agenda : agenda.filter((iso) => iso >= peil)
+
+  const spring = (iso: string) => {
+    setGekozen(iso)
+    if (iso < peil) setEerderOpen(true)
+    // Een frame wachten, zodat een net opengeklapte dag er al staat.
+    requestAnimationFrame(() => document.getElementById(`dag-${iso}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }
+  const veegStart = (e: TouchEvent) => {
+    veeg.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  }
+  const veegEind = (e: TouchEvent) => {
+    if (!veeg.current) return
+    const dx = e.changedTouches[0].clientX - veeg.current.x
+    const dy = e.changedTouches[0].clientY - veeg.current.y
+    veeg.current = null
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    if (dx < 0) onVolgende?.()
+    else onVorige?.()
+  }
+
+  return (
+    <div className="vervaag-in">
+      <div className="grid grid-cols-7 gap-1" onTouchStart={veegStart} onTouchEnd={veegEind}>
+        {DAGLETTERS.map((d) => (
+          <div key={d} className="pb-1 text-center text-[11px] font-bold uppercase tracking-wide text-muted">{d}</div>
+        ))}
+        {dagen.map((d) => {
+          const iso = isoDatum(d)
+          if (d.getMonth() !== maand) return <div key={iso} />
+          const items = perDag.get(iso) ?? []
+          const isVrij = vrij.has(iso)
+          const isVandaag = iso === peil
+          const iets = items.length > 0 || isVrij
+          return (
+            <button
+              key={iso}
+              disabled={!iets}
+              onClick={() => spring(iso)}
+              aria-label={`${datumLang(iso)}: ${items.length ? `${items.length} voorstelling${items.length > 1 ? 'en' : ''}` : isVrij ? 'vrije avond' : 'niets gepland'}`}
+              className={cx(
+                'flex h-12 flex-col items-center justify-center gap-1 rounded-xl text-sm font-semibold ring-1 ring-line transition active:scale-95',
+                isVrij ? 'bg-[repeating-linear-gradient(45deg,var(--color-oppervlak),var(--color-oppervlak)_5px,var(--color-lavendel)_5px,var(--color-lavendel)_10px)]' : 'bg-oppervlak',
+                !iets && 'text-muted',
+                isVandaag && 'ring-2 ring-koraal',
+                gekozen === iso && 'ring-2 ring-violet',
+              )}
+            >
+              <span className={cx(isVandaag && 'rounded-full bg-[#c93a24] px-1.5 text-white')}>{d.getDate()}</span>
+              <span className="flex h-1.5 gap-0.5">
+                {items.slice(0, 3).map((v) => <span key={v.id} className="h-1.5 w-1.5 rounded-full" style={{ background: kleurVan(v, kleuring) }} />)}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="mt-6 space-y-5">
+        {!agenda.length && <Leeg>Geen voorstellingen in deze maand.</Leeg>}
+        {zichtbaar.length < agenda.length && (
+          <button onClick={() => setEerderOpen(true)} className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-dashed border-line py-2.5 text-sm font-semibold text-ink-2">
+            <CaretUp size={14} weight="bold" /> Eerdere dagen deze maand tonen ({eerder.length})
+          </button>
+        )}
+        {zichtbaar.map((iso, i) => {
+          const items = perDag.get(iso) ?? []
+          return (
+            <section key={iso} id={`dag-${iso}`} className="scroll-mt-20">
+              <h3 className={cx('mb-2 text-xs font-bold uppercase tracking-wide', iso === peil ? 'text-koraal' : 'text-muted')}>
+                {iso === peil ? 'Vandaag, ' : ''}{datumLang(iso).replace(/ \d{4}$/, '')}
+              </h3>
+              <div className="space-y-1.5">
+                {items.map((v) => {
+                  const kleur = kleurVan(v, kleuring)
+                  const optie = v.status === 'Optie' || v.status === 'Concept'
+                  return (
+                    <button
+                      key={v.id}
+                      onClick={() => onToon(v.id)}
+                      className={cx('flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition active:scale-[.98]', v.status === 'Geannuleerd' && 'line-through opacity-50', optie && 'outline-1 outline-dashed outline-ink/30')}
+                      style={{ background: kleur + '22' }}
+                    >
+                      <Merk v={v} kleuring={kleuring} kleur={kleur} grootte={18} />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[15px] font-semibold">{v.titel}</span>
+                        <span className="block text-xs text-ink-2">{v.tijd} · {v.zaal}{optie ? ' · optie' : ''}</span>
+                      </span>
+                      <CaretRight size={16} className="shrink-0 text-muted" />
+                    </button>
+                  )
+                })}
+                {vrij.has(iso) && (
+                  <button
+                    data-uitleg={i === zichtbaar.findIndex((x) => vrij.has(x)) ? 'witte-vlek' : undefined}
+                    onClick={() => onPlan(iso)}
+                    className="flex w-full items-center gap-3 rounded-xl bg-[repeating-linear-gradient(45deg,var(--color-oppervlak),var(--color-oppervlak)_6px,var(--color-lavendel)_6px,var(--color-lavendel)_12px)] px-3 py-2.5 text-left ring-1 ring-line"
+                  >
+                    <Sparkle size={18} className="shrink-0 text-violet" />
+                    <span className="min-w-0 flex-1 text-[15px] font-semibold">Vrije avond in de Grote zaal</span>
+                    <span className="shrink-0 rounded-full bg-violet px-2.5 py-1 text-xs font-bold text-white">Iets inplannen?</span>
+                  </button>
+                )}
+              </div>
+            </section>
+          )
+        })}
+      </div>
     </div>
   )
 }

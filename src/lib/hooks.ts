@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useSyncExternalStore } from 'react'
 import { create } from 'zustand'
 import { seizoenVanDatum } from '../data/generate'
 import { useStore } from '../store/useStore'
@@ -44,4 +44,16 @@ export function useMatches() {
 export function useArtiesten() {
   const alle = useStore((s) => s.dataset.voorstellingen)
   return useMemo(() => artiestProfielen(alle), [alle])
+}
+
+const MOBIEL = '(max-width: 639px)'
+const volgMobiel = (bij: () => void) => {
+  const m = matchMedia(MOBIEL)
+  m.addEventListener('change', bij)
+  return () => m.removeEventListener('change', bij)
+}
+
+/** Waar op een telefoonbreed scherm (smaller dan 640 pixels). */
+export function useMobiel() {
+  return useSyncExternalStore(volgMobiel, () => matchMedia(MOBIEL).matches)
 }

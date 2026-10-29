@@ -1,8 +1,9 @@
 import { ArrowLeft, ArrowRight, Lightbulb, X } from '@phosphor-icons/react'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { create } from 'zustand'
-import { UITLEG, padVanSleutel, uitlegSleutel, uitlegVoor } from '../data/uitleg'
+import { UITLEG, padVanSleutel, stappenVoor, uitlegSleutel, uitlegVoor } from '../data/uitleg'
+import { useMobiel } from '../lib/hooks'
 import { cx } from './ui'
 
 const SLEUTEL = 'coulisse-uitleg-v2'
@@ -79,8 +80,10 @@ export default function Rondleiding() {
   const [kader, setKader] = useState<Kader | null>(null)
   const ballonRef = useRef<HTMLDivElement>(null)
   const [ballonHoogte, setBallonHoogte] = useState(220)
+  const mobiel = useMobiel()
   const uitleg = uitlegVoor(route)
-  const huidig = uitleg?.stappen[stap]
+  const stappen = useMemo(() => stappenVoor(route, mobiel), [route, mobiel])
+  const huidig = stappen[stap]
 
   useEffect(() => setStap(0), [route])
   useEffect(() => {
@@ -129,26 +132,28 @@ export default function Rondleiding() {
     if (!uitleg) return
     const h = (e: KeyboardEvent) => {
       if (e.key === 'Escape') klaar()
-      if (e.key === 'ArrowRight') setStap((s) => (s < uitleg.stappen.length - 1 ? s + 1 : s))
+      if (e.key === 'ArrowRight') setStap((s) => (s < stappen.length - 1 ? s + 1 : s))
       if (e.key === 'ArrowLeft') setStap((s) => Math.max(0, s - 1))
     }
     window.addEventListener('keydown', h)
     return () => window.removeEventListener('keydown', h)
-  }, [uitleg, klaar])
+  }, [uitleg, stappen.length, klaar])
 
   useLayoutEffect(() => {
     if (ballonRef.current) setBallonHoogte(ballonRef.current.offsetHeight)
   })
 
   if (!uitleg || !huidig) return null
-  const laatste = stap === uitleg.stappen.length - 1
-  const mobiel = window.innerWidth < 640
+  const laatste = stap === stappen.length - 1
 
   // Ballon onder het kader als er ruimte is, anders erboven; zonder kader in het midden.
   const ballonBreedte = Math.min(360, window.innerWidth - 32)
   let ballon: React.CSSProperties
   if (!kader || mobiel) {
-    ballon = mobiel && kader ? { left: 16, right: 16, bottom: 16 } : { left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: ballonBreedte + 40 }
+    // Op een telefoon over de volle breedte, aan de kant waar het uitgelichte deel niet zit.
+    const onderin = !!kader && kader.top + kader.height / 2 > window.innerHeight / 2
+    ballon = mobiel && kader
+      ? { left: 12, right: 12, ...(onderin ? { top: 'calc(12px + env(safe-area-inset-top))' } : { bottom: 'calc(12px + env(safe-area-inset-bottom))' }) } : { left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: ballonBreedte + 40 }
   } else {
     const h = ballonHoogte
     const vh = window.innerHeight
@@ -183,10 +188,10 @@ export default function Rondleiding() {
             <Lightbulb weight="fill" size={22} />
           </span>
           <div className="min-w-0 flex-1">
-            <div className="text-[11px] font-bold uppercase tracking-wide text-muted">{uitleg.naam} · stap {stap + 1} van {uitleg.stappen.length}</div>
+            <div className="text-[11px] font-bold uppercase tracking-wide text-muted">{uitleg.naam} · stap {stap + 1} van {stappen.length}</div>
             <div className="font-display mt-0.5 text-lg font-bold leading-snug">{huidig.titel}</div>
           </div>
-          <button onClick={klaar} className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-muted transition hover:rotate-90 hover:bg-perzik hover:text-ink" aria-label="Uitleg sluiten">
+          <button onClick={klaar} className="tik grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition hover:rotate-90 hover:bg-perzik hover:text-ink" aria-label="Uitleg sluiten">
             <X weight="bold" size={14} />
           </button>
         </div>
@@ -199,16 +204,16 @@ export default function Rondleiding() {
         </button>
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex gap-1.5">
-            {uitleg.stappen.map((_, i) => (
-              <button key={i} onClick={() => setStap(i)} aria-label={`Stap ${i + 1}`} className={cx('h-2 rounded-full transition-all duration-300', i === stap ? 'w-6 bg-violet' : 'w-2 bg-line hover:bg-violet/40')} />
+            {stappen.map((_, i) => (
+              <button key={i} onClick={() => setStap(i)} aria-label={`Stap ${i + 1}`} className={cx('relative h-2 rounded-full after:absolute after:-inset-x-1 after:-inset-y-4 after:content-[""] transition-all duration-300', i === stap ? 'w-6 bg-violet' : 'w-2 bg-line hover:bg-violet/40')} />
             ))}
           </div>
           <div className="ml-auto flex gap-2">
             {stap > 0 && (
-              <button className="knop knop-zacht !px-3 !py-1.5" onClick={() => setStap(stap - 1)} aria-label="Vorige"><ArrowLeft weight="bold" size={14} /></button>
+              <button className="knop knop-zacht !px-3 !py-2 sm:!py-1.5" onClick={() => setStap(stap - 1)} aria-label="Vorige"><ArrowLeft weight="bold" size={14} /></button>
             )}
-            {!laatste && <button className="knop !px-3 !py-1.5 text-ink-2 hover:bg-zacht" onClick={klaar}>Overslaan</button>}
-            <button className="knop knop-primair !py-1.5" onClick={() => (laatste ? klaar() : setStap(stap + 1))}>
+            {!laatste && <button className="knop !px-3 !py-2 text-ink-2 sm:!py-1.5 hover:bg-zacht" onClick={klaar}>Overslaan</button>}
+            <button className="knop knop-primair !py-2 sm:!py-1.5" onClick={() => (laatste ? klaar() : setStap(stap + 1))}>
               {laatste ? 'Aan de slag' : 'Volgende'} {!laatste && <ArrowRight weight="bold" size={14} />}
             </button>
           </div>

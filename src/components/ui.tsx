@@ -1,5 +1,5 @@
 import { X, type Icon } from '@phosphor-icons/react'
-import { useEffect, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useRef, type CSSProperties, type ReactNode, type TouchEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { AANBOD_STATUSSEN, DOELGROEPEN, STATUSSEN, familieVan, inktVoor, isLicht, type Segment } from '../data/vocab'
 import { staffel, useOptellen } from '../lib/animatie'
@@ -38,7 +38,7 @@ export function Kaart({ titel, sub, actie, children, className, kleur, i = 0, ui
   uitleg?: string
 }) {
   return (
-    <section data-uitleg={uitleg} className={cx('kaart verschijn p-5 sm:p-6', className)} style={{ ...staffel(i), ...(kleur ? { background: kleur } : {}) }}>
+    <section data-uitleg={uitleg} className={cx('kaart verschijn p-4 sm:p-6', className)} style={{ ...staffel(i), ...(kleur ? { background: kleur } : {}) }}>
       {(titel || actie) && (
         <header className="mb-4 flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -125,13 +125,32 @@ export function GenreLabel({ genre, klein }: { genre: string; klein?: boolean })
 
 function SluitKnop({ onSluit }: { onSluit: () => void }) {
   return (
-    <button onClick={onSluit} className="grid h-9 w-9 place-items-center rounded-full bg-oppervlak shadow-sm transition hover:rotate-90 hover:bg-perzik" aria-label="Sluiten">
+    <button onClick={onSluit} className="tik grid h-10 w-10 shrink-0 place-items-center rounded-full bg-oppervlak shadow-sm transition hover:rotate-90 hover:bg-perzik" aria-label="Sluiten">
       <X weight="bold" size={16} />
     </button>
   )
 }
 
-export function Lade({ open, onSluit, titel, children, breed }: { open: boolean; onSluit: () => void; titel: ReactNode; children: ReactNode; breed?: boolean }) {
+/** Zolang er een lade open is, scrollt de pagina eronder niet mee. Telt mee bij lades boven op elkaar. */
+let openLades = 0
+function useScrollSlot(open: boolean) {
+  useEffect(() => {
+    if (!open) return
+    if (openLades++ === 0) document.documentElement.style.overflow = 'hidden'
+    return () => {
+      if (--openLades === 0) document.documentElement.style.overflow = ''
+    }
+  }, [open])
+}
+
+/**
+ * Detailpaneel. Op een telefoon schuift het van onderen omhoog en veeg je het aan de greep weer omlaag;
+ * op grotere schermen komt het van rechts. Een voet blijft onderaan in beeld staan.
+ */
+export function Lade({ open, onSluit, titel, children, breed, voet }: { open: boolean; onSluit: () => void; titel: ReactNode; children: ReactNode; breed?: boolean; voet?: ReactNode }) {
+  const paneel = useRef<HTMLElement>(null)
+  const veeg = useRef<{ y: number; dy: number } | null>(null)
+  useScrollSlot(open)
   useEffect(() => {
     if (!open) return
     const h = (e: KeyboardEvent) => e.key === 'Escape' && onSluit()
@@ -139,16 +158,52 @@ export function Lade({ open, onSluit, titel, children, breed }: { open: boolean;
     return () => window.removeEventListener('keydown', h)
   }, [open, onSluit])
   if (!open) return null
+
+  const veegStart = (e: TouchEvent) => {
+    if (window.innerWidth < 640) veeg.current = { y: e.touches[0].clientY, dy: 0 }
+  }
+  const veegBeweeg = (e: TouchEvent) => {
+    if (!veeg.current || !paneel.current) return
+    veeg.current.dy = Math.max(0, e.touches[0].clientY - veeg.current.y)
+    paneel.current.style.transition = 'none'
+    paneel.current.style.transform = `translateY(${veeg.current.dy}px)`
+  }
+  const veegEind = () => {
+    const el = paneel.current
+    if (!veeg.current || !el) return
+    const ver = veeg.current.dy > Math.min(120, el.offsetHeight / 4)
+    veeg.current = null
+    if (ver) return onSluit()
+    el.style.transition = 'transform .25s ease'
+    el.style.transform = ''
+  }
+
   // Via een portal boven op de pagina, zodat de bovenbalk en animaties er nooit overheen vallen.
   return createPortal(
-    <div className="fixed inset-0 z-50 flex justify-end">
+    <div className="fixed inset-0 z-50 flex items-end justify-end sm:items-stretch">
       <div className="vervaag-in absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={onSluit} />
-      <aside className={cx('schuif-in dun-scroll relative h-full w-full overflow-y-auto bg-paneel shadow-2xl', breed ? 'max-w-2xl' : 'max-w-lg')}>
-        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-line bg-paneel/95 px-6 py-4 backdrop-blur">
-          <div className="font-display text-xl font-bold">{titel}</div>
-          <SluitKnop onSluit={onSluit} />
+      <aside
+        ref={paneel}
+        role="dialog"
+        aria-modal="true"
+        className={cx(
+          'lade-in dun-scroll relative max-h-[92dvh] w-full overflow-y-auto overscroll-contain rounded-t-3xl bg-paneel shadow-2xl sm:h-full sm:max-h-none sm:rounded-none',
+          breed ? 'sm:max-w-2xl' : 'sm:max-w-lg',
+        )}
+      >
+        <div className="sticky top-0 z-10 border-b border-line bg-paneel/95 backdrop-blur" onTouchStart={veegStart} onTouchMove={veegBeweeg} onTouchEnd={veegEind}>
+          <div className="mx-auto mt-2 h-1.5 w-10 rounded-full bg-line sm:hidden" aria-hidden="true" />
+          <div className="flex items-center justify-between gap-3 px-5 pt-2 pb-3 sm:px-6 sm:py-4">
+            <div className="font-display min-w-0 text-lg font-bold leading-snug sm:text-xl">{titel}</div>
+            <SluitKnop onSluit={onSluit} />
+          </div>
         </div>
-        <div className="p-6">{children}</div>
+        <div className={cx('p-5 sm:p-6', !voet && 'pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pb-6')}>{children}</div>
+        {voet && (
+          <div className="veilig-onder sticky bottom-0 border-t border-line bg-paneel/95 backdrop-blur">
+            <div className="flex flex-wrap gap-2 px-5 py-3 sm:px-6">{voet}</div>
+          </div>
+        )}
       </aside>
     </div>,
     document.body,
@@ -219,14 +274,15 @@ export function Leeg({ children }: { children: ReactNode }) {
   return <div className="rounded-2xl border border-dashed border-line bg-oppervlak/60 p-8 text-center text-sm text-ink-2">{children}</div>
 }
 
-export function Tabs<T extends string>({ waarde, opties, onChange, uitleg }: { waarde: T; opties: { id: T; label: ReactNode }[]; onChange: (t: T) => void; uitleg?: string }) {
+/** Wisselknoppen. Met vol vullen ze op een telefoon de hele breedte, zonder iconen. */
+export function Tabs<T extends string>({ waarde, opties, onChange, uitleg, vol }: { waarde: T; opties: { id: T; label: ReactNode }[]; onChange: (t: T) => void; uitleg?: string; vol?: boolean }) {
   return (
-    <div data-uitleg={uitleg} className="inline-flex flex-wrap gap-1 rounded-full border border-line bg-oppervlak p-1 shadow-sm">
+    <div data-uitleg={uitleg} className={cx('inline-flex flex-wrap gap-1 rounded-full border border-line bg-oppervlak p-1 shadow-sm', vol && 'max-sm:flex max-sm:min-w-0 max-sm:flex-1 max-sm:flex-nowrap max-sm:[&_svg]:hidden')}>
       {opties.map((o) => (
         <button
           key={o.id}
           onClick={() => onChange(o.id)}
-          className={cx('flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold transition active:scale-95', waarde === o.id ? 'bg-ink text-op-ink shadow' : 'text-ink-2 hover:bg-perzik/60')}
+          className={cx('flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-semibold transition active:scale-95', vol && 'max-sm:flex-1 max-sm:justify-center max-sm:px-2 max-sm:py-2', waarde === o.id ? 'bg-ink text-op-ink shadow' : 'text-ink-2 hover:bg-perzik/60')}
         >
           {o.label}
         </button>
@@ -237,15 +293,15 @@ export function Tabs<T extends string>({ waarde, opties, onChange, uitleg }: { w
 
 export function Paginakop({ titel, icoon: I, kleur, sub, children }: { titel: string; icoon: Icon; kleur: string; sub: ReactNode; children?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div className="mb-5 flex flex-wrap items-end justify-between gap-3 sm:mb-6 sm:gap-4">
       <div>
-        <h1 className="font-display flex items-center gap-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-          <span className="grid h-12 w-12 place-items-center rounded-2xl text-white shadow-[var(--shadow-hoog)]" style={{ background: `linear-gradient(135deg, ${kleur}, ${kleur}bb)` }}>
-            <I weight="fill" size={26} />
+        <h1 className="font-display flex items-center gap-2.5 text-[1.7rem] font-extrabold tracking-tight sm:gap-3 sm:text-4xl">
+          <span className="grid h-10 w-10 place-items-center rounded-xl text-white shadow-[var(--shadow-hoog)] sm:h-12 sm:w-12 sm:rounded-2xl" style={{ background: `linear-gradient(135deg, ${kleur}, ${kleur}bb)` }}>
+            <I weight="fill" size={22} className="sm:size-[26px]" />
           </span>
           {titel}
         </h1>
-        <p className="mt-2 max-w-2xl text-ink-2">{sub}</p>
+        <p className="mt-1.5 max-w-2xl text-[15px] text-ink-2 sm:mt-2 sm:text-base">{sub}</p>
       </div>
       {children}
     </div>

@@ -1,5 +1,5 @@
-import { CalendarDots, Moon, Question, Sun, SunHorizon, Target, Tray, UsersThree } from '@phosphor-icons/react'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { CalendarBlank, CalendarDots, CaretDown, Moon, Question, Sun, SunHorizon, Target, Tray, UsersThree } from '@phosphor-icons/react'
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { uitlegSleutel, uitlegVoor } from '../data/uitleg'
 import { HUIDIG_SEIZOEN, PLAN_SEIZOEN, SEIZOENEN } from '../data/vocab'
@@ -18,6 +18,11 @@ export const NAV = [
   { to: '/doelen', label: 'Doelen', icoon: Target, kleur: '#7c5cf0' },
 ]
 
+const RONDE_KNOP = 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-oppervlak text-ink-2 transition hover:bg-zacht hover:text-ink'
+
+/** Kleur van de statusbalk van de telefoon, gelijk aan de achtergrond van het thema. */
+const STATUSBALK = { licht: '#fff8f1', donker: '#13111c' }
+
 /** Wissel tussen licht en donker thema. */
 function ThemaSchakelaar() {
   const thema = useStore((s) => s.thema)
@@ -26,7 +31,7 @@ function ThemaSchakelaar() {
   return (
     <button
       onClick={() => setThema(donker ? 'licht' : 'donker')}
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-oppervlak text-ink-2 transition hover:bg-zacht hover:text-ink"
+      className={RONDE_KNOP}
       aria-label={donker ? 'Licht thema' : 'Donker thema'}
       title={donker ? 'Licht thema' : 'Donker thema'}
     >
@@ -45,7 +50,7 @@ function SeizoenKiezer() {
   const isEerder = eerder.includes(seizoen)
   const knop = (actief: boolean) => cx('whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm font-semibold transition active:scale-95', actief ? 'bg-ink text-op-ink' : 'text-ink-2 hover:bg-zacht')
   return (
-    <div data-uitleg="seizoenkiezer" className="dun-scroll flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-line bg-oppervlak p-1">
+    <div data-uitleg="seizoenkiezer" className="dun-scroll hidden sm:flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-line bg-oppervlak p-1">
       <button className={knop(seizoen === HUIDIG_SEIZOEN)} onClick={() => setSeizoen(HUIDIG_SEIZOEN)}>Dit seizoen</button>
       <button className={knop(seizoen === PLAN_SEIZOEN)} onClick={() => setSeizoen(PLAN_SEIZOEN)}>Volgend seizoen</button>
       <select
@@ -58,6 +63,58 @@ function SeizoenKiezer() {
         {[...eerder].reverse().map((s) => <option key={s} value={s}>Seizoen {s}</option>)}
       </select>
     </div>
+  )
+}
+
+/** Seizoenkeuze voor de telefoon: een compact knopje dat de keuzelijst van de telefoon zelf opent. */
+function SeizoenKiezerMobiel() {
+  const seizoen = useStore((s) => s.seizoen)
+  const setSeizoen = useStore((s) => s.setSeizoen)
+  const anders = seizoen !== HUIDIG_SEIZOEN
+  return (
+    <label
+      data-uitleg="seizoenkiezer"
+      className={cx('relative flex h-10 shrink-0 items-center gap-1.5 rounded-full border px-3 text-sm font-semibold sm:hidden', anders ? 'border-ink bg-ink text-op-ink' : 'border-line bg-oppervlak text-ink')}
+    >
+      <CalendarBlank size={17} />
+      {seizoen}
+      <CaretDown size={13} weight="bold" />
+      <select aria-label="Seizoen" value={seizoen} onChange={(e) => setSeizoen(e.target.value)} className="absolute inset-0 cursor-pointer opacity-0">
+        {[...SEIZOENEN].reverse().map((s) => (
+          <option key={s} value={s}>{s === HUIDIG_SEIZOEN ? `Dit seizoen (${s})` : s === PLAN_SEIZOEN ? `Volgend seizoen (${s})` : `Seizoen ${s}`}</option>
+        ))}
+      </select>
+    </label>
+  )
+}
+
+/** Tabbalk onderaan het scherm van een telefoon of tablet, binnen bereik van je duim. */
+function Tabbalk() {
+  return (
+    <nav data-uitleg="tabbalk" aria-label="Onderdelen" className="veilig-onder fixed inset-x-0 bottom-0 z-40 border-t border-line bg-oppervlak/90 backdrop-blur-md lg:hidden">
+      <div className="mx-auto grid max-w-xl grid-cols-5">
+        {NAV.map((n) => (
+          <NavLink
+            key={n.to}
+            to={n.to}
+            end={n.to === '/'}
+            className={({ isActive }) => cx('flex flex-col items-center gap-0.5 pt-2 pb-1.5 text-[11px] font-semibold transition-colors', isActive ? 'text-ink' : 'text-ink-2')}
+          >
+            {({ isActive }) => (
+              <>
+                <span
+                  className="grid h-8 w-14 place-items-center rounded-full transition-colors duration-300"
+                  style={{ background: isActive ? n.kleur + '29' : 'transparent', color: n.kleur }}
+                >
+                  <n.icoon weight="fill" size={isActive ? 23 : 22} />
+                </span>
+                {n.label}
+              </>
+            )}
+          </NavLink>
+        ))}
+      </div>
+    </nav>
   )
 }
 
@@ -111,13 +168,14 @@ export default function Layout() {
   const thema = useStore((s) => s.thema)
   useEffect(() => {
     document.documentElement.classList.toggle('donker', thema === 'donker')
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', thema === 'donker' ? STATUSBALK.donker : STATUSBALK.licht)
   }, [thema])
   const startUitleg = useUitleg((s) => s.start)
   const sleutel = uitlegSleutel(pathname)
   useAutomatischeUitleg()
   return (
     <div className="min-h-full lg:flex">
-      <aside className="sticky top-0 z-30 hidden h-screen w-60 shrink-0 flex-col border-r border-line bg-oppervlak/80 px-4 py-6 backdrop-blur lg:flex">
+      <aside className="sticky top-0 z-30 hidden h-dvh w-60 shrink-0 flex-col border-r border-line bg-oppervlak/80 px-4 py-6 backdrop-blur lg:flex">
         <div className="mb-9 px-2.5"><Logo /></div>
         <Zijnavigatie pathname={pathname} />
         <div className="mt-auto px-1">
@@ -126,20 +184,20 @@ export default function Layout() {
       </aside>
 
       <div className="min-w-0 flex-1">
-        <header className="sticky top-0 z-20 border-b border-line/70 bg-bg/80 backdrop-blur-md">
-          <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-2 lg:hidden">
+        <header className="sticky top-0 z-20 border-b border-line/70 bg-bg/80 pt-[env(safe-area-inset-top)] backdrop-blur-md">
+          <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4 py-2.5 sm:gap-3 sm:px-6 sm:py-3 lg:px-8">
+            <div className="flex min-w-0 items-center gap-2 lg:hidden">
               <Logo klein />
               <Info links>{OVER_DEZE_APP}</Info>
             </div>
             <span className="hidden rounded-full bg-citroen px-2.5 py-0.5 text-[11px] font-bold text-amber-800 lg:inline">voorbeelddata</span>
-            <div className="flex min-w-0 max-w-full flex-wrap items-center justify-end gap-2">
+            <div className="flex shrink-0 items-center justify-end gap-2">
               <ThemaSchakelaar />
               {uitlegVoor(sleutel) && (
                 <button
                   data-uitleg="uitleg-knop"
                   onClick={() => startUitleg(sleutel)}
-                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-oppervlak text-ink-2 transition hover:bg-zacht hover:text-ink"
+                  className={RONDE_KNOP}
                   aria-label="Uitleg van deze pagina"
                   title="Uitleg van deze pagina"
                 >
@@ -147,30 +205,17 @@ export default function Layout() {
                 </button>
               )}
               <SeizoenKiezer />
+              <SeizoenKiezerMobiel />
             </div>
           </div>
-          <nav className="dun-scroll flex gap-1 overflow-x-auto px-4 pb-3 lg:hidden">
-            {NAV.map((n) => (
-              <NavLink
-                key={n.to}
-                to={n.to}
-                end={n.to === '/'}
-                className={({ isActive }) => cx('flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold transition', isActive ? 'bg-ink text-op-ink' : 'bg-oppervlak text-ink-2')}
-              >
-                {({ isActive }) => (
-                  <>
-                    <n.icoon weight="fill" size={15} style={{ color: isActive ? 'var(--color-op-ink)' : n.kleur }} />
-                    {n.label}
-                  </>
-                )}
-              </NavLink>
-            ))}
-          </nav>
         </header>
-        <main key={pathname} className="pagina-in mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-          <Outlet />
+        <main key={pathname} className="pagina-in mx-auto max-w-[1400px] px-4 pt-5 pb-[calc(6rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-6 lg:px-8 lg:py-8">
+          <Suspense fallback={null}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
+      <Tabbalk />
       <VoorstellingLade />
       <AanbodLade />
       <Rondleiding />

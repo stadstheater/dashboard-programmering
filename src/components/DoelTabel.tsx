@@ -1,5 +1,5 @@
-import type { Icon } from '@phosphor-icons/react'
-import type { ReactNode } from 'react'
+import { CaretDown, type Icon } from '@phosphor-icons/react'
+import { useState, type ReactNode } from 'react'
 import { isLicht } from '../data/vocab'
 import { staffel } from '../lib/animatie'
 import Info from './Info'
@@ -15,15 +15,18 @@ export interface DoelRij {
 
 const pct = (x: number) => `${x.toFixed(1).replace('.', ',')}%`
 
-/** Tabel met per regel het doel, de realisatie en het verschil, plus een balk met doelstreepje. */
-export default function DoelTabel({ titel, icoon: I, kleur, rijen, actief, uitleg }: {
+/** Tabel met per regel het doel, de realisatie en het verschil, plus een balk met doelstreepje. Inklapbaar op een telefoon. */
+export default function DoelTabel({ titel, icoon: I, kleur, rijen, actief, uitleg, inklapbaar }: {
   titel: string
   icoon: Icon
   kleur: string
   rijen: DoelRij[]
   actief?: boolean
   uitleg?: string
+  inklapbaar?: boolean
 }) {
+  const [open, setOpen] = useState(false)
+  const toon = !inklapbaar || open
   const max = Math.max(...rijen.flatMap((r) => [r.doel, r.realisatie]), 1) * 1.1
   return (
     <section
@@ -31,15 +34,23 @@ export default function DoelTabel({ titel, icoon: I, kleur, rijen, actief, uitle
       className={cx('kaart verschijn p-5 transition', actief && 'ring-2 ring-offset-2')}
       style={actief ? ({ '--tw-ring-color': kleur } as React.CSSProperties) : undefined}
     >
-      <header className="mb-3 flex items-center gap-2.5">
+      <header className={cx('flex items-center gap-2.5', toon && 'mb-3')}>
         <span className="grid h-9 w-9 place-items-center rounded-xl" style={{ background: kleur + '22', color: kleur }}>
           <I size={19} />
         </span>
-        <h2 className="text-lg font-bold">{titel}</h2>
-        <Info className="ml-auto">
+        {inklapbaar ? (
+          <button onClick={() => setOpen(!open)} aria-expanded={open} className="flex min-w-0 flex-1 items-center justify-between gap-2 self-stretch text-left">
+            <h2 className="text-lg font-bold">{titel}</h2>
+            <CaretDown size={18} className={cx('shrink-0 text-ink-2 transition', open && 'rotate-180')} />
+          </button>
+        ) : (
+          <h2 className="text-lg font-bold">{titel}</h2>
+        )}
+        <Info className={cx(!inklapbaar && 'ml-auto')}>
           Doel: het aandeel dat we dit seizoen willen bereiken. Realisatie: het aandeel van alle bezoekers, met echte aantallen voor gespeelde voorstellingen en de verwachting voor de rest.
         </Info>
       </header>
+      {toon && (<>
       <div className="grid grid-cols-[1fr_2.6rem_4.4rem_3.6rem] items-end gap-x-2 pb-1 text-[11px] font-semibold uppercase tracking-wide text-muted">
         <span />
         <span className="text-right">Doel</span>
@@ -70,6 +81,7 @@ export default function DoelTabel({ titel, icoon: I, kleur, rijen, actief, uitle
           )
         })}
       </ul>
+      </>)}
     </section>
   )
 }

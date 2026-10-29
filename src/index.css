@@ -49,8 +49,10 @@
 html, body, #root { height: 100%; }
 
 /* Iets grotere basistekst, zodat alles rustig leesbaar is. */
-html { font-size: 17px; }
+html { font-size: 17px; -webkit-tap-highlight-color: transparent; }
 @media (max-width: 640px) { html { font-size: 16px; } }
+/* Geen vertraging en geen dubbeltik-zoom op knoppen. */
+a, button, label, select, input { touch-action: manipulation; }
 
 /* Donker thema: dezelfde vrolijke accenten op een diep paarsblauwe ondergrond. */
 html.donker {
@@ -110,11 +112,13 @@ body {
     radial-gradient(50rem 28rem at -10% 110%, var(--color-munt) 0%, transparent 60%),
     radial-gradient(40rem 22rem at 50% -20%, var(--color-citroen) 0%, transparent 60%);
   transition: background-color .3s ease, color .3s ease;
-  background-attachment: fixed;
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
+
+/* Een vaste achtergrond hapert op telefoons, dus alleen op grote schermen. */
+@media (min-width: 1024px) { body { background-attachment: fixed; } }
 
 h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0.01em; }
 
@@ -130,18 +134,20 @@ h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0
   border-radius: 9999px; padding: .5rem 1rem; font-weight: 600; font-size: .875rem;
   transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
 }
-.knop:hover { transform: translateY(-1px); }
+@media (hover: hover) { .knop:hover { transform: translateY(-1px); } }
 .knop:active { transform: translateY(0) scale(.96); }
 .knop-primair { background: var(--color-ink); color: var(--color-op-ink); box-shadow: var(--shadow-zacht); }
-.knop-primair:hover { background: color-mix(in srgb, var(--color-ink) 85%, var(--color-violet)); }
+@media (hover: hover) { .knop-primair:hover { background: color-mix(in srgb, var(--color-ink) 85%, var(--color-violet)); } }
 .knop-zacht { background: var(--color-oppervlak); color: var(--color-ink); border: 1px solid var(--color-line); }
-.knop-zacht:hover { background: var(--color-vlak); box-shadow: var(--shadow-zacht); }
+@media (hover: hover) { .knop-zacht:hover { background: var(--color-vlak); box-shadow: var(--shadow-zacht); } }
 .knop-koraal { background: var(--color-koraal); color: white; }
 
 .invoer {
   width: 100%; border-radius: .9rem; border: 1px solid var(--color-line); background: var(--color-oppervlak); color: var(--color-ink);
   padding: .55rem .8rem; font-size: .875rem; outline: none; transition: box-shadow .15s, border-color .15s;
 }
+/* Minstens 16 pixels, anders zoomt een iPhone in zodra je gaat typen. */
+@media (max-width: 639px) { .invoer { font-size: 1rem; } }
 .invoer:focus { border-color: var(--color-violet); box-shadow: 0 0 0 4px rgb(139 92 246 / .15); }
 
 /* ---------- Animaties ---------- */
@@ -151,11 +157,19 @@ h1, h2, h3, .font-display { font-family: var(--font-display); letter-spacing: -0
 .verschijn { animation: verschijn .55s cubic-bezier(.2, .8, .2, 1) backwards; animation-delay: calc(min(var(--i, 0), 24) * 55ms); }
 @keyframes verschijn { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: none; } }
 
+/* Op een telefoon komt alles sneller binnen: minder wachten bij het scrollen. */
+@media (max-width: 639px) { .verschijn { animation-delay: calc(min(var(--i, 0), 6) * 40ms); } }
+
 .pagina-in { animation: pagina .5s cubic-bezier(.2, .8, .2, 1) backwards; }
 @keyframes pagina { from { opacity: 0; transform: translateY(12px); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
 
 .schuif-in { animation: schuif .5s cubic-bezier(.22, 1.25, .36, 1) backwards; }
 @keyframes schuif { from { transform: translateX(60px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Lade: op een telefoon van onderen, op grotere schermen van rechts. */
+.lade-in { animation: omhoog .42s cubic-bezier(.22, 1, .36, 1) backwards; }
+@keyframes omhoog { from { transform: translateY(100%); } to { transform: none; } }
+@media (min-width: 640px) { .lade-in { animation: schuif .5s cubic-bezier(.22, 1.25, .36, 1) backwards; } }
 
 .vervaag-in { animation: vervaag .3s ease both; }
 @keyframes vervaag { from { opacity: 0; } }
@@ -178,6 +192,11 @@ html.donker .status-label { color: color-mix(in srgb, var(--k) 55%, #fff); }
 .schuif { appearance: none; height: 6px; border-radius: 99px; cursor: pointer; }
 .schuif::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--color-oppervlak); border: 3px solid var(--k); box-shadow: 0 1px 3px rgb(0 0 0 / .2); }
 .schuif::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--color-oppervlak); border: 3px solid var(--k); }
+@media (pointer: coarse) {
+  .schuif { height: 8px; }
+  .schuif::-webkit-slider-thumb { width: 26px; height: 26px; }
+  .schuif::-moz-range-thumb { width: 20px; height: 20px; }
+}
 .schuif:focus-visible { outline: 2px solid var(--color-violet); outline-offset: 4px; }
 
 /* Spotlight van de rondleiding. */
@@ -192,3 +211,10 @@ html.donker .status-label { color: color-mix(in srgb, var(--k) 55%, #fff); }
 
 /* Gridkinderen mogen krimpen, zodat lange titels nooit horizontaal scrollen veroorzaken. */
 .grid > * { min-width: 0; }
+
+/* Groter tikvlak dan het zichtbare knopje, zodat je het met een vinger makkelijk raakt. */
+.tik { position: relative; }
+.tik::after { content: ""; position: absolute; inset: -12px; }
+
+/* Ruimte voor de notch en de thuisbalk van telefoons. */
+.veilig-onder { padding-bottom: env(safe-area-inset-bottom); }

@@ -1,16 +1,23 @@
 import { IconContext } from '@phosphor-icons/react'
-import { Component, StrictMode, type ReactNode } from 'react'
+import { Component, StrictMode, lazy, type ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import { Beeldmerk } from './components/Logo'
 import './index.css'
-import Aanbod from './pages/Aanbod'
-import Doelen from './pages/Doelen'
-import Kalender from './pages/Kalender'
-import Publiek from './pages/Publiek'
 import Vandaag from './pages/Vandaag'
 import { OPSLAG_SLEUTEL } from './store/useStore'
+
+// Alleen de startpagina zit in de eerste download; de rest wordt geladen zodra je ernaartoe gaat.
+const Kalender = lazy(() => import('./pages/Kalender'))
+const Aanbod = lazy(() => import('./pages/Aanbod'))
+const Publiek = lazy(() => import('./pages/Publiek'))
+const Doelen = lazy(() => import('./pages/Doelen'))
+
+// Maakt de app installeerbaar op het beginscherm en laat hem zonder verbinding openen.
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}))
+}
 
 /** Vangt onverwachte fouten op en biedt een uitweg, in plaats van een leeg scherm. */
 class Vangnet extends Component<{ children: ReactNode }, { fout: boolean }> {
