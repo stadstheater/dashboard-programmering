@@ -85,7 +85,7 @@ export default function Doelen() {
           <ArrowCounterClockwise size={16} /> Standaarddoelen herstellen
         </button>
         <button className="knop knop-zacht" onClick={() => { wisAlleUitleg(); setMelding('De uitleg verschijnt weer bij je volgende bezoek aan elk onderdeel.') }}>
-          <Lightbulb size={16} /> Uitleg opnieuw tonen
+          <Lightbulb size={16} /> Uitleg weer aanzetten
         </button>
         <button className="knop knop-zacht" onClick={() => { if (confirm('Alle wijzigingen wissen en opnieuw beginnen met voorbeelddata?')) { opnieuwBeginnen(); setMelding('Je begint weer met verse voorbeelddata.') } }}>
           <ArrowsClockwise size={16} /> Opnieuw beginnen

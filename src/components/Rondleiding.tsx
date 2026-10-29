@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight, Lightbulb, X } from '@phosphor-icons/react'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { create } from 'zustand'
-import { padVanSleutel, uitlegSleutel, uitlegVoor } from '../data/uitleg'
+import { UITLEG, padVanSleutel, uitlegSleutel, uitlegVoor } from '../data/uitleg'
 import { cx } from './ui'
 
 const SLEUTEL = 'coulisse-uitleg-v2'
@@ -17,6 +17,14 @@ function gezien(): string[] {
 function markeer(route: string) {
   try {
     localStorage.setItem(SLEUTEL, JSON.stringify([...new Set([...gezien(), route])]))
+  } catch {
+    /* zonder opslag verschijnt de uitleg gewoon opnieuw */
+  }
+}
+/** Markeert alle rondleidingen als gezien, zodat er geen enkele meer vanzelf opent. */
+export function zetAlleUitlegUit() {
+  try {
+    localStorage.setItem(SLEUTEL, JSON.stringify([...new Set([...gezien(), ...Object.keys(UITLEG)])]))
   } catch {
     /* zonder opslag verschijnt de uitleg gewoon opnieuw */
   }
@@ -183,6 +191,12 @@ export default function Rondleiding() {
           </button>
         </div>
         <p className="mt-3 text-sm leading-relaxed text-ink-2">{huidig.tekst}</p>
+        <button
+          onClick={() => { zetAlleUitlegUit(); stop() }}
+          className="mt-3 text-xs font-semibold text-muted underline decoration-dotted underline-offset-2 hover:text-ink"
+        >
+          Alle uitleg uitzetten
+        </button>
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex gap-1.5">
             {uitleg.stappen.map((_, i) => (

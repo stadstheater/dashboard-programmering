@@ -14,6 +14,7 @@ export const UITLEG: Record<string, { naam: string; stappen: UitlegStap[] }> = {
       { doel: 'vandaag-cijfers', titel: 'Drie cijfers', tekst: 'Hoeveel voorstellingen, hoeveel bezoekers en hoe vol de zalen zitten. Groen is goed, oranje vraagt om aandacht.' },
       { doel: 'vandaag-aandacht', titel: 'Wat vraagt aandacht?', tekst: 'Hier staan de belangrijkste punten. Klik op de knop om er meteen mee aan de slag te gaan.' },
       { doel: 'seizoenkiezer', titel: 'Ander seizoen bekijken', tekst: 'Kies "Dit seizoen" of "Volgend seizoen". Oudere seizoenen vind je onder "Eerder".' },
+      { doel: 'uitleg-knop', titel: 'Uitleg terugzien', tekst: 'Met dit vraagteken start je de uitleg van een pagina opnieuw. Wil je geen uitleg meer vanzelf zien? Klik op "Alle uitleg uitzetten". Op de pagina Doelen zet je hem weer aan.' },
     ],
   },
   '/kalender': {
